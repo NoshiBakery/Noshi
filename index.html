@@ -1941,6 +1941,30 @@
         font-weight: 700;
         font-style: normal;
       }
+      .heart-beat {
+        display: inline-block;
+        animation: heartbeat 1.2s ease-in-out infinite;
+        transform-origin: center;
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        15% {
+          transform: scale(1.25);
+        }
+        30% {
+          transform: scale(1);
+        }
+        45% {
+          transform: scale(1.25);
+        }
+        60% {
+          transform: scale(1);
+        }
+      }
     </style>
   </head>
   <body>
@@ -2065,7 +2089,7 @@
       <div class="container">
         <h2>اولاً انا مبسوطه بوجودك</h2>
         <p class="welcome">لأن اكــــيــــد وصلتي هنا لأنك ذقتي منتج من منتجاتنا</p>
-        <p class="welcome-note">ومافيه شك انه اعجبك 😎</p>
+        <p class="welcome-note">ومــافــيــه شــك انــه اعـــجــبــك 😎</p>
         <p class="welcome">ولسى باقي منتجات ألذ بعد 🦦</p>
       </div>
     </section>
@@ -2074,7 +2098,7 @@
     <section id="products" class="products-section fade-in-section">
       <div class="container">
         <div class="section-header">
-          <h2>المنتجات الاكثر مبيعاً 🔥</h2>
+          <h2>المنتجات الاكثر مــبــيــعــاً 🔥</h2>
         </div>
 
         <div class="products-grid" id="productsGrid">
@@ -2091,7 +2115,7 @@
     <section class="steps-section fade-in-section">
       <div class="container">
         <div class="section-header">
-          <h2>طريقة الطلب سهلة جداً</h2>
+          <h2>طـريـقـة الـطـلـب سـهـلـة جــــداً</h2>
           <h3>بــــ ثلاث خطوات والباقي علينا 👏</h3>
         </div>
         <div class="steps-grid">
@@ -2168,7 +2192,7 @@
           <div class="story-icon">
             <img src="images/story.png" alt="أيقونة فرحة ومناسبات" loading="lazy" />
           </div>
-          <h2>مين نوشي؟</h2>
+          <h2>مــيــن نــوشـــي؟</h2>
           <p class="story-lead">
             بدأت بحلم صغير، وكبرت بمحبتكم وثقتكم. <br />ومن يومها، وعدت نفسي إني أقدّم منتج ينافس
             بجودته، ويترك بصمة في كل مكان. <br />لأن كل جلسة، وكل فنجال قهوة، يستحق نكهة حلوة تكمل
@@ -2185,7 +2209,7 @@
     <section id="why" class="why-section fade-in-section">
       <div class="container">
         <div class="section-header">
-          <h2>ليش تختار نوشي؟</h2>
+          <h2>ليش تختار نـــوشـــي؟</h2>
           <p>لأن التفاصيل الصغيرة هي اللي تصنع الفرق.</p>
         </div>
 
@@ -2222,7 +2246,7 @@
       <div class="container">
         <div class="reviews-heading">
           <span class="reviews-eyebrow">آراء العملاء</span>
-          <h2>وش قالوا عن نوشي؟</h2>
+          <h2>وش قالوا عن نــــوشـــي؟</h2>
           <p>رسالتك بعد استلام الطلب هي أجمل جزء بالنسبة لي ✨</p>
         </div>
 
@@ -2466,23 +2490,23 @@
                 onerror="this.style.display = 'none'"
               />
             </div>
-            <h2>نوشي بيكري</h2>
-            <p class="tagline">نكهة تُحكى، صُنعت بعناية، وقُدّمت بفخر.</p>
+            <h2>نـــوشـــي بـــيـــكـــري</h2>
+            <p class="tagline">نـكـهـة تُــحـكـى، صُــنـعـت بـعـنـايـة، وقُــدّمــت بـفـخـر.</p>
           </div>
 
           <div class="footer-column">
             <h3>روابط سريعة</h3>
             <nav class="footer-links" aria-label="روابط التذييل">
-              <a href="#products">منتجاتنا</a>
-              <a href="#story">مين نوشي؟</a>
-              <a href="#why">ليش تختار نوشي؟</a>
-              <a href="#reviews">وش قالوا عن نوشي؟</a>
-              <a href="#faq">الأسئلة الشائعة</a>
+              <a href="#products">مـنـتـجـاتـنـا</a>
+              <a href="#story">مــيــن نــوشــي؟</a>
+              <a href="#why">لــيــش تــخــتــار نـــوشــي؟</a>
+              <a href="#reviews">وش قــالــوا عـــن نـــوشــي؟</a>
+              <a href="#faq">الأســئــلــة الــشــائــعــة</a>
             </nav>
           </div>
 
           <div class="footer-column">
-            <h3>تواصل معنا</h3>
+            <h3>تــواصــل مــعــنــا</h3>
             <div class="footer-contacts">
               <a
                 class="footer-contact"
@@ -2508,7 +2532,7 @@
                   ></path>
                   <path d="M8.5 10.5h7M8.5 14h4"></path>
                 </svg>
-                راسلنا عبر واتساب
+                راســـلـــنـــا عــــبـــر واتـــســـاب
               </a>
             </div>
 
@@ -2558,7 +2582,10 @@
 
         <div class="footer-bottom">
           <span>© <span id="year"></span> نوشي بيكري. جميع الحقوق محفوظة.</span>
-          <span>صُنع بكل حب في المذنب 🙏🏻</span>
+          <span
+            >صُــــنــــع بــــكــــل حـــــب فــــي الــــمــــذنــــب
+            <span class="heart-beat">❤️</span></span
+          >
         </div>
       </div>
     </footer>
