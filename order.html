@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <title>نوشي بيكري | مخبوزات وحلويات صُنعت بعناية</title>
+    <meta
+      name="description"
+      content="اكتشف منتجات نوشي بيكري من المخبوزات والحلويات المحضّرة بعناية. تعرّف على نكهاتنا واطلب مباشرة عبر واتساب."
+    />
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="نوشي بيكري | مخبوزات وحلويات صُنعت بعناية" />
+    <meta
+      property="og:description"
+      content="نكهة تُحكى، صُنعت بعناية، وقُدّمت بفخر. مخبوزات وحلويات منزلية مميزة للضيافة والمناسبات."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="images/logo.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Bakery",
+        "name": "نوشي بيكري",
+        "description": "مخبوزات وحلويات منزلية تُحضّر بعناية.",
+        "telephone": "+966576059229",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "SA"
+        }
+      }
+    </script>
+
+    <!-- Favicon & Theme Color -->
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="shortcut icon" href="images/logo.png" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
+    <meta name="theme-color" content="#9c4b63" />
+
+    <!-- تحميل شعار الواجهة مبكرًا لتحسين سرعة الظهور -->
+    <link
+      rel="preload"
+      as="image"
+      href="images/logo.webp"
+      imagesrcset="images/logo-480.webp 480w, images/logo.webp 960w"
+      imagesizes="(max-width: 480px) 82vw, 360px"
+      fetchpriority="high"
+    />
+
+    <link rel="stylesheet" href="assets/css/style.css?v=5" />
+    <link rel="stylesheet" href="assets/css/catalog-v7.css" />
+  </head>
+  <body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" role="navigation" aria-label="القائمة الرئيسية">
+      <div class="navbar-brand">
+        <!-- تأكد من وجود الملف في مجلد images -->
+        <img
+          src="images/logo-480.webp"
+          srcset="images/logo-480.webp 480w, images/logo.webp 960w"
+          sizes="112px"
+          width="480"
+          height="480"
+          decoding="async"
+          alt="شعار نوشي بيكري"
+          onerror="
+            this.src =
+              'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🍩%3C/text%3E%3C/svg%3E'
+          "
+        />
+        <span>نوشي بيكري</span>
+      </div>
+
+      <button class="menu-toggle" aria-label="فتح القائمة">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="navbar-links" id="navLinks">
+        <a href="#products">منتجاتنا</a>
+        <a href="#story">قصتنا</a>
+        <a href="#why">ليش تختار نوشي؟</a>
+        <a href="#reviews">آراء العملاء</a>
+        <a href="#faq">الأسئلة الشائعة</a>
+      </div>
+    </nav>
+
+    <!-- ===== شريط سفلي ثابت للجوال ===== -->
+    <div class="bottom-bar">
+      <a href="#products" class="btn-cta btn-cta-menu">شاهد المنتجات</a>
+    </div>
+
+    <!-- ===== زر السلة العائم ===== -->
+    <a href="cart.html?from=order" class="floating-wa floating-cart" aria-label="فتح السلة">
+      <svg
+        width="34"
+        height="34"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="9" cy="20" r="1"></circle>
+        <circle cx="19" cy="20" r="1"></circle>
+        <path d="M3 4h2l2.4 10.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6"></path>
+      </svg>
+      <span class="cart-float-count" data-cart-count>0</span>
+    </a>
+
+    <!-- ===== زر العودة للأعلى ===== -->
+    <button class="scroll-top" id="scrollTopBtn" aria-label="العودة إلى أعلى الصفحة">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+
+    <!-- ===== مودال المنتج بتصميم dd ===== -->
+    <dialog
+      class="product-dialog"
+      id="productModal"
+      aria-labelledby="modalTitle"
+      aria-describedby="modalDescription"
+    >
+      <div class="dialog-shell">
+        <button class="dialog-close" id="modalClose" type="button" aria-label="إغلاق نافذة المنتج">
+          ✕
+        </button>
+
+        <div class="dialog-media">
+          <img
+            id="modalImage"
+            src="images/logo-480.webp"
+            width="960"
+            height="960"
+            alt=""
+            decoding="async"
+          />
+        </div>
+
+        <div class="dialog-body">
+          <span class="dialog-badge" id="modalBadge"> منتج مميز </span>
+
+          <h2 id="modalTitle"></h2>
+
+          <p class="dialog-description" id="modalDescription"></p>
+
+          <div class="dialog-meta">
+            <div class="dialog-pill">
+              <span>السعر</span>
+              <strong id="modalPrice"></strong>
+            </div>
+
+            <div class="dialog-pill" id="modalSizeWrap">
+              <span>العدد أو الحجم</span>
+              <strong id="modalSize"></strong>
+            </div>
+          </div>
+
+          <button class="dialog-cart-button" id="modalAddToCart" type="button">
+            <span aria-hidden="true">🛒</span>
+            <span>إضافة للسلة</span>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="toast-message" id="toastMessage" role="status" aria-live="polite"></div>
+
+    <!-- ===== الواجهة الرئيسية ===== -->
+    <section class="hero fade-in-section">
+      <div class="hero-logo-stage">
+        <img
+          src="images/logo.webp"
+          srcset="images/logo-480.webp 480w, images/logo.webp 960w"
+          sizes="(max-width: 480px) 82vw, 360px"
+          width="960"
+          height="960"
+          fetchpriority="high"
+          decoding="async"
+          class="hero-logo"
+          alt="شعار نوشي بيكري"
+          onerror="this.style.display = 'none'"
+        />
+      </div>
+      <div class="hero-badge">هــــلا بـالـــــزيـيـيـن!</div>
+      <br />
+      <h2>طـل الـقـمـر عـلـيـنـا 🌝<br /><span>نـوّرتـي مـوقـع نـوشـي بـيـكـري</span></h2>
+    </section>
+
+    <!-- ===== رسالة ترحيبية ===== -->
+    <section class="welcome-section fade-in-section">
+      <div class="container">
+        <h2>يـا قـمـرنــا 🌙</h2>
+        <p class="welcome">اختاري المنتجات اللي تعجبك وأضيفيها للسلة</p>
+        <p class="welcome-note">وحددي التوصيل والتاريخ والوقت بكل سهولة 😍</p>
+        <p class="welcome">وأضغطي ارسال عبر الواتساب</p>
+        <p class="welcome">وبيوصل الطلب لــنــوشــي بــكــامل الـتـفـاصـيل 🦦</p>
+      </div>
+    </section>
+
+    <!-- ===== قسم المنتجات ===== -->
+    <section id="products" class="products-section fade-in-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>المنتجات الاكثر مــبــيــعــاً 🔥</h2>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+          <!-- سيتم إنشاء المنتجات هنا بواسطة JavaScript -->
+        </div>
+
+        <div class="show-more-btn-wrapper" id="showMoreWrapper">
+          <button id="showMoreBtn" class="btn btn-outline">شاهد جميع المنتجات</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== طريقة الطلب ===== -->
+    <section class="steps-section fade-in-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>طـريـقـة الـطـلـب سـهـلـة جــــداً</h2>
+          <h3>بــــ ثلاث خطوات والباقي علينا 👏</h3>
+        </div>
+        <div class="steps-grid">
+          <article class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <div class="step-content">
+              <span class="step-label">الخطوة الأولى</span>
+              <div class="step-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M6 8h12l-1 12H7L6 8Z"></path>
+                  <path d="M9 8V6a3 3 0 0 1 6 0v2"></path>
+                </svg>
+              </div>
+              <h3>اختاري المنتج اللي يعجبك</h3>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <div class="step-content">
+              <span class="step-label">الخطوة الثانية</span>
+              <div class="step-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"
+                  ></path>
+                  <path d="M8.5 10.5h7M8.5 14h4"></path>
+                </svg>
+              </div>
+              <h3>أضيفي المنتجات للسلة</h3>
+            </div>
+          </article>
+          <article class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <div class="step-content">
+              <span class="step-label">الخطوة الثالثة</span>
+              <div class="step-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="m8.5 12 2.3 2.3 4.8-5"></path>
+                </svg>
+              </div>
+              <h3>حددي التوصيل وأرسلي الطلب</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== قصتنا ===== -->
+    <section id="story" class="story-section fade-in-section">
+      <div class="container">
+        <div class="story-card">
+          <div class="story-icon">
+            <img
+              src="images/story-480.webp"
+              srcset="images/story-480.webp 480w, images/story.webp 960w"
+              sizes="90px"
+              width="480"
+              height="480"
+              alt="أيقونة فرحة ومناسبات"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <h2>مــيــن نــوشـــي؟</h2>
+          <p class="story-lead">
+            بدأت بحلم صغير، وكبرت بمحبتكم وثقتكم. <br />ومن يومها، وعدت نفسي إني أقدّم منتج ينافس
+            بجودته، ويترك بصمة في كل مكان. <br />لأن كل جلسة، وكل فنجال قهوة، يستحق نكهة حلوة تكمل
+            اللحظة وتترك ذكرى ما تُنسى.
+          </p>
+          <p class="story-note">
+            كل طلب منكم يكتب سطر جديد في قصة نوشي، وثقتكم هي أجمل شيء يكبّر حلمنا.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== لماذا نوشي؟ ===== -->
+    <section id="why" class="why-section fade-in-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>ليش تختار نـــوشـــي؟</h2>
+          <p>لأن التفاصيل الصغيرة هي اللي تصنع الفرق.</p>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-card">
+            <i aria-hidden="true">❤️</i>
+            <h3>نجهزه بعناية</h3>
+            <p>كل طلب نجهزه باهتمام، كأنه لأحد من أهلنا.</p>
+          </div>
+
+          <div class="why-card">
+            <i aria-hidden="true">🍰</i>
+            <h3>نكهات ما تُنسى</h3>
+            <p>نكهات مختلفة تكمّل قهوتكم وتحلّي جمعتكم.</p>
+          </div>
+
+          <div class="why-card">
+            <i aria-hidden="true">🎁</i>
+            <h3>تقديم يفتح النفس</h3>
+            <p>نهتم بالشكل والتغليف مثل اهتمامنا بالطعم.</p>
+          </div>
+
+          <div class="why-card">
+            <i aria-hidden="true">💬</i>
+            <h3>قريبه منكم</h3>
+            <p>صوتك دائماً مسموع ورضاك اولوية قصوى عندي</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== آراء العملاء ===== -->
+    <section id="reviews" class="reviews-section fade-in-section">
+      <div class="container">
+        <div class="reviews-heading">
+          <span class="reviews-eyebrow">آراء العملاء</span>
+          <h2>وش قالوا عن نــــوشـــي؟</h2>
+          <p>رسالتك بعد استلام الطلب هي أجمل جزء بالنسبة لي ✨</p>
+        </div>
+
+        <div
+          class="reviews-slider"
+          id="reviewsSlider"
+          aria-roledescription="carousel"
+          aria-label="آراء عملاء نوشي"
+        >
+          <div class="review-window">
+            <!-- شريط العنوان البسيط -->
+            <div class="review-window-bar">
+              <span class="review-window-title">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z" />
+                </svg>
+                رسائل العميلات
+              </span>
+            </div>
+
+            <!-- مسار البطاقات -->
+            <div class="reviews-track" id="reviewsTrack" aria-live="polite">
+              <!-- البطاقة 1 -->
+              <article class="review-card active" aria-hidden="false">
+                <div class="review-content">
+                  <div class="review-header">
+                    <div class="review-author">
+                      <div
+                        class="reviewer-avatar"
+                        style="background-color: #f1dbe3; color: #9c4b63; padding: 0"
+                      >
+                        <img
+                          src="images/woman-480.webp"
+                          width="480"
+                          height="480"
+                          loading="lazy"
+                          decoding="async"
+                          alt="صورة عميلة"
+                          style="width: 150%; height: 150%; object-fit: cover; display: block"
+                        />
+                      </div>
+                      <div class="reviewer-info">
+                        <strong>نو** الع*****</strong>
+                        <span>القمر بزات نفسه</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="review-text">
+                    “الطعم لذيذ والتغليف مرتب جدًا، ما اعتمدت نوشي عبث❤️❤️❤️✨.”
+                  </p>
+                </div>
+              </article>
+
+              <!-- البطاقة 2 -->
+              <article class="review-card" aria-hidden="true">
+                <div class="review-content">
+                  <div class="review-header">
+                    <div class="review-author">
+                      <div
+                        class="reviewer-avatar"
+                        style="background-color: #e3f0ee; color: #4b8b86; padding: 0"
+                      >
+                        <img
+                          src="images/woman-480.webp"
+                          width="480"
+                          height="480"
+                          loading="lazy"
+                          decoding="async"
+                          alt="صورة عميلة"
+                          style="width: 150%; height: 150%; object-fit: cover; display: block"
+                        />
+                      </div>
+                      <div class="reviewer-info">
+                        <strong>لجي** الق*****</strong>
+                        <span>عميلة عسل</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="review-text">
+                    “واضح الاهتمام من شكل الطلب إلى الطعم, الله يبارك لك ويرزقك 💕👌🏻 ”
+                  </p>
+                </div>
+              </article>
+
+              <!-- البطاقة 3 -->
+              <article class="review-card" aria-hidden="true">
+                <div class="review-content">
+                  <div class="review-header">
+                    <div class="review-author">
+                      <div
+                        class="reviewer-avatar"
+                        style="background-color: #f5ece6; color: #b57c5a; padding: 0"
+                      >
+                        <img
+                          src="images/woman-480.webp"
+                          width="480"
+                          height="480"
+                          loading="lazy"
+                          decoding="async"
+                          alt="صورة عميلة"
+                          style="width: 150%; height: 150%; object-fit: cover; display: block"
+                        />
+                      </div>
+                      <div class="reviewer-info">
+                        <strong>منا** الن*****</strong>
+                        <span>عميلة من ذهب</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="review-text">
+                    منتجاتك ماتفشل انها تبهرني باللذاذة استمممري يا اقوى نوشي 🧡🧡🫶🏻”
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <!-- شريط التقدم -->
+            <div class="review-progress" aria-hidden="true">
+              <span id="reviewProgress"></span>
+            </div>
+          </div>
+
+          <!-- عناصر التحكم -->
+          <div class="review-controls">
+            <button class="review-arrow" id="reviewPrev" type="button" aria-label="الرأي السابق">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+            <div class="review-dots" id="reviewDots" aria-label="اختيار رأي">
+              <button class="review-dot active" type="button" aria-label="الرأي الأول"></button>
+              <button class="review-dot" type="button" aria-label="الرأي الثاني"></button>
+              <button class="review-dot" type="button" aria-label="الرأي الثالث"></button>
+            </div>
+            <button class="review-arrow" id="reviewNext" type="button" aria-label="الرأي التالي">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== الأسئلة الشائعة ===== -->
+    <section id="faq" class="faq-section fade-in-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>الأسئلة الشائعة</h2>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            كيف أطلب؟
+            <span>▼</span>
+          </button>
+
+          <div class="faq-answer">
+            الموضوع بسيط جدًا 💕 <br />
+            اختاري المنتجات اللي تعجبك وأضيفيها للسلة، وبعدها حددي مكان التوصيل وتاريخه ووقته. بيظهر
+            لك الإجمالي كامل، ثم اضغطي «إرسال الطلب عبر واتساب» وبيوصلنا طلبك مرتب بكل التفاصيل.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            هل الطلب يحتاج حجزًا مسبقًا؟
+            <span>▼</span>
+          </button>
+
+          <div class="faq-answer">
+            والله الأفضل تحجزين بدري، لأن بعض المنتجات يبي لها روقاااان عشان توصلك بطعم مجنون 😍
+            <br /><br />
+            لكن هذا ما يمنع أبدًا إنك ترسلين لنا حتى لو كنتِ مزنوقة، لأن مرات نقدر نطلع لك بحل 😎
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            محتارة وش تختارين؟
+            <span>▼</span>
+          </button>
+
+          <div class="faq-answer">
+            ولا يهمك أبدًا 👌🏻
+            <br /><br />
+            أرسلي لي وش المناسبة ووش النكهات اللي تحبينها، وأنا أساعدك تختارين الشي اللي يضبط معك
+            ومع ضيوفك.
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            تستقبلين طلبات بكميات كبيرة؟
+            <span>▼</span>
+          </button>
+
+          <div class="faq-answer">
+            إيه أكيد 💕<br />
+            نستقبل طلبات المدارس، الدوامات، الاجتماعات والمناسبات. <br />
+            أرسلي الكمية والموعد اللي تبينه، ومالك إلا بياض الوجه بإذن الله ✨❤️
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            كيف يوصلني الطلب؟
+            <span>▼</span>
+          </button>
+
+          <div class="faq-answer">
+            من هالناحية لا تشيلين هم أبدًا.
+            <br />
+            لأني أوفّر لك مندوب 🚗 <br />ويوصلك الطلب إلى باب بيتك. <br /><br />
+            كل اللي عليك ترسلين لي الموقع وصوره للباب 📍
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== تذييل الصفحة ===== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand-block">
+            <div class="footer-logo-shell">
+              <img
+                src="images/logo-480.webp"
+                srcset="images/logo-480.webp 480w, images/logo.webp 960w"
+                sizes="178px"
+                width="480"
+                height="480"
+                loading="lazy"
+                decoding="async"
+                alt="شعار نوشي بيكري"
+                onerror="this.style.display = 'none'"
+              />
+            </div>
+            <h2>نـــوشـــي بـــيـــكـــري</h2>
+            <p class="tagline">نـكـهـة تُــحـكـى، صُــنـعـت بـعـنـايـة، وقُــدّمــت بـفـخـر.</p>
+          </div>
+
+          <div class="footer-column">
+            <h3>روابط سريعة</h3>
+            <nav class="footer-links" aria-label="روابط التذييل">
+              <a href="#products">مـنـتـجـاتـنـا</a>
+              <a href="#story">مــيــن نــوشــي؟</a>
+              <a href="#why">لــيــش تــخــتــار نـــوشــي؟</a>
+              <a href="#reviews">وش قــالــوا عـــن نـــوشــي؟</a>
+              <a href="#faq">الأســئــلــة الــشــائــعــة</a>
+            </nav>
+          </div>
+
+          <div class="footer-column">
+            <h3>تــواصــل مــعــنــا</h3>
+            <div class="footer-contacts">
+              <a
+                class="footer-contact"
+                href="#"
+                onclick="
+                  window.location.href = createWhatsAppLink(
+                    'يا هلا نوشي ❤️\nحابة أستفسر عن المنتجات.',
+                  );
+                  return false;
+                "
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"
+                  ></path>
+                  <path d="M8.5 10.5h7M8.5 14h4"></path>
+                </svg>
+                راســـلـــنـــا عــــبـــر واتـــســـاب
+              </a>
+            </div>
+
+            <div class="footer-socials">
+              <a
+                href="https://www.instagram.com/noshibakrey"
+                aria-label="حساب نوشي بيكري على إنستغرام"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"></circle>
+                </svg>
+              </a>
+              <a
+                href="https://www.tiktok.com/@noshibakrey"
+                aria-label="حساب نوشي بيكري على تيك توك"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M14 4v10.2a4.2 4.2 0 1 1-3.2-4.08"></path>
+                  <path d="M14 4c.7 2.4 2.2 3.8 4.5 4.2"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© <span id="year"></span> نوشي بيكري. جميع الحقوق محفوظة.</span>
+          <span
+            >صُــــنــــع بــــكــــل حـــــب فــــي الــــمــــذنــــب
+            <span class="heart-beat">❤️</span></span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/products-v5.js" defer></script>
+    <script src="assets/js/offers-v7.js" defer></script>
+    <script src="assets/js/cart-store-v7.js" defer></script>
+    <script src="assets/js/catalog-v7.js" defer></script>
+  </body>
+</html>
