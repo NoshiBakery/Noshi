@@ -64,7 +64,7 @@ window.NOSHI_PRODUCTS = Object.freeze([
   {
     id: "p08",
     name: "كيكة سينابون",
-    price: 35,
+    price: 38,
     image: "images/cinnamon1.webp",
     description: "هشة ولذيذة جداً",
     showSize: false,
