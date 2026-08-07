@@ -208,7 +208,7 @@ window.NOSHI_PRODUCTS = Object.freeze([
     name: "تارت تشيز التمر",
     price: 60,
     image: "images/tartdate.webp",
-    description: "هششه وطعم يفوق الوصف",
+    description: "هـشـه وطعم يفوق الوصف",
     showSize: true,
     size: "24 حبة",
   },
