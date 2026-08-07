@@ -3177,3 +3177,6 @@ body.cart-page {
   38% { transform: scale(1.22) rotate(-8deg); }
   68% { transform: scale(.94) rotate(4deg); }
 }
+.floating-whatsapp {
+  bottom: calc(var(--bottom-bar-height) + var(--safe-area) + 90px);
+}
