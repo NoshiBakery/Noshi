@@ -261,7 +261,7 @@ window.NOSHI_PRODUCTS = Object.freeze([
     name: "شريط عبارة",
     price: 5,
     image: "images/ribbon.webp",
-    description: "بعد الطلب بنتواصل معك ونرسل لك رابط التصميم، وتكتبين عبارتك على ذوقك 💞",
+    description: "بعد الطلب بنتواصل معك ونرسل لك رابط التصميم، وتكتبين عبارتك على ذوقك",
     showSize: false,
   },
   {
