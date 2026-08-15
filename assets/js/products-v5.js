@@ -256,6 +256,7 @@ window.NOSHI_PRODUCTS = Object.freeze([
     description: "نكهة لا تُوصَف",
     showSize: false,
   },
+  {
       id: "p31",
     name: "شريط عبارة",
     price: 5,
@@ -263,6 +264,7 @@ window.NOSHI_PRODUCTS = Object.freeze([
     description: "بعد الطلب بنتواصل معك ونرسل لك رابط التصميم وتصممينه على ذوقك 💞",
     showSize: false,
   },
+  {
         id: "p32",
     name: "صحن تقديم",
     price: 10,
