@@ -1400,11 +1400,9 @@
       }
 
       let selectedFont = "Thmanyah";
-
-      // بيانات Supabase العامة المسموح بوضعها في واجهة الموقع
-      const SUPABASE_URL = "https://aplrahakfvcpecvyqapz.supabase.co";
-      const SUPABASE_PUBLISHABLE_KEY =
-        "sb_publishable_pOgBiR-zSsPavFdbOx6azw_az14TJVO";
+      // رابط Cloudflare Worker API فقط — لا توجد مفاتيح قاعدة بيانات في الواجهة
+      const WORKER_API_URL =
+        "https://noshi-ribbon-api.mremadcraftplugins.workers.dev";
 
       function render() {
         const l1 = $("line1").value,
@@ -1478,34 +1476,34 @@
       });
 
       async function createRibbonOrder(payload) {
-        const response = await fetch(
-          `${SUPABASE_URL}/rest/v1/rpc/create_ribbon_order`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              apikey: SUPABASE_PUBLISHABLE_KEY,
-              Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-            },
-            body: JSON.stringify(payload),
+        const response = await fetch(`${WORKER_API_URL}/api/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
-
-        const text = await response.text();
-        if (!response.ok) {
-          console.error("Supabase error:", response.status, text);
-          throw new Error("تعذر حفظ الطلب");
-        }
+          body: JSON.stringify({
+            customer_name: payload.p_customer_name,
+            line1: payload.p_line1,
+            line2: payload.p_line2,
+            font_name: payload.p_font_name,
+            font_size: payload.p_font_size,
+            design_settings: payload.p_design_settings,
+          }),
+        });
 
         let result;
         try {
-          result = JSON.parse(text);
+          result = await response.json();
         } catch {
-          result = text;
+          throw new Error("استجابة غير صالحة من الخادم");
         }
 
-        // RPC يرجع نصًا مثل N-1000
-        return typeof result === "string" ? result : String(result);
+        if (!response.ok || !result?.success) {
+          console.error("Worker API error:", response.status, result);
+          throw new Error(result?.error || "تعذر حفظ الطلب");
+        }
+
+        return String(result.order_number);
       }
 
       $("submitBtn").addEventListener("click", async () => {
