@@ -33,12 +33,6 @@
         font-display: swap;
       }
       @font-face {
-        font-family: "IslamicPhrases";
-        src: url("./fonts/Islamic-phrases.ttf") format("truetype");
-        font-weight: 400;
-        font-display: swap;
-      }
-      @font-face {
         font-family: "ZainSwashes";
         src: url("./fonts/zainmobileswashes-VF.ttf") format("truetype");
         font-weight: 400;
@@ -47,12 +41,6 @@
       @font-face {
         font-family: "Hajeen";
         src: url("./fonts/Hajeen-Regular.ttf") format("truetype");
-        font-weight: 400;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "Condolences";
-        src: url("./fonts/%40O5M71-Condolences-Regular.ttf") format("truetype");
         font-weight: 400;
         font-display: swap;
       }
@@ -254,9 +242,13 @@
         bottom: -70px;
       }
       .ribbon-wrap {
-        width: min(100%, 760px);
+        /* المقاس المرجعي نفسه المستخدم في الطباعة: 21 سم */
+        width: 210mm;
+        max-width: none;
+        flex: 0 0 auto;
         position: relative;
         z-index: 2;
+        transform-origin: center center;
         filter: drop-shadow(0 14px 22px rgba(62, 39, 35, 0.12));
       }
       .ribbon {
@@ -281,7 +273,6 @@
         white-space: nowrap;
         max-width: 100%;
         font-size: 32px;
-        font-weight: 800;
         line-height: 1.25;
       }
       .ribbon-line.second:empty {
@@ -779,12 +770,6 @@
         .stage {
           padding: 42px 18px 28px;
         }
-        .ribbon {
-          min-height: 108px;
-        }
-        .ribbon-line {
-          font-size: 28px;
-        }
         .intro {
           padding-top: 18px;
         }
@@ -824,13 +809,6 @@
         }
         .stage {
           padding: 32px 10px 22px;
-        }
-        .ribbon {
-          min-height: 94px;
-          padding-inline: 10%;
-        }
-        .ribbon-line {
-          font-size: 24px;
         }
         .preview-caption {
           padding-bottom: 16px;
@@ -887,12 +865,6 @@
       @font-face {
         font-family: "KAHandNaskh";
         src: url("./fonts/ka-hand-naskh-mob-v2.ttf") format("truetype");
-        font-weight: 400;
-        font-display: swap;
-      }
-      @font-face {
-        font-family: "PlaypenLight";
-        src: url("./fonts/playpen-sans-arabic-1-300-normal.woff") format("woff");
         font-weight: 400;
         font-display: swap;
       }
@@ -1090,20 +1062,6 @@
                     >الحمدلله على سلامتك</span
                   ><span class="font-name">ميلان</span>
                 </button>
-                <button
-                  type="button"
-                  class="font-item"
-                  data-font="IslamicPhrases"
-                >
-                  <span
-                    class="font-sample"
-                    style="
-                      font-family:
-                        &quot;IslamicPhrases&quot;, Thmanyah, Tahoma, sans-serif;
-                    "
-                    >الحمدلله على سلامتك</span
-                  ><span class="font-name">عبارات إسلامية</span>
-                </button>
                 <button type="button" class="font-item" data-font="ZainSwashes">
                   <span
                     class="font-sample"
@@ -1123,16 +1081,6 @@
                     "
                     >الحمدلله على سلامتك</span
                   ><span class="font-name">هجين</span>
-                </button>
-                <button type="button" class="font-item" data-font="Condolences">
-                  <span
-                    class="font-sample"
-                    style="
-                      font-family:
-                        &quot;Condolences&quot;, Thmanyah, Tahoma, sans-serif;
-                    "
-                    >الحمدلله على سلامتك</span
-                  ><span class="font-name">تعازي</span>
                 </button>
                 <button
                   type="button"
@@ -1197,20 +1145,6 @@
                     "
                     >الحمدلله على سلامتك</span
                   ><span class="font-name">KA Hand Naskh</span>
-                </button>
-                <button
-                  type="button"
-                  class="font-item"
-                  data-font="PlaypenLight"
-                >
-                  <span
-                    class="font-sample"
-                    style="
-                      font-family:
-                        &quot;PlaypenLight&quot;, Thmanyah, Tahoma, sans-serif;
-                    "
-                    >الحمدلله على سلامتك</span
-                  ><span class="font-name">Playpen Light 300</span>
                 </button>
                 <button
                   type="button"
@@ -1404,6 +1338,25 @@
       const WORKER_API_URL =
         "https://noshi-ribbon-api.mremadcraftplugins.workers.dev";
 
+      function updatePreviewScale() {
+        const stage = document.querySelector(".stage");
+        const wrap = document.querySelector(".ribbon-wrap");
+        if (!stage || !wrap) return;
+
+        // عرض الشريط الداخلي ثابت 21 سم.
+        // نصغّر الشريط كاملًا (النص + الإيموجي + الشكل) بنفس النسبة.
+        wrap.style.transform = "scale(1)";
+
+        const naturalWidth = wrap.getBoundingClientRect().width;
+        const availableWidth = Math.max(1, stage.clientWidth - 20);
+
+        const scale = Math.min(1, availableWidth / naturalWidth);
+        wrap.style.transform = `scale(${scale})`;
+
+        // نخزن النسبة للمراجعة/debug إن احتجنا.
+        wrap.dataset.previewScale = scale.toFixed(4);
+      }
+
       function render() {
         const l1 = $("line1").value,
           l2 = $("line2").value;
@@ -1427,7 +1380,10 @@
           .forEach((e) => {
             e.style.fontSize = fs + "px";
             e.style.fontFamily = `'${selectedFont}', Thmanyah, Tahoma, Arial, sans-serif`;
+            e.style.fontWeight = selectedFont === "Thmanyah" ? "800" : "400";
           });
+
+        requestAnimationFrame(updatePreviewScale);
       }
       ["line1", "line2", "fontSize"].forEach((id) => {
         $(id).addEventListener("input", render);
@@ -1564,6 +1520,16 @@
           btn.style.opacity = "";
         }
       });
+
+      window.addEventListener("resize", () => {
+        requestAnimationFrame(updatePreviewScale);
+      });
+
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => {
+          requestAnimationFrame(updatePreviewScale);
+        });
+      }
 
       render();
     </script>
