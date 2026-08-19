@@ -123,7 +123,8 @@ window.NOSHI_PRODUCTS = Object.freeze([
     name: "كيكة شوكليت",
     price: 50,
     image: "images/choco.webp",
-    description: "إذا كانت الشوكولاتة فنًّا، فكيكتنا أجمل ما قُدِّم في هذا الفن",
+    description:
+      "إذا كانت الشوكولاتة فنًّا، فكيكتنا أجمل ما قُدِّم في هذا الفن",
     showSize: false,
   },
   {
@@ -257,15 +258,24 @@ window.NOSHI_PRODUCTS = Object.freeze([
     showSize: false,
   },
   {
-      id: "p31",
-    name: "شريط عبارة",
-    price: 5,
-    image: "images/ribbon.webp",
-    description: "بعد الطلب بنتواصل معك ونرسل لك رابط التصميم، وتكتبين عبارتك على ذوقك",
+    id: "p31",
+    name: "ماتيلدا كيك",
+    price: 75,
+    image: "images/matilda.webp",
+    description: "لو للفن عنوان فــ طبعا هالمنتج عنوانه",
     showSize: false,
   },
   {
-        id: "p32",
+    id: "p32",
+    name: "شريط عبارة",
+    price: 5,
+    image: "images/ribbon.webp",
+    description:
+      "بعد الطلب بنتواصل معك ونرسل لك رابط التصميم، وتكتبين عبارتك على ذوقك",
+    showSize: false,
+  },
+  {
+    id: "p33",
     name: "صحن تقديم",
     price: 10,
     image: "images/plate.webp",
