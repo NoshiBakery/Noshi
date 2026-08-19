@@ -451,198 +451,265 @@
               </span>
             </div>
 
-            <!-- مسار البطاقات -->
-            <div class="reviews-track" id="reviewsTrack" aria-live="polite">
-              <!-- البطاقة 1 -->
-              <article class="review-card active" aria-hidden="false">
-                <div class="review-content">
-                  <div class="review-header">
-                    <div class="review-author">
-                      <div
-                        class="reviewer-avatar"
-                        style="
-                          background-color: #f1dbe3;
-                          color: #9c4b63;
-                          padding: 0;
-                        "
-                      >
-                        <img
-                          src="images/woman-480.webp"
-                          width="480"
-                          height="480"
-                          loading="lazy"
-                          decoding="async"
-                          alt="صورة عميلة"
-                          style="
-                            width: 150%;
-                            height: 150%;
-                            object-fit: cover;
-                            display: block;
-                          "
-                        />
-                      </div>
-                      <div class="reviewer-info">
-                        <strong>نو** الع*****</strong>
-                        <span>القمر بزات نفسه</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="review-text">
-                    “الطعم لذيذ والتغليف مرتب جدًا، ما اعتمدت نوشي عبث❤️❤️❤️✨.”
-                  </p>
-                </div>
-              </article>
+<!-- مسار البطاقات -->
+<div class="reviews-track" id="reviewsTrack" aria-live="polite">
 
-              <!-- البطاقة 2 -->
-              <article class="review-card" aria-hidden="true">
-                <div class="review-content">
-                  <div class="review-header">
-                    <div class="review-author">
-                      <div
-                        class="reviewer-avatar"
-                        style="
-                          background-color: #e3f0ee;
-                          color: #4b8b86;
-                          padding: 0;
-                        "
-                      >
-                        <img
-                          src="images/woman-480.webp"
-                          width="480"
-                          height="480"
-                          loading="lazy"
-                          decoding="async"
-                          alt="صورة عميلة"
-                          style="
-                            width: 150%;
-                            height: 150%;
-                            object-fit: cover;
-                            display: block;
-                          "
-                        />
-                      </div>
-                      <div class="reviewer-info">
-                        <strong>لجي** الق*****</strong>
-                        <span>عميلة عسل</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="review-text">
-                    “واضح الاهتمام من شكل الطلب إلى الطعم, الله يبارك لك ويرزقك
-                    💕👌🏻 ”
-                  </p>
-                </div>
-              </article>
-
-              <!-- البطاقة 3 -->
-              <article class="review-card" aria-hidden="true">
-                <div class="review-content">
-                  <div class="review-header">
-                    <div class="review-author">
-                      <div
-                        class="reviewer-avatar"
-                        style="
-                          background-color: #f5ece6;
-                          color: #b57c5a;
-                          padding: 0;
-                        "
-                      >
-                        <img
-                          src="images/woman-480.webp"
-                          width="480"
-                          height="480"
-                          loading="lazy"
-                          decoding="async"
-                          alt="صورة عميلة"
-                          style="
-                            width: 150%;
-                            height: 150%;
-                            object-fit: cover;
-                            display: block;
-                          "
-                        />
-                      </div>
-                      <div class="reviewer-info">
-                        <strong>منا** الن*****</strong>
-                        <span>عميلة من ذهب</span>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="review-text">
-                    منتجاتك ماتفشل انها تبهرني باللذاذة استمممري يا اقوى نوشي
-                    🧡🧡🫶🏻”
-                  </p>
-                </div>
-              </article>
-            </div>
-
-            <!-- شريط التقدم -->
-            <div class="review-progress" aria-hidden="true">
-              <span id="reviewProgress"></span>
-            </div>
+  <!-- البطاقة 1 -->
+  <article class="review-card active" aria-hidden="false">
+    <div class="review-content">
+      <div class="review-header">
+        <div class="review-author">
+          <div
+            class="reviewer-avatar"
+            style="
+              background-color: #f1dbe3;
+              color: #9c4b63;
+              padding: 0;
+            "
+          >
+            <img
+              src="images/woman-480.webp"
+              width="480"
+              height="480"
+              loading="lazy"
+              decoding="async"
+              alt="صورة عميلة"
+              style="
+                width: 150%;
+                height: 150%;
+                object-fit: cover;
+                display: block;
+              "
+            />
           </div>
 
-          <!-- عناصر التحكم -->
-          <div class="review-controls">
-            <button
-              class="review-arrow"
-              id="reviewPrev"
-              type="button"
-              aria-label="الرأي السابق"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </button>
-            <div class="review-dots" id="reviewDots" aria-label="اختيار رأي">
-              <button
-                class="review-dot active"
-                type="button"
-                aria-label="الرأي الأول"
-              ></button>
-              <button
-                class="review-dot"
-                type="button"
-                aria-label="الرأي الثاني"
-              ></button>
-              <button
-                class="review-dot"
-                type="button"
-                aria-label="الرأي الثالث"
-              ></button>
-            </div>
-            <button
-              class="review-arrow"
-              id="reviewNext"
-              type="button"
-              aria-label="الرأي التالي"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="m15 18-6-6 6-6" />
-              </svg>
-            </button>
+          <div class="reviewer-info">
+            <strong>نو** الع*****</strong>
+            <span>القمر بزات نفسه</span>
           </div>
         </div>
       </div>
-    </section>
+
+      <p class="review-text">
+        “الطعم لذيذ والتغليف مرتب جدًا، ما اعتمدت نوشي عبث❤️❤️❤️✨.”
+      </p>
+    </div>
+  </article>
+
+  <!-- البطاقة 2 -->
+  <article class="review-card" aria-hidden="true">
+    <div class="review-content">
+      <div class="review-header">
+        <div class="review-author">
+          <div
+            class="reviewer-avatar"
+            style="
+              background-color: #e3f0ee;
+              color: #4b8b86;
+              padding: 0;
+            "
+          >
+            <img
+              src="images/woman-480.webp"
+              width="480"
+              height="480"
+              loading="lazy"
+              decoding="async"
+              alt="صورة عميلة"
+              style="
+                width: 150%;
+                height: 150%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+          </div>
+
+          <div class="reviewer-info">
+            <strong>لجي** الق*****</strong>
+            <span>عميلة عسل</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="review-text">
+        “واضح الاهتمام من شكل الطلب إلى الطعم, الله يبارك لك ويرزقك
+        💕👌🏻 ”
+      </p>
+    </div>
+  </article>
+
+  <!-- البطاقة 3 -->
+  <article class="review-card" aria-hidden="true">
+    <div class="review-content">
+      <div class="review-header">
+        <div class="review-author">
+          <div
+            class="reviewer-avatar"
+            style="
+              background-color: #f5ece6;
+              color: #b57c5a;
+              padding: 0;
+            "
+          >
+            <img
+              src="images/woman-480.webp"
+              width="480"
+              height="480"
+              loading="lazy"
+              decoding="async"
+              alt="صورة عميلة"
+              style="
+                width: 150%;
+                height: 150%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+          </div>
+
+          <div class="reviewer-info">
+            <strong>منا** الن*****</strong>
+            <span>عميلة من ذهب</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="review-text">
+        منتجاتك ماتفشل انها تبهرني باللذاذة استمممري يا اقوى نوشي
+        🧡🧡🫶🏻”
+      </p>
+    </div>
+  </article>
+
+  <!-- البطاقة 4 -->
+  <article class="review-card" aria-hidden="true">
+    <div class="review-content">
+      <div class="review-header">
+        <div class="review-author">
+          <div
+            class="reviewer-avatar"
+            style="
+              background-color: #f1dbe3;
+              color: #9c4b63;
+              padding: 0;
+            "
+          >
+            <img
+              src="images/woman-480.webp"
+              width="480"
+              height="480"
+              loading="lazy"
+              decoding="async"
+              alt="صورة عميلة"
+              style="
+                width: 150%;
+                height: 150%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+          </div>
+
+          <div class="reviewer-info">
+            <strong>شر**ق الشا**</strong>
+            <span>عميلة عسل</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="review-text">
+        “بعد تجربة أكثر من منتج
+        أنصحكم وبقوة ، اطلبوا وانتم مغمضين 😍
+        طعامه ونظافه و تعامل كله لطافه وسلاسه”
+      </p>
+    </div>
+  </article>
+
+</div>
+
+<!-- شريط التقدم -->
+<div class="review-progress" aria-hidden="true">
+  <span id="reviewProgress"></span>
+</div>
+
+</div>
+
+<!-- عناصر التحكم -->
+<div class="review-controls">
+
+  <button
+    class="review-arrow"
+    id="reviewPrev"
+    type="button"
+    aria-label="الرأي السابق"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  </button>
+
+  <div class="review-dots" id="reviewDots" aria-label="اختيار رأي">
+
+    <button
+      class="review-dot active"
+      type="button"
+      aria-label="الرأي الأول"
+    ></button>
+
+    <button
+      class="review-dot"
+      type="button"
+      aria-label="الرأي الثاني"
+    ></button>
+
+    <button
+      class="review-dot"
+      type="button"
+      aria-label="الرأي الثالث"
+    ></button>
+
+    <button
+      class="review-dot"
+      type="button"
+      aria-label="الرأي الرابع"
+    ></button>
+
+  </div>
+
+  <button
+    class="review-arrow"
+    id="reviewNext"
+    type="button"
+    aria-label="الرأي التالي"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  </button>
+
+</div>
+</div>
+</div>
+</section>
 
     <!-- ===== الأسئلة الشائعة ===== -->
     <section id="faq" class="faq-section fade-in-section">
