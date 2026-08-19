@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>سلة الطلب | نوشي بيكري</title>
+  <meta name="theme-color" content="#8f4058" />
+  <link rel="icon" href="images/logo.png" />
+  <link rel="stylesheet" href="assets/css/cart-v7.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" id="brandLink" href="order.html#products">
+      <img src="images/logo-480.webp" width="44" height="44" alt="شعار نوشي بيكري" />
+      <span>نوشي بيكري</span>
+    </a>
+    <a class="back-button" id="backButton" href="order.html#products">↩ العودة للمنتجات</a>
+  </header>
+
+  <main class="page">
+    <section class="cart-panel" aria-labelledby="pageTitle">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">طلبك</p>
+          <h1 id="pageTitle">سلة المشتريات</h1>
+        </div>
+        <span class="count-pill"><span id="cartCount">0</span> منتج</span>
+      </div>
+
+      <div id="emptyState" class="empty-state" hidden>
+        <span aria-hidden="true">🧁</span>
+        <strong>السلة فاضية</strong>
+        <p>أضيفي المنتجات التي تعجبك ثم ارجعي هنا.</p>
+        <a id="emptyBackButton" href="order.html#products">شاهد المنتجات</a>
+      </div>
+
+      <div id="cartItems" class="cart-items"></div>
+
+      <form id="checkoutForm" class="checkout" novalidate>
+        <section class="form-card" id="phoneSection">
+          <div class="field" id="phoneField">
+            <label for="customerPhone">📱 رقم الجوال <em>*</em></label>
+            <input class="text-input" id="customerPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="05XXXXXXXX" aria-describedby="phoneHint phoneError" />
+            <p class="field-hint" id="phoneHint">نحتاجه لتأكيد الطلب والتواصل معك عند الحاجة.</p>
+            <p class="error" id="phoneError"></p>
+          </div>
+        </section>
+
+        <section class="form-card" id="deliverySection">
+          <h2>🚚 نطاق التوصيل <em>*</em></h2>
+          <div class="delivery-grid" id="deliveryGroup">
+            <label class="delivery-choice">
+              <input type="radio" name="delivery" value="inside" />
+              <span><b>داخل المذنب</b><small>10 ريال</small></span>
+            </label>
+            <label class="delivery-choice">
+              <input type="radio" name="delivery" value="outside" />
+              <span><b>خارج المذنب</b><small>25 ريال</small></span>
+            </label>
+          </div>
+          <p class="error" id="deliveryError"></p>
+        </section>
+
+        <section class="form-card" id="scheduleSection">
+          <h2>⏰ موعد التوصيل</h2>
+          <div class="schedule-grid">
+            <div class="field" id="dateField">
+              <label for="deliveryDate">تاريخ التوصيل <em>*</em></label>
+              <div class="picker-control" id="dateControl">
+                <span aria-hidden="true">📅</span>
+                <b id="dateText" dir="ltr">اختاري التاريخ</b>
+                <input class="native-picker" id="deliveryDate" type="date" aria-label="تاريخ التوصيل" />
+              </div>
+              <p class="error" id="dateError"></p>
+            </div>
+
+            <div class="field" id="timeField">
+              <label for="deliveryTime">وقت التوصيل <em>*</em></label>
+              <div class="picker-control select-picker" id="timeControl">
+                <span aria-hidden="true">🕐</span>
+                <select id="deliveryTime" class="time-select" aria-label="وقت التوصيل">
+                  <option value="">اختاري الوقت</option>
+                </select>
+              </div>
+              <p class="field-hint">الأوقات المتاحة من 6:00 صباحًا إلى 12:00 صباحًا</p>
+              <p class="error" id="timeError"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <label class="notes-label" for="notes">ملاحظات الطلب <small>(اختياري)</small></label>
+          <textarea id="notes" rows="3" placeholder="مثال: تقليل كمية السكر، أو أي ملاحظة مهمة"></textarea>
+        </section>
+
+        <section class="summary" aria-live="polite">
+          <div><span id="subtotalLabel">مجموع المنتجات</span><b id="subtotal">0 ريال</b></div>
+          <div class="discount-row" id="discountRow" hidden><span>الخصم</span><b id="discountAmount">− 0 ريال</b></div>
+          <div><span>التوصيل</span><b id="deliveryFee">لم يُحدد</b></div>
+          <div class="total"><span>الإجمالي النهائي</span><strong id="grandTotal">0 ريال</strong></div>
+        </section>
+
+        <p class="form-message" id="formMessage" role="alert"></p>
+        <button class="submit-button" id="submitButton" type="submit">
+          <span aria-hidden="true">✅</span>
+          <span id="submitButtonText">اعتماد الطلب</span>
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="status-dialog success-dialog" id="orderSuccessDialog" aria-labelledby="orderSuccessTitle">
+    <div class="status-dialog-card success-card" id="orderSuccessMain">
+      <div class="success-mark" aria-hidden="true"><span>✓</span></div>
+
+      <div class="success-heading">
+        <h2 id="orderSuccessTitle">وصل طلبك لنوشي! 🎉</h2>
+        <p>تم تسجيل طلبك بنجاح.</p>
+      </div>
+
+      <div class="order-ticket" aria-label="رقم الطلب">
+        <span>رقم طلبك</span>
+        <strong class="success-order-number" id="successOrderNumber" dir="ltr">—</strong>
+      </div>
+
+      <p class="success-message">تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.</p>
+
+      <div class="whatsapp-handoff" aria-live="polite">
+        <p>سيتم تحويلك تلقائيًا إلى واتساب خلال <b id="whatsAppCountdown">10</b> ثوانٍ</p>
+        <div class="countdown-track" aria-hidden="true"><span id="whatsAppCountdownBar"></span></div>
+      </div>
+
+      <button class="success-close" id="successWhatsAppButton" type="button">إرسال رقم الطلب عبر واتساب</button>
+    </div>
+
+    <div class="status-dialog-card success-card thanks-card noshi-signature-card" id="orderThanksPanel" hidden>
+      <button class="thanks-close" id="thanksCloseButton" type="button" aria-label="إغلاق">×</button>
+
+      <div class="thanks-content">
+        <div class="thanks-emoji" aria-hidden="true">🌝💕</div>
+        <h2>شكرًا لطلبك من نوشي</h2>
+        <p>نتمنى لك تجربة جميلة 💕</p>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="assets/js/products-v5.js" defer></script>
+  <script src="assets/js/offers-v7.js" defer></script>
+  <script src="assets/js/cart-store-v7.js" defer></script>
+  <script src="assets/js/order-api-config-v1.js" defer></script>
+  <script src="assets/js/cart-v7.js" defer></script>
+</body>
+</html>
