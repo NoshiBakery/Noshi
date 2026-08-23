@@ -1,0 +1,1537 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <meta name="theme-color" content="#9c4b63" />
+    <style>
+      @font-face {
+        font-family: "Thmanyah";
+        src: url("./fonts/thmanyahsans-Regular.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Thmanyah";
+        src: url("./fonts/thmanyahsans-Bold.woff2") format("woff2");
+        font-weight: 700 900;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "DigitalMadina";
+        src: url("./fonts/DigitalMadina-NON%20V1.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "MilanDisplay";
+        src: url("./fonts/Milan%20Display%20Black.otf") format("opentype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "ZainSwashes";
+        src: url("./fonts/zainmobileswashes-VF.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Hajeen";
+        src: url("./fonts/Hajeen-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      :root {
+        --primary: #9c4b63;
+        --primary-dark: #793a4f;
+        --primary-light: #f1dbe3;
+        --honey: #d4a373;
+        --cream: #fdf6ee;
+        --beige: #f7f2eb;
+        --white: #fff;
+        --ink: #3e2723;
+        --muted: #725e58;
+        --border: #ead9cf;
+        --shadow: 0 18px 50px rgba(74, 44, 39, 0.1);
+        --shadow-sm: 0 8px 24px rgba(74, 44, 39, 0.07);
+        --radius: 24px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: Thmanyah, Tahoma, Arial, sans-serif;
+        min-height: 100vh;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      .page {
+        max-width: 1080px;
+        margin: auto;
+        padding: 18px 18px 52px;
+      }
+      .topbar {
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .brand img {
+        width: 104px;
+        height: 104px;
+        object-fit: contain;
+        filter: drop-shadow(0 5px 9px rgba(121, 58, 79, 0.12));
+      }
+      .brand-title {
+        font-weight: 900;
+        color: var(--primary);
+        font-size: 28px;
+      }
+      .brand-sub {
+        font-size: 18px;
+        color: var(--muted);
+        margin-top: 1px;
+      }
+      .safe {
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .safe-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--honey);
+      }
+      .intro {
+        text-align: center;
+        padding: 30px 12px 24px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--primary-light);
+        color: var(--primary-dark);
+        font-size: 12px;
+        font-weight: 800;
+        padding: 7px 13px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+      .intro h1 {
+        margin: 0;
+        font-size: clamp(28px, 6vw, 46px);
+        line-height: 1.28;
+        font-weight: 900;
+      }
+      .intro h1 span {
+        color: var(--primary);
+      }
+      .intro p,
+      .intro p strong,
+      .intro p .intro-highlight,
+      .intro p span,
+      .intro p .accent {
+        max-width: 620px;
+        margin: 16px auto 0;
+        color: #000;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        line-height: 1.95;
+      }
+      .intro p strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+      .intro p .intro-highlight {
+        display: block;
+        margin: 6px 0;
+      }
+      .intro p .accent {
+        color: var(--primary);
+      }
+      .designer {
+        display: grid;
+        grid-template-columns: 1fr 390px;
+        gap: 22px;
+        align-items: start;
+      }
+      .preview-panel {
+        position: sticky;
+        top: 16px;
+        background: linear-gradient(145deg, #fffaf5, #f7f2eb);
+        border: 1px solid var(--border);
+        border-radius: 30px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+      }
+      .preview-head {
+        padding: 20px 22px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .preview-title {
+        font-weight: 900;
+        font-size: 15px;
+      }
+      .live {
+        font-size: 11px;
+        color: var(--primary);
+        background: #fff;
+        border: 1px solid var(--primary-light);
+        padding: 6px 9px;
+        border-radius: 999px;
+      }
+      .stage {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 30px 34px;
+        position: relative;
+        overflow: hidden;
+      }
+      .stage:before,
+      .stage:after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .stage:before {
+        width: 220px;
+        height: 220px;
+        background: rgba(156, 75, 99, 0.08);
+        right: -100px;
+        top: -80px;
+      }
+      .stage:after {
+        width: 180px;
+        height: 180px;
+        background: rgba(212, 163, 115, 0.12);
+        left: -70px;
+        bottom: -70px;
+      }
+      .ribbon-wrap {
+        /* المقاس المرجعي نفسه المستخدم في الطباعة: 21 سم */
+        width: 210mm;
+        max-width: none;
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 2;
+        transform-origin: center center;
+        filter: drop-shadow(0 14px 22px rgba(62, 39, 35, 0.12));
+      }
+      .ribbon {
+        width: 100%;
+        min-height: 124px;
+        background: #fff;
+        color: #000;
+        clip-path: polygon(0 0, 7% 50%, 0 100%, 100% 100%, 93% 50%, 100% 0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 9%;
+        text-align: center;
+        gap: 5px;
+      }
+      .ribbon-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.18em;
+        white-space: nowrap;
+        max-width: 100%;
+        font-size: 32px;
+        line-height: 1.25;
+      }
+      .ribbon-line.second:empty {
+        display: none;
+      }
+      .preview-caption {
+        text-align: center;
+        padding: 0 22px 23px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.7;
+      }
+      .form-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 30px;
+        box-shadow: var(--shadow-sm);
+        padding: 22px;
+      }
+      .progress {
+        display: flex;
+        gap: 7px;
+        margin-bottom: 22px;
+      }
+      .progress span {
+        height: 5px;
+        border-radius: 999px;
+        background: var(--beige);
+        flex: 1;
+      }
+      .progress span.active {
+        background: var(--primary);
+      }
+      .form-title {
+        font-size: 20px;
+        font-weight: 900;
+        margin: 0 0 5px;
+      }
+      .form-note {
+        font-size: 14.5px;
+        color: var(--muted);
+        margin: 0 0 20px;
+        line-height: 1.6;
+      }
+      .section {
+        padding: 18px 0;
+        border-top: 1px solid #f2e8e1;
+      }
+      .section:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: 900;
+        font-size: 14px;
+        margin-bottom: 13px;
+      }
+      .num {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--primary-light);
+        color: var(--primary-dark);
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .field {
+        margin-bottom: 12px;
+      }
+      .field:last-child {
+        margin-bottom: 0;
+      }
+      .label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+      .label small {
+        font-weight: 400;
+        color: var(--muted);
+      }
+      .input,
+      .select {
+        width: 100%;
+        height: 48px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: #fffaf7;
+        color: var(--ink);
+        padding: 0 13px;
+        outline: none;
+        transition: 0.18s;
+      }
+      .input:focus,
+      .select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(156, 75, 99, 0.09);
+        background: #fff;
+      }
+      .rangebox {
+        background: #fffaf7;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 11px 12px;
+      }
+      .rangehead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 7px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .rangevalue {
+        color: var(--primary);
+        font-size: 12px;
+      }
+      .range {
+        width: 100%;
+        accent-color: var(--primary);
+      }
+      .font-picker {
+        position: relative;
+      }
+      .font-trigger {
+        width: 100%;
+        min-height: 54px;
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        background: #fffaf7;
+        padding: 8px 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--ink);
+        transition: 0.18s;
+      }
+      .font-trigger:hover,
+      .font-trigger.open {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(156, 75, 99, 0.07);
+        background: #fff;
+      }
+      .font-current {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        min-width: 0;
+      }
+      .font-current small {
+        font-family: Thmanyah, Tahoma, sans-serif;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .font-current-preview {
+        font-size: 17px;
+        line-height: 1.9;
+        white-space: nowrap;
+        overflow: visible;
+        max-width: 100%;
+        padding-top: 4px;
+        padding-bottom: 6px;
+      }
+      .font-arrow {
+        font-family: Arial, sans-serif;
+        color: var(--primary);
+        font-size: 17px;
+        transition: 0.18s;
+      }
+      .font-trigger.open .font-arrow {
+        transform: rotate(180deg);
+      }
+      .font-menu {
+        display: none;
+        position: absolute;
+        z-index: 50;
+        top: calc(100% + 7px);
+        right: 0;
+        left: 0;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 17px;
+        padding: 6px;
+        box-shadow: 0 18px 45px rgba(62, 39, 35, 0.16);
+        max-height: 290px;
+        overflow: auto;
+      }
+      .font-menu.show {
+        display: block;
+        animation: fontPop 0.14s ease;
+      }
+      .font-item {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        border-radius: 12px;
+        padding: 10px 11px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        text-align: right;
+        color: var(--ink);
+      }
+      .font-item:hover {
+        background: #fff6f8;
+      }
+      .font-item.active {
+        background: var(--primary-light);
+        color: var(--primary-dark);
+      }
+      .font-sample {
+        font-size: 17px;
+        line-height: 1.5;
+      }
+      .font-name {
+        display: none;
+        font-family: Thmanyah, Tahoma, sans-serif;
+        font-size: 10px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .font-item.active .font-name {
+        color: var(--primary-dark);
+      }
+      @keyframes fontPop {
+        from {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .heart {
+        display: inline-block;
+        animation: heartbeat 1.3s ease-in-out infinite;
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        15% {
+          transform: scale(1.2);
+        }
+        30% {
+          transform: scale(1);
+        }
+        45% {
+          transform: scale(1.12);
+        }
+        60% {
+          transform: scale(1);
+        }
+      }
+      .customer-box {
+        background: linear-gradient(145deg, #fff9f3, #f9f0e9);
+        border: 1px solid var(--border);
+        padding: 14px;
+        border-radius: 18px;
+        margin-top: 4px;
+      }
+      .customer-box .input {
+        background: #fff;
+      }
+      .submit {
+        width: 100%;
+        min-height: 54px;
+        border: 0;
+        border-radius: 16px;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 900;
+        font-size: 15px;
+        box-shadow: 0 10px 22px rgba(156, 75, 99, 0.23);
+        transition: 0.18s;
+      }
+      .submit:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+      }
+      .submit:active {
+        transform: translateY(0);
+      }
+      .under-submit {
+        text-align: center;
+        color: var(--muted);
+        font-size: 10.5px;
+        margin-top: 9px;
+      }
+      .success-note {
+        display: none;
+        margin-top: 12px;
+        background: #fff8fb;
+        border: 1px solid var(--primary-light);
+        border-radius: 15px;
+        padding: 12px 14px;
+        text-align: center;
+        color: var(--primary-dark);
+        font-size: 12px;
+        line-height: 1.8;
+      }
+      .success-note strong {
+        display: inline-block;
+        font-size: 14px;
+        color: var(--ink);
+        direction: ltr;
+        letter-spacing: 0.04em;
+        margin-inline: 4px;
+      }
+      .error-note {
+        display: none;
+        margin-top: 12px;
+        background: #fff5f5;
+        border: 1px solid #efcaca;
+        border-radius: 15px;
+        padding: 12px 14px;
+        text-align: center;
+        color: #8b3434;
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .field-error {
+        display: none;
+        margin-top: 7px;
+        color: #9c4b63;
+        font-size: 11px;
+        font-weight: 700;
+        align-items: center;
+        gap: 5px;
+      }
+      .field-error.show {
+        display: flex;
+      }
+      .input.invalid {
+        border-color: #9c4b63 !important;
+        background: #fff7f8 !important;
+        box-shadow: 0 0 0 4px rgba(156, 75, 99, 0.08) !important;
+      }
+      .required-mark {
+        color: #9c4b63;
+        font-weight: 900;
+        margin-right: 3px;
+      }
+      @keyframes fieldShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(3px);
+        }
+        75% {
+          transform: translateX(-3px);
+        }
+      }
+      .input.invalid {
+        animation: fieldShake 0.18s ease 2;
+      }
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(62, 39, 35, 0.38);
+        backdrop-filter: blur(7px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        z-index: 1000;
+      }
+      .modal-backdrop.show {
+        display: flex;
+      }
+      .success-modal {
+        width: min(100%, 430px);
+        background: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 30px;
+        box-shadow: 0 28px 80px rgba(62, 39, 35, 0.24);
+        padding: 30px 24px 24px;
+        text-align: center;
+        position: relative;
+        animation: pop 0.22s ease;
+      }
+      .modal-close {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--beige);
+        color: var(--muted);
+        font-size: 22px;
+        line-height: 1;
+      }
+      .modal-emoji {
+        width: 74px;
+        height: 74px;
+        border-radius: 24px;
+        margin: 2px auto 16px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(145deg, var(--primary-light), #fff4e8);
+        font-size: 36px;
+        box-shadow: 0 12px 28px rgba(156, 75, 99, 0.12);
+      }
+      .success-modal h3 {
+        margin: 0;
+        color: var(--primary-dark);
+        font-size: 24px;
+        font-weight: 900;
+      }
+      .success-modal p {
+        margin: 8px 0 18px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      .order-card {
+        background: var(--cream);
+        border: 1px dashed #d8b3bf;
+        border-radius: 20px;
+        padding: 14px 16px;
+        margin: 0 auto 18px;
+      }
+      .order-label {
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 5px;
+      }
+      .order-code {
+        font-size: 27px;
+        font-weight: 900;
+        color: var(--ink);
+        direction: ltr;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+      }
+      .modal-done {
+        width: 100%;
+        height: 50px;
+        border: 0;
+        border-radius: 15px;
+        background: var(--primary);
+        color: #fff;
+        font-weight: 900;
+        font-size: 14px;
+      }
+      .modal-done:hover {
+        background: var(--primary-dark);
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.96);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 15px;
+        padding: 26px 0 0;
+      }
+      @media (max-width: 860px) {
+        .designer {
+          grid-template-columns: 1fr;
+        }
+        .preview-panel {
+          position: relative;
+          top: auto;
+          min-height: 360px;
+        }
+        .form-card {
+          padding: 18px;
+        }
+        .stage {
+          padding: 42px 18px 28px;
+        }
+        .intro {
+          padding-top: 18px;
+        }
+      }
+      @media (max-width: 560px) {
+        .page {
+          padding: 10px 11px 34px;
+        }
+        .topbar {
+          height: 84px;
+        }
+        .brand img {
+          width: 64px;
+          height: 64px;
+        }
+        .brand-title {
+          font-size: 20px;
+        }
+        .safe {
+          display: none;
+        }
+        .intro {
+          padding: 22px 8px 18px;
+        }
+        .intro p {
+          font-size: 12.5px;
+        }
+        .preview-panel,
+        .form-card {
+          border-radius: 22px;
+        }
+        .preview-panel {
+          min-height: 310px;
+        }
+        .preview-head {
+          padding: 16px 16px 0;
+        }
+        .stage {
+          padding: 32px 10px 22px;
+        }
+        .preview-caption {
+          padding-bottom: 16px;
+        }
+        .form-title {
+          font-size: 18px;
+        }
+      }
+
+      .apple-emoji {
+        width: 1em;
+        height: 1em;
+        object-fit: contain;
+        display: inline-block;
+        vertical-align: -0.12em;
+        margin: 0 0.035em;
+      }
+      @media print {
+        .apple-emoji {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+      @font-face {
+        font-family: "ArslanWessam";
+        src: url("./fonts/4.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "ArefRuqaa";
+        src: url("./fonts/aref-ruqaa-arabic-400-normal.woff") format("woff");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "DecoSpecial";
+        src: url("./fonts/decotype-naskh-special.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "BisbeeTrial";
+        src: url("./fonts/alfont_com_Bisbee_Trial_Rg.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "DimaNaskh";
+        src: url("./fonts/dima-naskh-arabic.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "KAHandNaskh";
+        src: url("./fonts/ka-hand-naskh-mob-v2.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "PlaypenExtraLight";
+        src: url("./fonts/PlaypenSansArabic-ExtraLight.ttf") format("truetype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "YearHandicrafts";
+        src: url("./fonts/TheYearofHandicrafts-Regular.otf") format("opentype");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "YearCamel";
+        src: url("./fonts/TheYearofTheCamel-Regular.otf") format("opentype");
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      /* الحفاظ على المسافات التي يكتبها العميل كما هي */
+      #preview1,
+      #preview2,
+      .font-sample,
+      #fontCurrentPreview {
+        white-space: pre-wrap;
+      }
+      #line1,
+      #line2 {
+        height: 56px;
+        padding: 10px 14px;
+        line-height: normal;
+        font-family: Tahoma, Arial, sans-serif;
+        font-size: 16px;
+      }
+      #customerName {
+        height: 62px;
+        padding: 12px 14px 16px !important;
+        line-height: 1.2 !important;
+        font-size: 16px;
+        font-family: Tahoma, Arial, sans-serif !important;
+        overflow: visible;
+      }
+
+      #customerName::placeholder {
+        font-family: Tahoma, Arial, sans-serif !important;
+        line-height: 1.2 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <div class="brand">
+          <img
+            src="https://noshibakery.github.io/Noshi/images/logo-480.webp"
+            alt="شعار نوشي"
+            onerror="this.style.display = 'none'"
+          />
+          <div>
+            <div class="brand-title">نوشي بيكري</div>
+          </div>
+        </div>
+      </header>
+
+      <section class="intro">
+        <div class="pill">لــمــســتــك تــحــلــي الـــطـــلـــب 😎</div>
+        <h1>صممي عـبـارتـك <span>بطريقتك</span></h1>
+        <p>
+          <strong
+            >في <span class="accent">نوشي بيكري</span>، أجمل التفاصيل <br />هي
+            اللي تحمل لمستك ✨</strong
+          >
+          <span class="intro-highlight">ابدعي وصممي بطريقتك</span>
+          <span>لأن الجمال يكتمل بذوقك ❤️</span>
+        </p>
+      </section>
+
+      <section class="designer">
+        <section class="preview-panel" aria-label="معاينة الشريط">
+          <div class="preview-head">
+            <div class="preview-title">معاينة الشريط</div>
+            <div class="live">● مباشر</div>
+          </div>
+          <div class="stage">
+            <div class="ribbon-wrap">
+              <div class="ribbon" id="ribbon">
+                <div class="ribbon-line" id="preview1"></div>
+                <div class="ribbon-line second" id="preview2"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-card">
+          <div class="progress">
+            <span class="active"></span><span class="active"></span
+            ><span class="active"></span><span class="active"></span>
+          </div>
+          <h2 class="form-title">ضبطي العبارة على ذوقك ياعـــســـل 😍</h2>
+          <p class="form-note">اي تعديل تسوينه يظهر فوق بالمعاينة ☝️</p>
+
+          <div class="section">
+            <div class="section-label">
+              <span class="num">1</span> اكتبي العبارة
+            </div>
+            <div class="field">
+              <div class="label">
+                <span>السطر الأول</span
+                ><small><span id="count1">0</span>/60</small>
+              </div>
+              <input
+                class="input"
+                id="line1"
+                maxlength="60"
+                value=""
+                placeholder="مثال: الـحـمـدلله عـلـى سـلامــتـك"
+              />
+            </div>
+            <div class="field">
+              <div class="label">
+                <span>السطر الثاني</span
+                ><small>اختياري · <span id="count2">0</span>/40</small>
+              </div>
+              <input
+                class="input"
+                id="line2"
+                maxlength="40"
+                placeholder="اتركيه فاضي إذا تبين سطر واحد"
+              />
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-label">
+              <span class="num">2</span> اختاري الخط
+            </div>
+            <div class="font-picker" id="fontPicker">
+              <button type="button" class="font-trigger" id="fontTrigger">
+                <span class="font-current"
+                  ><small>الخط المختار</small
+                  ><span
+                    class="font-current-preview"
+                    id="fontCurrentPreview"
+                    style="
+                      font-family: &quot;Thmanyah&quot;, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ></span
+                >
+                <span class="font-arrow">⌄</span>
+              </button>
+              <div class="font-menu" id="fontMenu">
+                <button
+                  type="button"
+                  class="font-item active"
+                  data-font="Thmanyah"
+                >
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;Thmanyah&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">ثمانية</span>
+                </button>
+                <button
+                  type="button"
+                  class="font-item"
+                  data-font="DigitalMadina"
+                >
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;DigitalMadina&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">المدينة الرقمية</span>
+                </button>
+                <button
+                  type="button"
+                  class="font-item"
+                  data-font="MilanDisplay"
+                >
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;MilanDisplay&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">ميلان</span>
+                </button>
+                <button type="button" class="font-item" data-font="ZainSwashes">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;ZainSwashes&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">زين</span>
+                </button>
+                <button type="button" class="font-item" data-font="Hajeen">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;Hajeen&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">هجين</span>
+                </button>
+                <button
+                  type="button"
+                  class="font-item"
+                  data-font="ArslanWessam"
+                >
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;ArslanWessam&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">أرسلان وسام</span>
+                </button>
+                <button type="button" class="font-item" data-font="ArefRuqaa">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;ArefRuqaa&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">Aref Ruqaa</span>
+                </button>
+                <button type="button" class="font-item" data-font="DecoSpecial">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;DecoSpecial&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">DecoType Naskh Special</span>
+                </button>
+                <button type="button" class="font-item" data-font="BisbeeTrial">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;BisbeeTrial&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">Bisbee</span>
+                </button>
+                <button type="button" class="font-item" data-font="DimaNaskh">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;DimaNaskh&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">Dima Naskh</span>
+                </button>
+                <button type="button" class="font-item" data-font="KAHandNaskh">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;KAHandNaskh&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">KA Hand Naskh</span>
+                </button>
+                <button
+                  type="button"
+                  class="font-item"
+                  data-font="PlaypenExtraLight"
+                >
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;PlaypenExtraLight&quot;, Thmanyah, Tahoma,
+                        sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">Playpen ExtraLight</span>
+                </button>
+                <button
+                  type="button"
+                  class="font-item"
+                  data-font="YearHandicrafts"
+                >
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;YearHandicrafts&quot;, Thmanyah, Tahoma,
+                        sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">The Year of Handicrafts</span>
+                </button>
+                <button type="button" class="font-item" data-font="YearCamel">
+                  <span
+                    class="font-sample"
+                    style="
+                      font-family:
+                        &quot;YearCamel&quot;, Thmanyah, Tahoma, sans-serif;
+                    "
+                    >الحمدلله على سلامتك</span
+                  ><span class="font-name">The Year of The Camel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-label">
+              <span class="num">3</span> اضبطي حجم الخط
+            </div>
+            <div class="rangebox">
+              <div class="rangehead">
+                <span>حجم الخط</span
+                ><span class="rangevalue" id="fontValue">30</span>
+              </div>
+              <input
+                class="range"
+                type="range"
+                id="fontSize"
+                min="18"
+                max="46"
+                value="30"
+              />
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-label"><span class="num">4</span> بياناتك</div>
+            <div class="customer-box">
+              <div class="field">
+                <div class="label">
+                  <span>الاسم <span class="required-mark">*</span></span
+                  ><small>مهم علشان نعرف طلبك 🫶</small>
+                </div>
+                <input
+                  class="input"
+                  id="customerName"
+                  maxlength="40"
+                  placeholder="اكتبي اسمك"
+                  aria-describedby="customerNameError"
+                />
+                <div class="field-error" id="customerNameError">
+                  ⚠ اكتبي اسمك علشان نعرف طلبك ياحلوة
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="submit" id="submitBtn" type="button">
+            اعـتـمـاد الـتـصـمـيـم وإرسـالـه لــنــوشــي
+          </button>
+          <div class="success-note" id="successNote">
+            تم اعتماد تصميمك وإرساله لنوشي 🎀 رقم طلبك:
+            <strong id="orderNumberInline"></strong>
+          </div>
+          <div class="error-note" id="errorNote">
+            تعذر إرسال الطلب الآن. حاولي مرة أخرى.
+          </div>
+        </section>
+      </section>
+      <footer class="footer">
+        صُنع بحب في نوشي بيكري
+        <span class="heart">❤️</span>
+        <br />
+        نوشي بيكري · جميع الحقوق محفوظة ©
+      </footer>
+    </main>
+    <div
+      class="modal-backdrop"
+      id="successModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+      <div class="success-modal">
+        <button
+          class="modal-close"
+          id="modalClose"
+          type="button"
+          aria-label="إغلاق"
+        >
+          ×
+        </button>
+        <div class="modal-emoji">🎀</div>
+        <h3 id="modalTitle">تم اعتماد تصميمك</h3>
+        <p>وصل طلبك لنوشي بنجاح. احتفظي برقم الطلب لو احتجتي ترجعين له.</p>
+        <div class="order-card">
+          <div class="order-label">رقم الطلب</div>
+          <div class="order-code" id="orderNumberModal"></div>
+        </div>
+        <button class="modal-done" id="modalDone" type="button">
+          تم، شكرًا 🤍
+        </button>
+      </div>
+    </div>
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      const APPLE_EMOJI_BASE =
+        "https://cdn.jsdelivr.net/npm/emoji-datasource-apple@16.0.0/img/apple/64/";
+      function appleEmojiCode(s) {
+        return Array.from(s)
+          .map((c) => c.codePointAt(0).toString(16).padStart(4, "0"))
+          .join("-");
+      }
+      function renderAppleEmoji(el, text) {
+        if (!el) return;
+        el.textContent = "";
+        const parts =
+          typeof Intl !== "undefined" && Intl.Segmenter
+            ? [
+                ...new Intl.Segmenter(undefined, {
+                  granularity: "grapheme",
+                }).segment(text),
+              ].map((x) => x.segment)
+            : Array.from(text);
+
+        let textBuffer = "";
+
+        const flushText = () => {
+          if (textBuffer) {
+            el.appendChild(document.createTextNode(textBuffer));
+            textBuffer = "";
+          }
+        };
+
+        parts.forEach((part) => {
+          const isEmoji =
+            /\p{Extended_Pictographic}|\p{Regional_Indicator}|[0-9#*]\uFE0F?\u20E3/u.test(
+              part,
+            );
+
+          if (isEmoji) {
+            flushText();
+            const im = document.createElement("img");
+            im.className = "apple-emoji";
+            im.alt = part;
+            im.src = APPLE_EMOJI_BASE + appleEmojiCode(part) + ".png";
+            im.onerror = () => im.replaceWith(document.createTextNode(part));
+            el.appendChild(im);
+          } else {
+            // مهم: نجمع النص العربي في Text Node واحد حتى تبقى الحروف متصلة
+            textBuffer += part;
+          }
+        });
+
+        flushText();
+      }
+
+      let selectedFont = "Thmanyah";
+      // رابط Cloudflare Worker API فقط — لا توجد مفاتيح قاعدة بيانات في الواجهة
+      const WORKER_API_URL =
+        "https://noshi-ribbon-api.mremadcraftplugins.workers.dev";
+
+      function updatePreviewScale() {
+        const stage = document.querySelector(".stage");
+        const wrap = document.querySelector(".ribbon-wrap");
+        if (!stage || !wrap) return;
+
+        // عرض الشريط الداخلي ثابت 21 سم.
+        // نصغّر الشريط كاملًا (النص + الإيموجي + الشكل) بنفس النسبة.
+        wrap.style.transform = "scale(1)";
+
+        const naturalWidth = wrap.getBoundingClientRect().width;
+        const availableWidth = Math.max(1, stage.clientWidth - 20);
+
+        const scale = Math.min(1, availableWidth / naturalWidth);
+        wrap.style.transform = `scale(${scale})`;
+
+        // نخزن النسبة للمراجعة/debug إن احتجنا.
+        wrap.dataset.previewScale = scale.toFixed(4);
+      }
+
+      function render() {
+        const l1 = $("line1").value,
+          l2 = $("line2").value;
+        const fontSample =
+          [l1.trim(), l2.trim()].filter(Boolean).join(" • ") ||
+          "الحمدلله على سلامتك";
+        $("count1").textContent = l1.length;
+        $("count2").textContent = l2.length;
+        renderAppleEmoji($("preview1"), l1);
+        renderAppleEmoji($("preview2"), l2);
+        document
+          .querySelectorAll(".font-sample")
+          .forEach((e) => renderAppleEmoji(e, fontSample));
+        renderAppleEmoji($("fontCurrentPreview"), fontSample);
+        $("preview2").style.display = l2.trim() ? "flex" : "none";
+        const fs = +$("fontSize").value;
+        $("fontValue").textContent = fs;
+
+        $("ribbon")
+          .querySelectorAll(".ribbon-line")
+          .forEach((e) => {
+            e.style.fontSize = fs + "px";
+            e.style.fontFamily = `'${selectedFont}', Thmanyah, Tahoma, Arial, sans-serif`;
+            e.style.fontWeight = selectedFont === "Thmanyah" ? "800" : "400";
+          });
+
+        requestAnimationFrame(updatePreviewScale);
+      }
+      ["line1", "line2", "fontSize"].forEach((id) => {
+        $(id).addEventListener("input", render);
+        $(id).addEventListener("change", render);
+      });
+      $("fontTrigger").addEventListener("click", () => {
+        $("fontMenu").classList.toggle("show");
+        $("fontTrigger").classList.toggle("open");
+      });
+      $("customerName").addEventListener("input", () => {
+        if ($("customerName").value.trim()) {
+          $("customerName").classList.remove("invalid");
+          $("customerNameError")?.classList.remove("show");
+        }
+      });
+      document.querySelectorAll(".font-item").forEach((item) =>
+        item.addEventListener("click", () => {
+          selectedFont = item.dataset.font;
+          document
+            .querySelectorAll(".font-item")
+            .forEach((x) => x.classList.toggle("active", x === item));
+          $("fontCurrentPreview").style.fontFamily =
+            `'${selectedFont}',Thmanyah,Tahoma,sans-serif`;
+          $("fontMenu").classList.remove("show");
+          $("fontTrigger").classList.remove("open");
+          render();
+        }),
+      );
+      document.addEventListener("click", (e) => {
+        if (!$("fontPicker").contains(e.target)) {
+          $("fontMenu").classList.remove("show");
+          $("fontTrigger").classList.remove("open");
+        }
+      });
+
+      function closeModal() {
+        $("successModal").classList.remove("show");
+      }
+      $("modalClose").addEventListener("click", closeModal);
+      $("modalDone").addEventListener("click", closeModal);
+      $("successModal").addEventListener("click", (e) => {
+        if (e.target === $("successModal")) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      async function createRibbonOrder(payload) {
+        const response = await fetch(`${WORKER_API_URL}/api/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            customer_name: payload.p_customer_name,
+            line1: payload.p_line1,
+            line2: payload.p_line2,
+            font_name: payload.p_font_name,
+            font_size: payload.p_font_size,
+            design_settings: payload.p_design_settings,
+          }),
+        });
+
+        let result;
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error("استجابة غير صالحة من الخادم");
+        }
+
+        if (!response.ok || !result?.success) {
+          console.error("Worker API error:", response.status, result);
+          throw new Error(result?.error || "تعذر حفظ الطلب");
+        }
+
+        return String(result.order_number);
+      }
+
+      $("submitBtn").addEventListener("click", async () => {
+        const name = $("customerName").value.trim();
+        const line1 = $("line1").value;
+        const line2 = $("line2").value;
+
+        $("errorNote").style.display = "none";
+        $("customerName").classList.remove("invalid");
+        $("customerNameError")?.classList.remove("show");
+
+        if (!name) {
+          $("customerName").classList.add("invalid");
+          $("customerNameError")?.classList.add("show");
+          $("customerName").focus();
+          $("customerName").scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          return;
+        }
+        if (!line1 && !line2) {
+          $("line1").focus();
+          return;
+        }
+
+        const btn = $("submitBtn");
+        const oldText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = "جاري إرسال الطلب...";
+        btn.style.opacity = ".75";
+
+        try {
+          const order = await createRibbonOrder({
+            p_customer_name: name,
+            p_line1: line1,
+            p_line2: line2 || null,
+            p_font_name: selectedFont,
+            p_font_size: +$("fontSize").value,
+            p_design_settings: {
+              font: selectedFont,
+              fontSize: +$("fontSize").value,
+              ribbonColor: "#FFFFFF",
+              textColor: "#000000",
+            },
+          });
+
+          $("orderNumberModal").textContent = order;
+          $("orderNumberInline").textContent = order;
+          $("successNote").style.display = "block";
+          $("successModal").classList.add("show");
+        } catch (err) {
+          console.error(err);
+          $("errorNote").style.display = "block";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = oldText;
+          btn.style.opacity = "";
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        requestAnimationFrame(updatePreviewScale);
+      });
+
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => {
+          requestAnimationFrame(updatePreviewScale);
+        });
+      }
+
+      render();
+    </script>
+  </body>
+</html>
