@@ -27,6 +27,9 @@
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 
+  /* ينزل الزر شوي */
+  top:3px;
+
   transition:
     transform .18s ease,
     box-shadow .18s ease;
@@ -37,7 +40,7 @@
   position:relative;
   z-index:2;
 
-  animation:noshiReviewTextMove 5.5s ease-in-out infinite;
+  animation:noshiReviewTextMove 3.6s ease-in-out infinite;
 }
 
 /* القلب */
@@ -58,7 +61,7 @@
 
   transform-origin:center;
 
-  animation:noshiReviewHeartBeat 1.6s ease-in-out infinite;
+  animation:noshiReviewHeartBeat 2.2s ease-in-out infinite;
 }
 
 /* اللمعة داخل الزر */
@@ -77,13 +80,13 @@
   background:linear-gradient(
     90deg,
     transparent,
-    rgba(255,255,255,.75),
+    rgba(255,255,255,.78),
     transparent
   );
 
   transform:rotate(18deg);
 
-  animation:noshiReviewShine 5.5s ease-in-out infinite;
+  animation:noshiReviewShine 3.6s ease-in-out infinite;
 
   pointer-events:none;
 }
@@ -91,11 +94,11 @@
 /* مرور اللمعة */
 @keyframes noshiReviewShine{
   0%,
-  55%{
+  28%{
     left:-40%;
   }
 
-  82%{
+  72%{
     left:125%;
   }
 
@@ -104,27 +107,27 @@
   }
 }
 
-/* حركة النص وقت مرور اللمعة فقط */
+/* حركة النص وقت مرور اللمعة */
 @keyframes noshiReviewTextMove{
   0%,
-  55%,
+  28%,
   100%{
     transform:translateX(0);
   }
 
-  63%{
-    transform:translateX(1.5px);
+  42%{
+    transform:translateX(.7px);
   }
 
-  70%{
-    transform:translateX(-1.5px);
+  52%{
+    transform:translateX(-.7px);
   }
 
-  77%{
-    transform:translateX(1px);
+  62%{
+    transform:translateX(.4px);
   }
 
-  82%{
+  72%{
     transform:translateX(0);
   }
 }
@@ -132,27 +135,24 @@
 /* نبض القلب */
 @keyframes noshiReviewHeartBeat{
   0%,
+  65%,
   100%{
     transform:scale(1);
   }
 
-  45%{
-    transform:scale(1);
+  72%{
+    transform:scale(1.16);
   }
 
-  55%{
-    transform:scale(1.18);
+  79%{
+    transform:scale(.97);
   }
 
-  65%{
-    transform:scale(.96);
+  86%{
+    transform:scale(1.08);
   }
 
-  75%{
-    transform:scale(1.10);
-  }
-
-  85%{
+  93%{
     transform:scale(1);
   }
 }
