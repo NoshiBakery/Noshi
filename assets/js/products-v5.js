@@ -30,20 +30,20 @@ window.NOSHI_PRODUCTS = Object.freeze([
   },
   {
     id: "p04",
-    name: "كيكة دايجستف",
-    price: 50,
-    image: "images/digestive.webp",
-    description: "لا يمكن أن لا تلامس ذائقتك",
-    showSize: false,
-  },
-  {
-    id: "p05",
     name: "تاوة نوشي ميني",
     price: 45,
     image: "images/tawamini.webp",
     description: "تاوة بطعم مذهل وبحجم جميل",
     size: "90 حبة",
     showSize: true,
+  },
+  {
+    id: "p05",
+    name: "كيكة دايجستف",
+    price: 50,
+    image: "images/digestive.webp",
+    description: "لا يمكن أن لا تلامس ذائقتك",
+    showSize: false,
   },
   {
     id: "p06",
