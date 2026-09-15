@@ -184,3 +184,71 @@ html, body { touch-action: pan-x pan-y; }
     font-size:13px !important;
   }
 }
+
+
+/* NOSHI — tighter cell-product details under image ONLY */
+@media (max-width:600px){
+  /* product name */
+  .modal-body h2,
+  .modal-title{
+    font-size:16px !important;
+    line-height:1.15 !important;
+    margin:0 0 3px !important;
+  }
+
+  /* Small / Medium rectangles */
+  .variant-picker,
+  .size-picker,
+  .modal-variants{
+    margin:4px 0 !important;
+    gap:5px !important;
+  }
+  .variant-picker button,
+  .size-picker button,
+  .modal-variants button{
+    min-height:30px !important;
+    padding:4px 8px !important;
+    font-size:11px !important;
+    line-height:1.1 !important;
+    border-radius:8px !important;
+  }
+
+  /* price rectangle / price area */
+  .modal-price,
+  .modal-body .price,
+  .price-box,
+  .modal-price-box{
+    min-height:0 !important;
+    padding:5px 8px !important;
+    margin:3px 0 !important;
+    font-size:14px !important;
+    line-height:1.15 !important;
+    border-radius:8px !important;
+  }
+
+  .modal-body .old-price,
+  .modal-body del{
+    font-size:10px !important;
+    line-height:1.1 !important;
+  }
+
+  .modal-body .discount-badge,
+  .modal-body .offer-badge{
+    font-size:9px !important;
+    padding:2px 5px !important;
+  }
+
+  /* recover vertical space so Add to cart stays visible */
+  .modal-body{
+    padding-top:7px !important;
+    padding-bottom:8px !important;
+  }
+  .modal-actions{
+    margin-top:5px !important;
+  }
+  .modal-actions button{
+    min-height:38px !important;
+    padding:6px 10px !important;
+    font-size:12px !important;
+  }
+}
