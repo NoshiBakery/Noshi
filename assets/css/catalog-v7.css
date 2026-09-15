@@ -117,138 +117,38 @@ html, body { touch-action: pan-x pan-y; }
 @media (max-width:420px) { .dialog-variant-button { min-height:60px; padding:.62rem; } }
 
 
-/* NOSHI — compact content under product image only (image size untouched) */
-@media (max-width: 600px){
-  .modal-body{
-    padding:10px 14px 12px !important;
-  }
-
-  .modal-body h2,
-  .modal-title{
-    font-size:18px !important;
-    line-height:1.25 !important;
-    margin:0 0 4px !important;
-  }
-
-  .modal-body p,
-  .modal-description{
-    font-size:12px !important;
-    line-height:1.4 !important;
-    margin:3px 0 7px !important;
-  }
-
-  .modal-price,
-  .modal-body .price{
-    font-size:16px !important;
-    line-height:1.2 !important;
-    margin:4px 0 !important;
-  }
-
-  .modal-body .old-price,
-  .modal-body del{
-    font-size:12px !important;
-  }
-
-  .modal-body .discount-badge,
-  .modal-body .offer-badge{
-    font-size:10px !important;
-    padding:3px 7px !important;
-    line-height:1.2 !important;
-  }
-
-  .variant-picker,
-  .size-picker,
-  .modal-variants{
-    margin:7px 0 !important;
-    gap:6px !important;
-  }
-
-  .variant-picker button,
-  .size-picker button,
-  .modal-variants button{
-    min-height:36px !important;
-    padding:6px 10px !important;
-    font-size:12px !important;
-    line-height:1.2 !important;
-    border-radius:9px !important;
-  }
-
-  .modal-actions{
-    margin-top:8px !important;
-    gap:6px !important;
-  }
-
-  .modal-actions button{
-    min-height:42px !important;
-    padding:8px 12px !important;
-    font-size:13px !important;
-  }
-}
-
-
-/* NOSHI — tighter cell-product details under image ONLY */
+/* NOSHI — compact cell size controls */
 @media (max-width:600px){
-  /* product name */
-  .modal-body h2,
-  .modal-title{
-    font-size:16px !important;
-    line-height:1.15 !important;
-    margin:0 0 3px !important;
+  .dialog-variants{
+    margin-top:.18rem !important;
+    margin-bottom:.4rem !important;
   }
 
-  /* Small / Medium rectangles */
-  .variant-picker,
-  .size-picker,
-  .modal-variants{
-    margin:4px 0 !important;
-    gap:5px !important;
-  }
-  .variant-picker button,
-  .size-picker button,
-  .modal-variants button{
-    min-height:30px !important;
-    padding:4px 8px !important;
-    font-size:11px !important;
-    line-height:1.1 !important;
-    border-radius:8px !important;
-  }
-
-  /* price rectangle / price area */
-  .modal-price,
-  .modal-body .price,
-  .price-box,
-  .modal-price-box{
-    min-height:0 !important;
-    padding:5px 8px !important;
-    margin:3px 0 !important;
-    font-size:14px !important;
-    line-height:1.15 !important;
-    border-radius:8px !important;
-  }
-
-  .modal-body .old-price,
-  .modal-body del{
-    font-size:10px !important;
+  .dialog-variants-label{
+    margin-bottom:.25rem !important;
+    font-size:.7rem !important;
     line-height:1.1 !important;
   }
 
-  .modal-body .discount-badge,
-  .modal-body .offer-badge{
-    font-size:9px !important;
-    padding:2px 5px !important;
+  .dialog-variant-options{
+    gap:.4rem !important;
   }
 
-  /* recover vertical space so Add to cart stays visible */
-  .modal-body{
-    padding-top:7px !important;
-    padding-bottom:8px !important;
+  .dialog-variant-button{
+    min-height:34px !important;
+    padding:.3rem .45rem !important;
+    border-radius:9px !important;
+    gap:.08rem !important;
   }
-  .modal-actions{
-    margin-top:5px !important;
+
+  .dialog-variant-button > span{
+    font-size:.72rem !important;
+    line-height:1.05 !important;
   }
-  .modal-actions button{
-    min-height:38px !important;
-    padding:6px 10px !important;
-    font-size:12px !important;
+
+  .dialog-variant-button > strong{
+    font-size:.7rem !important;
+    line-height:1.05 !important;
+    gap:.1rem .2rem !important;
   }
 }

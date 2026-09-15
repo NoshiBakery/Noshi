@@ -828,8 +828,8 @@
         inset: 0;
         margin: auto;
 
-        width: min(90vw, 620px);
-        max-height: min(82dvh, 680px);
+        width: min(92vw, 760px);
+        max-height: min(90dvh, 820px);
 
         padding: 0;
         border: 0;
@@ -1021,8 +1021,8 @@
 
       @media (max-width: 767px) {
         .product-dialog {
-          width: min(92vw, 500px);
-          max-height: 78dvh;
+          width: min(94vw, 560px);
+          max-height: 92dvh;
         }
 
         .dialog-shell {
@@ -1031,13 +1031,13 @@
         }
 
         .dialog-media {
-          min-height: 150px;
-          max-height: 190px;
+          min-height: 250px;
+          max-height: 320px;
         }
 
         .dialog-media img {
-          min-height: 150px;
-          max-height: 190px;
+          min-height: 250px;
+          max-height: 320px;
         }
 
         .dialog-body {
@@ -1047,20 +1047,20 @@
 
       @media (max-width: 420px) {
         .product-dialog {
-          width: calc(100vw - 24px);
-          max-height: 76dvh;
+          width: calc(100vw - 20px);
+          max-height: calc(100dvh - 20px);
 
-          border-radius: 18px;
+          border-radius: 22px;
         }
 
         .dialog-media {
-          min-height: 130px;
-          max-height: 165px;
+          min-height: 220px;
+          max-height: 270px;
         }
 
         .dialog-media img {
-          min-height: 130px;
-          max-height: 165px;
+          min-height: 220px;
+          max-height: 270px;
         }
 
         .dialog-meta {
@@ -3182,23 +3182,61 @@ body.cart-page {
 }
 
 
-/* NOSHI — iPhone product modal: compact + Safari-safe CTA */
+/* NOSHI — product modal: NO SCROLL, image untouched */
 @media (max-width: 600px){
-  .modal-card{
-    margin-bottom:max(14px, env(safe-area-inset-bottom)) !important;
+  .product-dialog{
+    overflow:hidden !important;
   }
-  .modal-body{
-    padding:12px 14px max(14px, env(safe-area-inset-bottom)) !important;
+
+  .dialog-body{
+    padding:.72rem .9rem .8rem !important;
   }
-  .modal-actions{
-    position:sticky;
-    bottom:0;
-    z-index:3;
-    background:#fff;
-    padding-top:8px;
-    padding-bottom:max(8px, env(safe-area-inset-bottom));
+
+  .dialog-badge{
+    margin-bottom:.3rem !important;
+    padding:.18rem .48rem !important;
+    font-size:.65rem !important;
   }
-  .modal-actions button{
-    min-height:46px;
+
+  .dialog-body h2{
+    margin:0 0 .25rem !important;
+    font-size:1.08rem !important;
+    line-height:1.18 !important;
+  }
+
+  .dialog-description{
+    margin:0 0 .42rem !important;
+    font-size:.75rem !important;
+    line-height:1.35 !important;
+  }
+
+  /* السعر + العدد/الحجم بالعرض بدل فوق بعض */
+  .dialog-meta{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:.4rem !important;
+    margin-bottom:.5rem !important;
+  }
+
+  .dialog-pill{
+    padding:.38rem .5rem !important;
+    border-radius:9px !important;
+  }
+
+  .dialog-pill span{
+    font-size:.62rem !important;
+    line-height:1.1 !important;
+  }
+
+  .dialog-pill strong{
+    margin-top:.08rem !important;
+    font-size:.84rem !important;
+    line-height:1.15 !important;
+  }
+
+  .dialog-cart-button{
+    min-height:38px !important;
+    padding:.48rem .75rem !important;
+    font-size:.82rem !important;
+    border-radius:11px !important;
   }
 }
