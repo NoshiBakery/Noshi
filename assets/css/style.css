@@ -828,8 +828,8 @@
         inset: 0;
         margin: auto;
 
-        width: min(92vw, 760px);
-        max-height: min(90dvh, 820px);
+        width: min(90vw, 620px);
+        max-height: min(82dvh, 680px);
 
         padding: 0;
         border: 0;
@@ -1021,8 +1021,8 @@
 
       @media (max-width: 767px) {
         .product-dialog {
-          width: min(94vw, 560px);
-          max-height: 92dvh;
+          width: min(92vw, 500px);
+          max-height: 78dvh;
         }
 
         .dialog-shell {
@@ -1031,13 +1031,13 @@
         }
 
         .dialog-media {
-          min-height: 250px;
-          max-height: 320px;
+          min-height: 150px;
+          max-height: 190px;
         }
 
         .dialog-media img {
-          min-height: 250px;
-          max-height: 320px;
+          min-height: 150px;
+          max-height: 190px;
         }
 
         .dialog-body {
@@ -1047,20 +1047,20 @@
 
       @media (max-width: 420px) {
         .product-dialog {
-          width: calc(100vw - 20px);
-          max-height: calc(100dvh - 20px);
+          width: calc(100vw - 24px);
+          max-height: 76dvh;
 
-          border-radius: 22px;
+          border-radius: 18px;
         }
 
         .dialog-media {
-          min-height: 220px;
-          max-height: 270px;
+          min-height: 130px;
+          max-height: 165px;
         }
 
         .dialog-media img {
-          min-height: 220px;
-          max-height: 270px;
+          min-height: 130px;
+          max-height: 165px;
         }
 
         .dialog-meta {
@@ -3179,4 +3179,26 @@ body.cart-page {
 }
 .floating-whatsapp {
   bottom: calc(var(--bottom-bar-height) + var(--safe-area) + 90px);
+}
+
+
+/* NOSHI — iPhone product modal: compact + Safari-safe CTA */
+@media (max-width: 600px){
+  .modal-card{
+    margin-bottom:max(14px, env(safe-area-inset-bottom)) !important;
+  }
+  .modal-body{
+    padding:12px 14px max(14px, env(safe-area-inset-bottom)) !important;
+  }
+  .modal-actions{
+    position:sticky;
+    bottom:0;
+    z-index:3;
+    background:#fff;
+    padding-top:8px;
+    padding-bottom:max(8px, env(safe-area-inset-bottom));
+  }
+  .modal-actions button{
+    min-height:46px;
+  }
 }
