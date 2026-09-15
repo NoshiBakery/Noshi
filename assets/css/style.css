@@ -3240,3 +3240,26 @@ body.cart-page {
     border-radius:11px !important;
   }
 }
+
+
+/* NOSHI — readability bump only; keep no-scroll layout */
+@media (max-width:600px){
+  .dialog-body h2{
+    font-size:1.18rem !important;
+    line-height:1.2 !important;
+  }
+  .dialog-description{
+    font-size:.82rem !important;
+    line-height:1.4 !important;
+  }
+  .dialog-pill span{
+    font-size:.69rem !important;
+  }
+  .dialog-pill strong{
+    font-size:.92rem !important;
+  }
+  .dialog-cart-button{
+    font-size:.9rem !important;
+    min-height:40px !important;
+  }
+}

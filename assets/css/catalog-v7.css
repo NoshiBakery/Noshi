@@ -152,3 +152,17 @@ html, body { touch-action: pan-x pan-y; }
     gap:.1rem .2rem !important;
   }
 }
+
+
+/* NOSHI — slightly larger cell size text only */
+@media (max-width:600px){
+  .dialog-variants-label{
+    font-size:.76rem !important;
+  }
+  .dialog-variant-button > span{
+    font-size:.8rem !important;
+  }
+  .dialog-variant-button > strong{
+    font-size:.77rem !important;
+  }
+}
