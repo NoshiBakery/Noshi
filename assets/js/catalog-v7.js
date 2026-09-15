@@ -19,6 +19,8 @@
   const modalPrice = document.getElementById("modalPrice");
   const modalSizeWrap = document.getElementById("modalSizeWrap");
   const modalSize = document.getElementById("modalSize");
+  const modalVariants = document.getElementById("modalVariants");
+  const modalVariantOptions = document.getElementById("modalVariantOptions");
   const modalClose = document.getElementById("modalClose");
   const modalAddButton = document.getElementById("modalAddToCart");
   const toast = document.getElementById("toastMessage");
@@ -26,6 +28,7 @@
   let expanded = true;
   let activeProductId = null;
   let lastTrigger = null;
+  let activeVariantId = "";
   let toastTimer = null;
 
   function englishDigits(value) {
@@ -42,17 +45,23 @@
     return `${number(value)} ريال`;
   }
 
-  function pricingFor(product) {
-    return offers?.pricingFor(product) || {
-      originalPrice: Number(product?.price || 0),
-      finalPrice: Number(product?.price || 0),
-      percent: 0,
-      hasOffer: false,
+  function pricingFor(product, variantId = "") {
+    const variant = Array.isArray(product?.variants) ? product.variants.find((item) => item.id === variantId) : null;
+    return offers?.pricingFor(product, variantId) || {
+      originalPrice: Number(variant?.price ?? product?.price ?? 0),
+      finalPrice: Number(variant?.price ?? product?.price ?? 0), percent: 0, hasOffer: false,
     };
   }
 
-  function priceMarkup(product) {
-    const pricing = pricingFor(product);
+  function priceMarkup(product, variantId = "") {
+    if (Array.isArray(product?.variants) && product.variants.length && !variantId) {
+      const prices = product.variants.map((variant) => pricingFor(product, variant.id));
+      const lowest = prices.reduce((best, item) => item.finalPrice < best.finalPrice ? item : best, prices[0]);
+      const prefix = `<span class="price-from">يبدأ من</span>`;
+      if (!lowest.hasOffer) return `${prefix}<span class="current-product-price">${money(lowest.finalPrice)}</span>`;
+      return `${prefix}<span class="current-product-price sale">${money(lowest.finalPrice)}</span><span class="original-product-price">${money(lowest.originalPrice)}</span>`;
+    }
+    const pricing = pricingFor(product, variantId);
     if (!pricing.hasOffer) return `<span class="current-product-price">${money(pricing.finalPrice)}</span>`;
     return `<span class="current-product-price sale">${money(pricing.finalPrice)}</span><span class="original-product-price">${money(pricing.originalPrice)}</span><span class="catalog-offer-chip">خصم ${number(pricing.percent)}%</span>`;
   }
@@ -155,11 +164,15 @@
     window.setTimeout(finish, 1450);
   }
 
-  function addProduct(productId, source, button) {
+  function addProduct(productId, source, button, variantId = "") {
     const product = productById(productId);
     if (!product) return;
+    if (Array.isArray(product.variants) && product.variants.length && !variantId) {
+      openProduct(productId, button || source);
+      return;
+    }
     animateIntoCart(product, source);
-    cart.add(product.id, 1);
+    cart.add(product.id, 1, variantId);
     updateCartUI();
     showToast(`تمت إضافة ${product.name} للسلة`);
 
@@ -183,11 +196,34 @@
     modalImage.alt = `صورة ${product.name}`;
     modalTitle.textContent = product.name;
     modalDescription.textContent = product.description || "";
+    activeVariantId = "";
     const pricing = pricingFor(product);
     modalPrice.innerHTML = priceMarkup(product);
     const modalBadge = document.getElementById("modalBadge");
-    if (modalBadge) modalBadge.textContent = pricing.hasOffer ? `خصم ${number(pricing.percent)}%` : "منتج مميز";
-    const hasSize = Boolean(product.showSize && product.size);
+    if (modalBadge) modalBadge.textContent = "منتج مميز";
+    const hasVariants = Array.isArray(product.variants) && product.variants.length > 0;
+    if (modalVariants) modalVariants.hidden = !hasVariants;
+    if (modalVariantOptions) {
+      modalVariantOptions.replaceChildren();
+      product.variants?.forEach((variant) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "dialog-variant-button";
+        button.dataset.variantId = variant.id;
+        button.innerHTML = `<span>${variant.name}</span><strong>${priceMarkup(product, variant.id)}</strong>`;
+        button.addEventListener("click", () => {
+          activeVariantId = variant.id;
+          modalVariantOptions.querySelectorAll(".dialog-variant-button").forEach((item) => item.classList.toggle("selected", item === button));
+          modalPrice.innerHTML = priceMarkup(product, variant.id);
+          const selectedPricing = pricingFor(product, variant.id);
+          if (modalBadge) modalBadge.textContent = selectedPricing.hasOffer ? `خصم ${number(selectedPricing.percent)}%` : "منتج مميز";
+          if (modalAddButton) modalAddButton.disabled = false;
+        });
+        modalVariantOptions.appendChild(button);
+      });
+    }
+    if (modalAddButton) modalAddButton.disabled = hasVariants;
+    const hasSize = !hasVariants && Boolean(product.showSize && product.size);
     modalSizeWrap.hidden = !hasSize;
     modalSize.textContent = hasSize ? englishDigits(product.size) : "";
     document.body.classList.add("modal-open");
@@ -231,10 +267,11 @@
       media.appendChild(image);
 
       const pricing = pricingFor(product);
-      if (pricing.hasOffer) {
+      const variantOffer = Array.isArray(product.variants) && product.variants.some((variant) => pricingFor(product, variant.id).hasOffer);
+      if (pricing.hasOffer || variantOffer) {
         const offerBadge = document.createElement("span");
         offerBadge.className = "product-badge product-offer-badge";
-        offerBadge.textContent = `خصم ${number(pricing.percent)}%`;
+        offerBadge.textContent = variantOffer && !pricing.hasOffer ? "عرض" : `خصم ${number(pricing.percent)}%`;
         media.appendChild(offerBadge);
       } else if (index < 6) {
         const badge = document.createElement("span");
@@ -296,7 +333,7 @@
     closeProduct();
   });
   modalAddButton?.addEventListener("click", () => {
-    if (activeProductId) addProduct(activeProductId, modalImage, modalAddButton);
+    if (activeProductId) addProduct(activeProductId, modalImage, modalAddButton, activeVariantId);
   });
   window.addEventListener("noshi:cart-change", updateCartUI);
   window.addEventListener("storage", updateCartUI);
