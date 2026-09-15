@@ -3263,3 +3263,62 @@ body.cart-page {
     min-height:40px !important;
   }
 }
+
+
+/* NOSHI — final balance: slightly smaller image + larger readable content */
+@media (max-width:600px){
+  /* الصورة أصغر بشكل خفيف فقط */
+  .dialog-media{
+    min-height:235px !important;
+    max-height:295px !important;
+  }
+  .dialog-media img{
+    min-height:235px !important;
+    max-height:295px !important;
+  }
+
+  /* كل ما تحت الصورة أكبر وأوضح */
+  .dialog-body{
+    padding:.78rem 1rem .88rem !important;
+  }
+  .dialog-badge{
+    font-size:.73rem !important;
+    padding:.22rem .55rem !important;
+  }
+  .dialog-body h2{
+    font-size:1.3rem !important;
+    line-height:1.22 !important;
+    margin-bottom:.32rem !important;
+  }
+  .dialog-description{
+    font-size:.9rem !important;
+    line-height:1.42 !important;
+    margin-bottom:.5rem !important;
+  }
+  .dialog-meta{
+    gap:.5rem !important;
+    margin-bottom:.55rem !important;
+  }
+  .dialog-pill{
+    padding:.48rem .6rem !important;
+  }
+  .dialog-pill span{
+    font-size:.76rem !important;
+  }
+  .dialog-pill strong{
+    font-size:1rem !important;
+  }
+  .dialog-cart-button{
+    min-height:43px !important;
+    padding:.58rem .8rem !important;
+    font-size:.98rem !important;
+  }
+}
+
+@media (max-width:420px){
+  .dialog-media,
+  .dialog-media img{
+    min-height:205px !important;
+    max-height:245px !important;
+  }
+}

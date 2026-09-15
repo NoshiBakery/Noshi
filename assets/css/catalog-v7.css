@@ -166,3 +166,29 @@ html, body { touch-action: pan-x pan-y; }
     font-size:.77rem !important;
   }
 }
+
+
+/* NOSHI — larger cell size controls while preserving compact height */
+@media (max-width:600px){
+  .dialog-variants{
+    margin-top:.25rem !important;
+    margin-bottom:.48rem !important;
+  }
+  .dialog-variants-label{
+    font-size:.84rem !important;
+    margin-bottom:.3rem !important;
+  }
+  .dialog-variant-options{
+    gap:.48rem !important;
+  }
+  .dialog-variant-button{
+    min-height:38px !important;
+    padding:.4rem .55rem !important;
+  }
+  .dialog-variant-button > span{
+    font-size:.9rem !important;
+  }
+  .dialog-variant-button > strong{
+    font-size:.86rem !important;
+  }
+}
