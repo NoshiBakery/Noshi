@@ -115,3 +115,72 @@ html, body { touch-action: pan-x pan-y; }
 .dialog-variant-button.selected { border-color:var(--color-primary-strong); box-shadow:0 0 0 2px rgba(156,75,99,.10); background:#fff8fa; }
 .dialog-cart-button:disabled { opacity:.5; cursor:not-allowed; transform:none !important; }
 @media (max-width:420px) { .dialog-variant-button { min-height:60px; padding:.62rem; } }
+
+
+/* NOSHI — compact content under product image only (image size untouched) */
+@media (max-width: 600px){
+  .modal-body{
+    padding:10px 14px 12px !important;
+  }
+
+  .modal-body h2,
+  .modal-title{
+    font-size:18px !important;
+    line-height:1.25 !important;
+    margin:0 0 4px !important;
+  }
+
+  .modal-body p,
+  .modal-description{
+    font-size:12px !important;
+    line-height:1.4 !important;
+    margin:3px 0 7px !important;
+  }
+
+  .modal-price,
+  .modal-body .price{
+    font-size:16px !important;
+    line-height:1.2 !important;
+    margin:4px 0 !important;
+  }
+
+  .modal-body .old-price,
+  .modal-body del{
+    font-size:12px !important;
+  }
+
+  .modal-body .discount-badge,
+  .modal-body .offer-badge{
+    font-size:10px !important;
+    padding:3px 7px !important;
+    line-height:1.2 !important;
+  }
+
+  .variant-picker,
+  .size-picker,
+  .modal-variants{
+    margin:7px 0 !important;
+    gap:6px !important;
+  }
+
+  .variant-picker button,
+  .size-picker button,
+  .modal-variants button{
+    min-height:36px !important;
+    padding:6px 10px !important;
+    font-size:12px !important;
+    line-height:1.2 !important;
+    border-radius:9px !important;
+  }
+
+  .modal-actions{
+    margin-top:8px !important;
+    gap:6px !important;
+  }
+
+  .modal-actions button{
+    min-height:42px !important;
+    padding:8px 12px !important;
+    font-size:13px !important;
+  }
+}
