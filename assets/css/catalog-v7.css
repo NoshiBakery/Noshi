@@ -103,15 +103,35 @@ html, body { touch-action: pan-x pan-y; }
   .catalog-offer-chip { font-size: .6rem; }
 }
 
-/* ===== Product size variants (honey cells only) ===== */
-.price-from { font-size: .72em; font-weight: 800; color: #7f7376; margin-inline-end: .18rem; }
-.dialog-variants[hidden] { display:none !important; }
-.dialog-variants { margin-top:.25rem; width:100%; }
-.dialog-variants-label { display:block; margin-bottom:.55rem; font-size:.88rem; font-weight:900; color:var(--color-primary-strong); }
-.dialog-variant-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; width:100%; }
-.dialog-variant-button { min-width:0; min-height:76px; padding:.8rem .9rem; border:1.5px solid #eadde0; border-radius:14px; background:#fff; color:inherit; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.35rem; font:inherit; cursor:pointer; text-align:center; }
-.dialog-variant-button > span { font-weight:900; }
-.dialog-variant-button > strong { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:.2rem .35rem; font-size:.92rem; }
-.dialog-variant-button.selected { border-color:var(--color-primary-strong); box-shadow:0 0 0 2px rgba(156,75,99,.10); background:#fff8fa; }
-.dialog-cart-button:disabled { opacity:.5; cursor:not-allowed; transform:none !important; }
-@media (max-width:420px) { .dialog-variant-button { min-height:60px; padding:.62rem; } }
+
+/* NOSHI — compact product details modal, iPhone friendly */
+#productModal .modal-card,
+.product-modal .modal-card,
+.modal-card.product-details{
+  width:min(92vw,430px) !important;
+  max-height:84dvh !important;
+  overflow-y:auto !important;
+  border-radius:18px !important;
+}
+#productModal .modal-card img,
+.product-modal .modal-card img{
+  max-height:190px !important;
+  object-fit:cover !important;
+}
+#productModal .modal-body,
+.product-modal .modal-body{
+  padding:12px 14px !important;
+}
+@media(max-width:520px){
+  #productModal .modal-card,
+  .product-modal .modal-card,
+  .modal-card.product-details{
+    width:calc(100vw - 22px) !important;
+    max-height:80dvh !important;
+    border-radius:16px !important;
+  }
+  #productModal .modal-card img,
+  .product-modal .modal-card img{
+    max-height:160px !important;
+  }
+}
