@@ -18,7 +18,7 @@
 window.NOSHI_OFFERS = Object.freeze([
   // { target: "all", percent: 15, active: true },
   { target: "p01", percent: 15, active: false },
-
+{ target: "p10", percent: 10, active: true }
 
 ]);
 
