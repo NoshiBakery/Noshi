@@ -33,6 +33,13 @@
     subtotal: document.getElementById("subtotal"),
     discountRow: document.getElementById("discountRow"),
     discountAmount: document.getElementById("discountAmount"),
+    couponSection: document.getElementById("couponSection"),
+    couponInput: document.getElementById("couponInput"),
+    couponApply: document.getElementById("couponApply"),
+    couponRemove: document.getElementById("couponRemove"),
+    couponMessage: document.getElementById("couponMessage"),
+    couponDiscountRow: document.getElementById("couponDiscountRow"),
+    couponDiscountAmount: document.getElementById("couponDiscountAmount"),
     deliveryFee: document.getElementById("deliveryFee"),
     grandTotal: document.getElementById("grandTotal"),
     deliveryGroup: document.getElementById("deliveryGroup"),
@@ -70,6 +77,161 @@
   let lastWhatsAppUrl = "";
   let whatsAppCountdownTimer = null;
   let submitting = false;
+  
+  // =============================================
+  // NOSHI COUPONS — CUSTOMER CHECKOUT
+  // يبقى مغلقًا إلى أن تنجح اختبارات الحجز والرفض
+  // =============================================
+
+  const COUPONS_ENABLED = true;
+
+  const COUPON_PREVIEW_URL = ORDER_API_URL.replace(
+    /\/api\/orders\/?$/,
+    "/api/coupons/preview"
+  );
+
+  let appliedCoupon = null;
+  let couponRequestVersion = 0;
+
+  elements.couponSection.hidden = !COUPONS_ENABLED;
+
+  function currentCouponItems() {
+    return cart.lines().map(line => ({
+      productId: line.product.id,
+      quantity: line.quantity
+    }));
+  }
+
+  function couponCartFingerprint() {
+    return JSON.stringify(currentCouponItems());
+  }
+
+  function clearCoupon(message = "") {
+    couponRequestVersion++;
+    elements.couponApply.disabled = false;
+    appliedCoupon = null;
+    elements.couponMessage.textContent = message;
+    elements.couponRemove.hidden = true;
+    elements.couponDiscountRow.hidden = true;
+    elements.couponDiscountAmount.textContent = "− 0 ريال";
+    resetIdempotency();
+  }
+
+  function renderCouponTotal() {
+    const currentFingerprint = couponCartFingerprint();
+
+    if (
+      appliedCoupon &&
+      appliedCoupon.fingerprint !== currentFingerprint
+    ) {
+      clearCoupon("تغيرت السلة، يرجى تطبيق الكود مرة أخرى.");
+    }
+
+    const couponAmount = Number(appliedCoupon?.discountAmount || 0);
+    const subtotal = cart.subtotal();
+    const fee = selectedDelivery()?.fee || 0;
+
+    elements.couponDiscountRow.hidden = couponAmount <= 0;
+    elements.couponDiscountAmount.textContent =
+      `− ${formatMoney(couponAmount)}`;
+
+    elements.grandTotal.textContent =
+      formatMoney(Math.max(0, subtotal - couponAmount) + fee);
+  }
+
+  async function applyCoupon() {
+    if (!COUPONS_ENABLED || submitting) return;
+
+    const code = elements.couponInput.value.trim().toUpperCase();
+
+    if (!/^[A-Z0-9_-]{3,32}$/.test(code)) {
+      clearCoupon("اكتب كود خصم صحيح.");
+      renderCouponTotal();
+      return;
+    }
+
+    const fingerprint = couponCartFingerprint();
+    const requestVersion = ++couponRequestVersion;
+
+    appliedCoupon = null;
+    elements.couponRemove.hidden = true;
+    elements.couponDiscountRow.hidden = true;
+    elements.couponApply.disabled = true;
+    elements.couponMessage.textContent = "جاري التحقق من الكود...";
+
+    try {
+      const response = await fetch(COUPON_PREVIEW_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code,
+          items: currentCouponItems()
+        })
+      });
+
+      const data = await response.json();
+
+      if (
+        requestVersion !== couponRequestVersion ||
+        fingerprint !== couponCartFingerprint()
+      ) {
+        return;
+      }
+
+      if (!response.ok || !data.success) {
+        clearCoupon(data.message || "تعذّر تطبيق كود الخصم.");
+        renderCouponTotal();
+        return;
+      }
+
+      appliedCoupon = {
+        code: data.code,
+        discountAmount: Number(data.discountAmount),
+        fingerprint
+      };
+
+      elements.couponInput.value = data.code;
+      elements.couponRemove.hidden = false;
+      elements.couponMessage.textContent =
+        data.message || "تم تطبيق كود الخصم بنجاح.";
+
+      resetIdempotency();
+      renderCouponTotal();
+
+    } catch (error) {
+      if (requestVersion === couponRequestVersion) {
+        clearCoupon("تعذّر التحقق من الكود، حاول مرة أخرى.");
+        renderCouponTotal();
+      }
+    } finally {
+      if (requestVersion === couponRequestVersion) {
+        elements.couponApply.disabled = false;
+      }
+    }
+  }
+
+  elements.couponApply.addEventListener("click", applyCoupon);
+
+  elements.couponRemove.addEventListener("click", () => {
+    elements.couponInput.value = "";
+    clearCoupon("تمت إزالة كود الخصم.");
+    renderCouponTotal();
+  });
+
+  elements.couponInput.addEventListener("input", () => {
+    clearCoupon("");
+    renderCouponTotal();
+  });
+
+  // لو تغيرت المنتجات أو الكميات نلغي المعاينة القديمة.
+  window.addEventListener("noshi:cart-change", () => {
+    if (appliedCoupon &&
+        appliedCoupon.fingerprint !== couponCartFingerprint()) {
+      clearCoupon("تغيرت السلة، يرجى تطبيق الكود مرة أخرى.");
+    }
+    renderCouponTotal();
+  });
+
 
 
   function stopWhatsAppCountdown() {
@@ -496,7 +658,7 @@
     elements.discountAmount.textContent = `− ${formatMoney(discount)}`;
     elements.deliveryFee.textContent = delivery ? formatMoney(fee) : "لم يُحدد";
     elements.grandTotal.textContent = formatMoney(subtotal + fee);
-    elements.submit.disabled = lines.length === 0;
+    renderCouponTotal();    elements.submit.disabled = lines.length === 0;
     updateNavigation();
   }
 
@@ -584,6 +746,9 @@
         quantity: line.quantity,
       })),
     };
+        if (COUPONS_ENABLED && appliedCoupon) {
+      payload.couponCode = appliedCoupon.code;
+    }
     const fingerprint = JSON.stringify(payload);
     return { idempotencyKey: getIdempotencyKey(fingerprint), ...payload };
   }
@@ -672,6 +837,13 @@
     setSubmitting(true);
 
     try {
+            if (COUPONS_ENABLED &&
+          appliedCoupon &&
+          appliedCoupon.fingerprint !== couponCartFingerprint()) {
+        clearCoupon("تغيرت السلة، يرجى إعادة تطبيق الكود.");
+        renderCouponTotal();
+        throw new Error("COUPON_CART_CHANGED");
+      }
       const data = await createOrder(result);
       const orderNumber = String(data.orderNumber);
       const message = buildMessage(orderNumber);
@@ -690,8 +862,10 @@
       if (error?.message === "ORDER_API_NOT_CONFIGURED") {
         elements.formMessage.textContent = "نسخة الطلبات التجريبية تحتاج وضع رابط Cloudflare Worker أولًا.";
       } else {
-        elements.formMessage.textContent = "تعذر اعتماد الطلب الآن. لم يتم تفريغ السلة؛ حاولي مرة أخرى.";
-      }
+elements.formMessage.textContent =
+  error?.message === "COUPON_CART_CHANGED"
+    ? "تغيرت السلة، يرجى تطبيق كود الخصم مرة أخرى."
+    : "تعذر اعتماد الطلب الآن. لم يتم تفريغ السلة؛ حاولي مرة أخرى.";      }
       setSubmitting(false);
     }
   });
