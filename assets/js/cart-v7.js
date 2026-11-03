@@ -302,7 +302,7 @@
   function formatDate(value) {
     const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
     if (!match) return "";
-    return `${match[1]}/${Number(match[2])}/${Number(match[3])}`;
+    return `${match[1]}/${match[2]}/${match[3]}`;
   }
 
   function formatTime12(value) {
@@ -310,9 +310,9 @@
     if (!match) return "";
     const hour24 = Number(match[1]);
     const minutes = match[2];
-    const period = hour24 < 12 ? "صباحًا" : "مساءً";
+    const period = hour24 < 12 ? "ص" : "م";
     const hour12 = hour24 % 12 || 12;
-    return `${hour12}:${minutes} ${period}`;
+    return `⁦${period} ${hour12}:${minutes}⁩`;
   }
 
   function availableTimes() {
