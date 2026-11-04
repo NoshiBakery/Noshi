@@ -68,7 +68,7 @@
               <label for="deliveryDate">تاريخ التوصيل <em>*</em></label>
               <div class="picker-control" id="dateControl">
                 <span aria-hidden="true">📅</span>
-                <b id="dateText" dir="ltr">اختاري التاريخ</b>
+                <b id="dateText" dir="rtl">اختاري التاريخ</b>
                 <input class="native-picker" id="deliveryDate" type="date" aria-label="تاريخ التوصيل" />
               </div>
               <p class="error" id="dateError"></p>
@@ -82,7 +82,7 @@
                   <option value="">اختاري الوقت</option>
                 </select>
               </div>
-              <p class="field-hint">الأوقات المتاحة من 6:00 صباحًا إلى 12:00 صباحًا</p>
+              <p class="field-hint delivery-time-hint">الأوقات المتاحة من <span class="hint-time" data-noshi-display-skip><span dir="rtl">صباحًا</span><span dir="ltr">6:00</span></span> إلى <span class="hint-time" data-noshi-display-skip><span dir="rtl">صباحًا</span><span dir="ltr">12:00</span></span></p>
               <p class="error" id="timeError"></p>
             </div>
           </div>

@@ -665,6 +665,7 @@
   function updatePickerText() {
     const dateValue = formatDate(elements.dateInput.value);
     elements.dateText.textContent = dateValue || "اختاري التاريخ";
+    elements.dateText.dir = dateValue ? "ltr" : "rtl";
     elements.dateControl.classList.toggle("has-value", Boolean(dateValue));
     elements.timeControl.classList.toggle("has-value", Boolean(elements.timeInput.value));
   }

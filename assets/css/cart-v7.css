@@ -1195,3 +1195,30 @@ textarea:focus,
   outline: 3px solid var(--gold);
   outline-offset: 2px;
 }
+
+/* Delivery schedule: readable date placeholder and isolated Arabic time labels. */
+#dateControl #dateText {
+  flex: 1 1 auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: right;
+}
+#dateControl.has-value #dateText {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.delivery-time-hint {
+  font-size: 10px;
+  line-height: 1.7;
+}
+.delivery-time-hint .hint-time {
+  display: inline-flex;
+  direction: ltr;
+  align-items: baseline;
+  gap: 3px;
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--ink);
+  unicode-bidi: isolate;
+}
