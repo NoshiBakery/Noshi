@@ -97,33 +97,21 @@
     🎟️ عندك كود خصم؟
   </label>
 
-  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px">
+  <div class="coupon-controls">
     <input
       id="couponInput"
       type="text"
       maxlength="32"
       autocomplete="off"
       placeholder="اكتب كود الخصم"
-      style="flex:1;min-width:160px;text-transform:uppercase"
     />
-
-    <button id="couponApply" type="button"
-      style="padding:11px 16px;border:0;border-radius:10px;background:#654b32;color:white;cursor:pointer">
-      تطبيق
-    </button>
-
-    <button id="couponRemove" type="button" hidden
-      style="padding:11px 16px;border:1px solid #ddd;border-radius:10px;background:white;cursor:pointer">
-      إزالة
-    </button>
+    <button id="couponApply" class="coupon-action" type="button">تطبيق</button>
+    <button id="couponRemove" class="coupon-action" type="button" hidden>إزالة</button>
   </div>
 
   <p id="couponMessage" role="status" aria-live="polite"
      style="margin:8px 0 0;font-size:13px"></p>
 
-  <p style="font-size:12px;color:#786c60;margin-top:6px">
-    الخصم لا يشمل صحن التقديم أو شريط العبارة أو رسوم التوصيل.
-  </p>
 </section>
         <section class="summary" aria-live="polite">
           <div><span id="subtotalLabel">مجموع المنتجات</span><b id="subtotal">0 ريال</b></div>

@@ -272,7 +272,7 @@ em {
   opacity: 0;
   pointer-events: none;
 }
-.delivery-choice span {
+.delivery-choice > span {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -549,7 +549,7 @@ textarea:focus,
   .schedule-grid {
     gap: 5px;
   }
-  .delivery-choice span {
+  .delivery-choice > span {
     padding-inline: 6px;
   }
   .delivery-choice b,
@@ -1150,4 +1150,48 @@ textarea:focus,
   border: 0 !important;
   width: 0 !important;
   height: 0 !important;
+}
+
+/* Checkout coupon controls: match the single-outline delivery choices. */
+#couponSection .coupon-controls {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 9px;
+}
+#couponSection #couponInput {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 9px 11px;
+  border: 1px solid #ddcfd3;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  outline: none;
+  text-transform: uppercase;
+}
+#couponSection #couponInput:focus {
+  border-color: var(--rose);
+  box-shadow: 0 0 0 3px rgba(143, 64, 88, 0.1);
+}
+#couponSection .coupon-action {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 9px 15px;
+  border: 1px solid var(--rose);
+  border-radius: 10px;
+  background: var(--rose);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+#couponSection #couponRemove {
+  background: var(--rose-soft);
+  color: var(--rose-dark);
+}
+#couponSection .coupon-action:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
 }
