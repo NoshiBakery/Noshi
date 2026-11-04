@@ -1209,8 +1209,9 @@ textarea:focus,
   font-variant-numeric: tabular-nums;
 }
 .delivery-time-hint {
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1.7;
+  white-space: nowrap;
 }
 .delivery-time-hint .hint-time {
   display: inline-flex;
