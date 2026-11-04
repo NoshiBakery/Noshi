@@ -1222,3 +1222,71 @@ textarea:focus,
   color: var(--ink);
   unicode-bidi: isolate;
 }
+
+/* Checkout: same Arabic typography in both pickers, with room for descenders. */
+#dateControl,
+#timeControl {
+  min-height: 46px;
+  height: 46px;
+  overflow: visible;
+}
+#dateControl #dateText,
+#timeControl .time-select {
+  font-family: Thmanyah, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+#dateControl #dateText {
+  display: block;
+  min-height: 23px;
+  padding-block: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#timeControl .time-select {
+  padding-block: 0;
+  -webkit-text-size-adjust: 100%;
+}
+@media (max-width: 340px) {
+  #dateControl #dateText,
+  #timeControl .time-select { font-size: 12px; }
+}
+
+/* Coupon feedback: success, error and in-progress have distinct meaning. */
+#couponSection #couponMessage:not(:empty) {
+  margin: 9px 0 0;
+  padding: 9px 11px;
+  border: 1px solid #e3d9dc;
+  border-radius: 10px;
+  background: #f7f3f4;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+#couponSection #couponMessage[data-state="error"]:not(:empty) {
+  background: #fff0f0;
+  border-color: #f2c5c8;
+  color: #aa293c;
+}
+#couponSection #couponMessage[data-state="success"]:not(:empty) {
+  background: #eaf7ee;
+  border-color: #b5dfc0;
+  color: #176738;
+}
+#couponDiscountRow:not([hidden]) {
+  padding: 9px 10px;
+  border: 1px solid #b5dfc0;
+  border-radius: 10px;
+  background: #eaf7ee;
+  color: #176738;
+  font-weight: 700;
+}
+#couponDiscountRow b,
+#couponDiscountRow span {
+  color: #176738;
+}

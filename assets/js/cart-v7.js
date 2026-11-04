@@ -106,11 +106,12 @@
     return JSON.stringify(currentCouponItems());
   }
 
-  function clearCoupon(message = "") {
+  function clearCoupon(message = "", state = message ? "error" : "neutral") {
     couponRequestVersion++;
     elements.couponApply.disabled = false;
     appliedCoupon = null;
     elements.couponMessage.textContent = message;
+    elements.couponMessage.dataset.state = state;
     elements.couponRemove.hidden = true;
     elements.couponDiscountRow.hidden = true;
     elements.couponDiscountAmount.textContent = "− 0 ريال";
@@ -158,6 +159,7 @@
     elements.couponDiscountRow.hidden = true;
     elements.couponApply.disabled = true;
     elements.couponMessage.textContent = "جاري التحقق من الكود...";
+    elements.couponMessage.dataset.state = "neutral";
 
     try {
       const response = await fetch(COUPON_PREVIEW_URL, {
@@ -194,6 +196,7 @@
       elements.couponRemove.hidden = false;
       elements.couponMessage.textContent =
         data.message || "تم تطبيق كود الخصم بنجاح.";
+      elements.couponMessage.dataset.state = "success";
 
       resetIdempotency();
       renderCouponTotal();
@@ -214,7 +217,7 @@
 
   elements.couponRemove.addEventListener("click", () => {
     elements.couponInput.value = "";
-    clearCoupon("تمت إزالة كود الخصم.");
+    clearCoupon("تمت إزالة كود الخصم.", "neutral");
     renderCouponTotal();
   });
 
