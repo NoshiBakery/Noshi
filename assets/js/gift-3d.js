@@ -168,9 +168,12 @@ function populateGift(data){
   const sender=safeText(data.senderName,80)||'مُهدية تحبّك';
   const recipient=safeText(data.recipientName,80)||'يا جميلة';
   $('.story h1').innerHTML='هناك من أراد أن يُسعد <span class="heartword">قلبكِ.</span>';
-  $('#senderBadge').textContent=`من ${sender}`;
-  $('.letter p').textContent=safeText(data.message,600);
-  $('.signature span').textContent = data.message?.includes(`من ${sender}`) ? '' : `من ${sender}`;
+  // The suggested signature belongs only at the end of the paper letter.
+  const signatureLine = `من ${sender} 💕`;
+  const messageText = safeText(data.message,600);
+  $('.letter p').textContent = messageText.endsWith(`\n${signatureLine}`)
+    ? messageText.slice(0, -(signatureLine.length + 1)) : messageText;
+  $('.signature span').textContent = `من ${sender}`;
   const products=$('.products');products.replaceChildren();
   const resolved=data.items.slice(0,32).map(resolvedItem);
   for(const item of resolved){

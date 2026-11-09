@@ -7,6 +7,7 @@
 
   const WHATSAPP_NUMBER = "966576059229";
   const CHECKOUT_KEY = "noshi-checkout-v4";
+  const GIFT_DRAFT_KEY = "noshi-gift-draft-v1";
   const IDEMPOTENCY_KEY = "noshi-order-idempotency-v1";
   const ORDER_API_URL = String(window.NOSHI_ORDER_API_URL || "").trim();
   const DELIVERY = Object.freeze({
@@ -81,7 +82,7 @@
     enabled: document.getElementById("giftEnabled"), fields: document.getElementById("giftFields"),
     sender: document.getElementById("giftSenderName"), senderPhone: document.getElementById("giftSenderPhone"),
     recipient: document.getElementById("giftRecipientName"), recipientPhone: document.getElementById("giftRecipientPhone"),
-    greeting: document.getElementById("giftGreeting"), message: document.getElementById("giftMessage"),
+    message: document.getElementById("giftMessage"),
     consent: document.getElementById("giftConsent"), error: document.getElementById("giftError"),
     hint: document.getElementById("giftScheduleHint")
   };
@@ -95,9 +96,21 @@
   let currentMessageMode = "suggested";
 
   function updateSuggestedMessage() {
-    if (document.querySelector('input[name="giftMessageMode"]:checked')?.value !== "suggested" || messageEdited) return;
-    lastSuggested = suggestedGiftMessage();
-    gift.message.value = lastSuggested;
+    if (document.querySelector('input[name="giftMessageMode"]:checked')?.value !== "suggested") return;
+    const next = suggestedGiftMessage();
+    if (!messageEdited || gift.message.value === lastSuggested) {
+      gift.message.value = next;
+      messageEdited = false;
+    } else if (lastSuggested) {
+      // If she edited the suggested wording, update the sender's closing line only.
+      // Never overwrite the rest of her message or move the caret while she types.
+      const previousSignature = lastSuggested.split("\n").at(-1);
+      const nextSignature = next.split("\n").at(-1);
+      if (gift.message.value.includes(previousSignature)) {
+        gift.message.value = gift.message.value.replace(previousSignature, nextSignature);
+      }
+    }
+    lastSuggested = next;
   }
   updateSuggestedMessage();
   const giftMode = () => document.querySelector('input[name="giftScheduleMode"]:checked')?.value || "";
@@ -117,7 +130,6 @@
     document.getElementById("giftScheduleStep").hidden = !on;
     document.getElementById("scheduleSection").hidden = on && giftMode() !== "sender";
     updateSuggestedMessage();
-    gift.greeting.textContent = gift.sender.value.trim() ? `يا هلا ${gift.sender.value.trim()}! 💗 خلّينا نجهز هديتك بطريقة تفرح اللي تحبين.` : "خلّينا نجهز هديتك بطريقة تفرح اللي تحبين 💗";
     gift.hint.textContent = giftMode() === "sender" ? "بنرسل هديتك للمستلمة، ونتأكد معها إذا الموعد اللي اخترتيه يناسبها قبل تأكيد التوصيل." : giftMode() === "recipient" ? "💌 خلّي الباقي علينا! بنرسل رابط الهدية للمستلمة، وهي تختار التاريخ والوقت اللي يناسبانها." : "";
     if (on && !gift.senderPhone.value.trim() && elements.phone.value.trim()) gift.senderPhone.value = elements.phone.value;
     if (on) elements.phone.value = gift.senderPhone.value;
@@ -172,13 +184,16 @@
   }));
   document.getElementById("giftPreviewSelected").addEventListener("click", () => openGiftPreview(giftTheme()));
   gift.message.addEventListener("input", () => {
-    if (document.querySelector('input[name="giftMessageMode"]:checked')?.value === "suggested") messageEdited = gift.message.value !== lastSuggested;
-    resetIdempotency();
+    if (currentMessageMode === "suggested") messageEdited = gift.message.value !== lastSuggested;
+    saveGiftDraft(); resetIdempotency();
   });
-  [gift.sender,gift.senderPhone,gift.recipient,gift.recipientPhone,gift.consent].forEach(el=>el.addEventListener("input",()=>{syncGift();resetIdempotency();}));
-  gift.enabled.addEventListener("change",()=>{syncGift();resetIdempotency();});
+  [gift.sender,gift.senderPhone,gift.recipient,gift.recipientPhone,gift.consent].forEach(el=>{
+    el.addEventListener("input",()=>{syncGift();saveGiftDraft();resetIdempotency();});
+    el.addEventListener("change",()=>{syncGift();saveGiftDraft();resetIdempotency();});
+  });
+  gift.enabled.addEventListener("change",()=>{syncGift();saveGiftDraft();resetIdempotency();});
   gift.senderPhone.addEventListener("input",()=>{elements.phone.value=gift.senderPhone.value;});
-  document.querySelectorAll('input[name="giftScheduleMode"],input[name="giftTheme"]').forEach(el=>el.addEventListener("change",()=>{syncGift();resetIdempotency();}));
+  document.querySelectorAll('input[name="giftScheduleMode"],input[name="giftTheme"]').forEach(el=>el.addEventListener("change",()=>{syncGift();saveGiftDraft();resetIdempotency();}));
   document.querySelectorAll('input[name="giftMessageMode"]').forEach(el=>el.addEventListener("change",()=>{
     if (!el.checked) return;
     if (currentMessageMode === "custom") savedCustomMessage = gift.message.value;
@@ -189,11 +204,21 @@
       messageEdited = true;
       gift.message.focus();
     } else {
-      gift.message.value = savedSuggestedMessage === null ? suggestedGiftMessage() : savedSuggestedMessage;
-      messageEdited = gift.message.value !== suggestedGiftMessage();
-      lastSuggested = suggestedGiftMessage();
+      const nextSuggested = suggestedGiftMessage();
+      if (savedSuggestedMessage === null || savedSuggestedMessage === lastSuggested) {
+        gift.message.value = nextSuggested;
+        messageEdited = false;
+      } else {
+        // A hand-edited suggestion keeps its wording but refreshes its signature.
+        const oldSignature = lastSuggested.split("\n").at(-1);
+        const newSignature = nextSuggested.split("\n").at(-1);
+        gift.message.value = oldSignature && savedSuggestedMessage.includes(oldSignature)
+          ? savedSuggestedMessage.replace(oldSignature, newSignature) : savedSuggestedMessage;
+        messageEdited = gift.message.value !== nextSuggested;
+      }
+      lastSuggested = nextSuggested;
     }
-    syncGift();resetIdempotency();
+    syncGift();saveGiftDraft();resetIdempotency();
   }));
 
   // =============================================
@@ -647,8 +672,52 @@
     );
   }
 
+  function saveGiftDraft() {
+    try {
+      sessionStorage.setItem(GIFT_DRAFT_KEY, JSON.stringify({
+        enabled: gift.enabled.checked,
+        sender: gift.sender.value, senderPhone: gift.senderPhone.value,
+        recipient: gift.recipient.value, recipientPhone: gift.recipientPhone.value,
+        message: gift.message.value, messageMode: currentMessageMode,
+        edited: messageEdited, suggested: savedSuggestedMessage,
+        custom: savedCustomMessage, lastSuggested,
+        theme: giftTheme(), scheduleMode: giftMode(), consent: gift.consent.checked
+      }));
+    } catch (_) { /* Storage unavailable: the live form remains usable. */ }
+  }
+
+  function restoreGiftDraft() {
+    let state;
+    try { state = JSON.parse(sessionStorage.getItem(GIFT_DRAFT_KEY) || "null"); }
+    catch (_) { return; }
+    if (!state || typeof state !== "object") return;
+    gift.enabled.checked = state.enabled === true;
+    for (const [key, el] of [["sender",gift.sender],["senderPhone",gift.senderPhone],["recipient",gift.recipient],["recipientPhone",gift.recipientPhone]]) {
+      if (typeof state[key] === "string") el.value = state[key].slice(0, key.toLowerCase().includes("phone") ? 16 : 80);
+    }
+    if (["rose","luxury","joy"].includes(state.theme)) {
+      const input = document.querySelector(`input[name="giftTheme"][value="${state.theme}"]`);
+      if (input) input.checked = true;
+    }
+    if (["sender","recipient"].includes(state.scheduleMode)) {
+      const input = document.querySelector(`input[name="giftScheduleMode"][value="${state.scheduleMode}"]`);
+      if (input) input.checked = true;
+    }
+    currentMessageMode = state.messageMode === "custom" ? "custom" : "suggested";
+    const selected = document.querySelector(`input[name="giftMessageMode"][value="${currentMessageMode}"]`);
+    if (selected) selected.checked = true;
+    savedSuggestedMessage = typeof state.suggested === "string" ? state.suggested : null;
+    savedCustomMessage = typeof state.custom === "string" ? state.custom.slice(0,600) : "";
+    lastSuggested = typeof state.lastSuggested === "string" ? state.lastSuggested.slice(0,600) : suggestedGiftMessage();
+    gift.message.value = typeof state.message === "string" ? state.message.slice(0,600) : (currentMessageMode === "custom" ? savedCustomMessage : lastSuggested);
+    messageEdited = currentMessageMode === "suggested" && gift.message.value !== lastSuggested;
+    gift.consent.checked = state.consent === true;
+    updateSuggestedMessage();
+  }
+
   function clearCheckout() {
     removeStorage(CHECKOUT_KEY);
+    try { sessionStorage.removeItem(GIFT_DRAFT_KEY); } catch (_) { /* no-op */ }
     document.querySelectorAll('input[name="delivery"]').forEach((input) => {
       input.checked = false;
     });
@@ -1015,7 +1084,7 @@
         : "تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.";
       document.getElementById("checkoutWhatsappHandoff").hidden = false;
       elements.successWhatsApp.hidden = false;
-      startWhatsAppCountdown(10);
+      startWhatsAppCountdown(30);
     } catch (error) {
       console.error("Noshi order error", error);
       if (error?.message === "ORDER_API_NOT_CONFIGURED") {
@@ -1051,6 +1120,7 @@ elements.formMessage.textContent =
   // نبني القائمة أولًا حتى يمكن استعادة الوقت المحفوظ.
   populateTimeOptions();
   restoreCheckout();
+  restoreGiftDraft();
 
   // يتحقق من التاريخ المحفوظ، ثم يعيد بناء الأوقات حسب التاريخ:
   // اليوم = إغلاق الأوقات المنتهية، يوم قادم = جميع الأوقات متاحة.

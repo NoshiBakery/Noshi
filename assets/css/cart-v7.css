@@ -1452,3 +1452,8 @@ body.gift-checkout .coupon-action{background:#994b6c;color:white}
   border-radius:9px;background:#fff0f5;color:#6d3850;
   font-size:13px;line-height:1.9;
 }
+
+/* Gift editor: natural Arabic reading/writing order, including multi-line text. */
+.gift-panel #giftMessage{direction:rtl;text-align:right;unicode-bidi:plaintext;white-space:pre-wrap;overflow-wrap:break-word;line-height:1.95}
+/* Appointment helper must stand apart from the already pink selected cards. */
+.gift-panel #giftScheduleHint:not(:empty){background:#f1eee9;border:1px solid #d6c8c0;border-inline-start:4px solid #795260;color:#4b3541;padding:12px 14px;margin:13px 0;border-radius:11px}
