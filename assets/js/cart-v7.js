@@ -130,7 +130,10 @@
     document.getElementById("giftScheduleStep").hidden = !on;
     document.getElementById("scheduleSection").hidden = on && giftMode() !== "sender";
     updateSuggestedMessage();
-    gift.hint.textContent = giftMode() === "sender" ? "بنرسل هديتك للمستلمة، ونتأكد معها إذا الموعد اللي اخترتيه يناسبها قبل تأكيد التوصيل." : giftMode() === "recipient" ? "💌 خلّي الباقي علينا! بنرسل رابط الهدية للمستلمة، وهي تختار التاريخ والوقت اللي يناسبانها." : "";
+    const scheduleMode = giftMode();
+    gift.hint.hidden = !on || !scheduleMode;
+    document.getElementById("giftScheduleHintTitle").textContent = scheduleMode === "sender" ? "موعد مبدئي" : "المستلمة تختار موعدها";
+    document.getElementById("giftScheduleHintText").textContent = scheduleMode === "sender" ? "نتأكد معها قبل اعتماد موعد التوصيل." : "بنرسل لها رابط الهدية لتحدد اليوم والوقت المناسب.";
     if (on && !gift.senderPhone.value.trim() && elements.phone.value.trim()) gift.senderPhone.value = elements.phone.value;
     if (on) elements.phone.value = gift.senderPhone.value;
     document.getElementById("giftPreviewSelected").disabled = !giftTheme();
@@ -1078,10 +1081,10 @@
       resetSuccessDialog();
       openDialog(elements.successDialog);
       // Keep the original success ticket, countdown, WhatsApp button and handoff.
-      // Gift orders only get an additional explanatory line; they must not hide it.
-      document.getElementById("checkoutSuccessMessage").textContent = completedGift
-        ? "وصل طلب هديتك لنوشي 🎁 فريقنا سيتواصل مع المستلمة لإرسال رابط الهدية والتأكد من موعد التوصيل. أرسلي رقم الطلب لنا على واتساب للمتابعة."
-        : "تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.";
+      // Both order types keep the original success ticket and WhatsApp handoff.
+      // Keep the original message for ordinary orders; gifts get concise, separate steps.
+      document.getElementById("checkoutSuccessMessage").hidden = completedGift;
+      document.getElementById("checkoutGiftSuccessNote").hidden = !completedGift;
       document.getElementById("checkoutWhatsappHandoff").hidden = false;
       elements.successWhatsApp.hidden = false;
       startWhatsAppCountdown(30);

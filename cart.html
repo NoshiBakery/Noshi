@@ -6,7 +6,7 @@
   <title>سلة الطلب | نوشي بيكري</title>
   <meta name="theme-color" content="#8f4058" />
   <link rel="icon" href="images/logo.png" />
-  <link rel="stylesheet" href="assets/css/cart-v7.css?v=gift-round2-20261109" />
+  <link rel="stylesheet" href="assets/css/cart-v7.css?v=gift-note-tidy-20261109" />
 </head>
 <body>
   <header class="topbar">
@@ -88,7 +88,10 @@
                 <label class="gift-radio-card"><input type="radio" name="giftScheduleMode" value="sender" /><span>أنا أحدد الموعد بنفسي<small>نستأذن المستلمة قبل اعتماد الموعد</small></span></label>
                 <label class="gift-radio-card"><input type="radio" name="giftScheduleMode" value="recipient" /><span>المستلمة تختار الموعد<small>نرسل لها رابط الهدية لتختار وقتها</small></span></label>
               </div>
-              <p class="gift-schedule-hint" id="giftScheduleHint" aria-live="polite"></p>
+              <div class="gift-schedule-hint" id="giftScheduleHint" role="status" aria-live="polite" hidden>
+                <span class="gift-hint-icon" aria-hidden="true">✦</span>
+                <span class="gift-hint-body"><strong id="giftScheduleHintTitle"></strong><span id="giftScheduleHintText"></span></span>
+              </div>
               <label class="gift-consent"><input id="giftConsent" type="checkbox" /><span>أوافق على تواصل فريق نوشي مع المستلمة لتنسيق توصيل الهدية. <em>*</em></span></label>
             </div>
             <p class="error" id="giftError" role="alert"></p>
@@ -208,6 +211,11 @@
       </div>
 
       <p class="success-message" id="checkoutSuccessMessage">تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.</p>
+      <div class="gift-success-next" id="checkoutGiftSuccessNote" hidden>
+        <strong>وش يصير بعد الطلب؟</strong>
+        <div class="gift-success-point"><span aria-hidden="true">1</span><p>نتواصل مع المستلمة لإرسال رابط الهدية وتأكيد الموعد.</p></div>
+        <div class="gift-success-point"><span aria-hidden="true">2</span><p>أرسلي رقم الطلب لنا على واتساب للمتابعة.</p></div>
+      </div>
 
       <div class="whatsapp-handoff" id="checkoutWhatsappHandoff" aria-live="polite">
         <p>سيتم تحويلك تلقائيًا إلى واتساب خلال <b id="whatsAppCountdown">10</b> ثوانٍ</p>
@@ -232,6 +240,6 @@
   <script src="assets/js/offers-v7.js" defer></script>
   <script src="assets/js/cart-store-v7.js" defer></script>
   <script src="assets/js/order-api-config-v1.js" defer></script>
-  <script src="assets/js/cart-v7.js?v=gift-round2-20261109" defer></script><script src="assets/js/display-format.js?v=1.0.0" defer></script>
+  <script src="assets/js/cart-v7.js?v=gift-note-tidy-20261109" defer></script><script src="assets/js/display-format.js?v=1.0.0" defer></script>
 </body>
 </html>

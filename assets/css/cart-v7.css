@@ -1457,3 +1457,28 @@ body.gift-checkout .coupon-action{background:#994b6c;color:white}
 .gift-panel #giftMessage{direction:rtl;text-align:right;unicode-bidi:plaintext;white-space:pre-wrap;overflow-wrap:break-word;line-height:1.95}
 /* Appointment helper must stand apart from the already pink selected cards. */
 .gift-panel #giftScheduleHint:not(:empty){background:#f1eee9;border:1px solid #d6c8c0;border-inline-start:4px solid #795260;color:#4b3541;padding:12px 14px;margin:13px 0;border-radius:11px}
+
+
+/* Gift-only explanatory content: short, scan-friendly steps instead of prose. */
+.gift-panel #giftScheduleHint[hidden],
+.success-dialog #checkoutGiftSuccessNote[hidden]{display:none}
+.gift-panel #giftScheduleHint:not([hidden]){
+  display:flex;align-items:flex-start;gap:11px;
+  margin:13px 0;padding:12px 13px;
+  border:1px solid #ddd4cd;border-inline-start:3px solid #86566a;
+  border-radius:12px;background:#f3f1ee;color:#563944;
+  text-align:start;line-height:1.65;
+}
+.gift-hint-icon{display:grid;place-items:center;width:26px;height:26px;flex:0 0 auto;
+  border-radius:9px;background:#e7dde0;color:#79455e;font-size:15px}
+.gift-hint-body{display:grid;gap:3px;min-width:0}
+.gift-hint-body strong{font-size:13px;color:#573349;font-weight:700}
+.gift-hint-body>span{font-size:12px;color:#695963}
+.success-dialog #checkoutGiftSuccessNote{width:100%;max-width:345px;box-sizing:border-box;
+  text-align:start;margin:0 auto;padding:13px 14px;border:1px solid #e9dbde;
+  border-radius:15px;background:#fbf6f7;color:#59424b}
+.gift-success-next>strong{display:block;font-size:13px;line-height:1.6;margin-bottom:9px;color:#713f56}
+.gift-success-point{display:flex;align-items:flex-start;gap:10px;margin-top:7px}
+.gift-success-point>span{width:22px;height:22px;flex:0 0 auto;border-radius:50%;
+  background:#ead6dd;color:#713f56;display:grid;place-items:center;font-size:12px;font-weight:700}
+.status-dialog-card .gift-success-point p{margin:0;color:#554b4c;font-size:12px;line-height:1.75;text-align:start}
