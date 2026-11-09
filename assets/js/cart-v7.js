@@ -77,7 +77,125 @@
   let lastWhatsAppUrl = "";
   let whatsAppCountdownTimer = null;
   let submitting = false;
-  
+  const gift = {
+    enabled: document.getElementById("giftEnabled"), fields: document.getElementById("giftFields"),
+    sender: document.getElementById("giftSenderName"), senderPhone: document.getElementById("giftSenderPhone"),
+    recipient: document.getElementById("giftRecipientName"), recipientPhone: document.getElementById("giftRecipientPhone"),
+    greeting: document.getElementById("giftGreeting"), message: document.getElementById("giftMessage"),
+    consent: document.getElementById("giftConsent"), error: document.getElementById("giftError"),
+    hint: document.getElementById("giftScheduleHint")
+  };
+  const suggestedGiftMessage = () => {
+    const recipient = gift.recipient.value.trim().slice(0, 80) || "الغالية";
+    const sender = gift.sender.value.trim().slice(0, 80) || "مُهدية تحبّك";
+    return `من قلب يحبّك، إلى قلب يستحق الفرح 💗\nلأنك غالية يا ${recipient}، ولأن وجودك يضيف للدنيا حلاوة، هذي هدية صغيرة محمّلة بكثير من المحبة.\nعسى أيامك كلها فرح وجمال، مثل قلبك. 🌸\nمن ${sender} 💕`;
+  };
+  let lastSuggested = "", messageEdited = false;
+  let savedSuggestedMessage = null, savedCustomMessage = "";
+  let currentMessageMode = "suggested";
+
+  function updateSuggestedMessage() {
+    if (document.querySelector('input[name="giftMessageMode"]:checked')?.value !== "suggested" || messageEdited) return;
+    lastSuggested = suggestedGiftMessage();
+    gift.message.value = lastSuggested;
+  }
+  updateSuggestedMessage();
+  const giftMode = () => document.querySelector('input[name="giftScheduleMode"]:checked')?.value || "";
+  const giftTheme = () => document.querySelector('input[name="giftTheme"]:checked')?.value || "";
+  const giftPreviewDialog = document.getElementById("giftPreviewDialog");
+  const giftPreviewFrame = document.getElementById("giftPreviewFrame");
+  let previewTheme = "rose";
+  const previewNonce = crypto.randomUUID();
+  function syncGift() {
+    const on = gift.enabled.checked;
+    gift.fields.hidden = !on;
+    elements.phoneSection.hidden = on;
+    document.body.classList.toggle("gift-checkout", on);
+    // Keep the message available before recipient details are entered.
+    document.getElementById("giftMessageStep").hidden = !on;
+    document.getElementById("giftThemeStep").hidden = !on;
+    document.getElementById("giftScheduleStep").hidden = !on;
+    document.getElementById("scheduleSection").hidden = on && giftMode() !== "sender";
+    updateSuggestedMessage();
+    gift.greeting.textContent = gift.sender.value.trim() ? `يا هلا ${gift.sender.value.trim()}! 💗 خلّينا نجهز هديتك بطريقة تفرح اللي تحبين.` : "خلّينا نجهز هديتك بطريقة تفرح اللي تحبين 💗";
+    gift.hint.textContent = giftMode() === "sender" ? "بنرسل هديتك للمستلمة، ونتأكد معها إذا الموعد اللي اخترتيه يناسبها قبل تأكيد التوصيل." : giftMode() === "recipient" ? "💌 خلّي الباقي علينا! بنرسل رابط الهدية للمستلمة، وهي تختار التاريخ والوقت اللي يناسبانها." : "";
+    if (on && !gift.senderPhone.value.trim() && elements.phone.value.trim()) gift.senderPhone.value = elements.phone.value;
+    if (on) elements.phone.value = gift.senderPhone.value;
+    document.getElementById("giftPreviewSelected").disabled = !giftTheme();
+  }
+  function previewPayload(theme) {
+    return {
+      theme,
+      senderName: gift.sender.value.trim() || "شخص غالٍ عليكِ",
+      recipientName: gift.recipient.value.trim() || "يا جميلة",
+      message: gift.message.value.trim() || suggestedGiftMessage(),
+      scheduleMode: giftMode(),
+      proposedDate: giftMode() === "sender" ? elements.dateInput.value : "",
+      proposedTime: giftMode() === "sender" ? elements.timeInput.value : "",
+      // Do not pass prices, phone numbers, or payment fields to the preview iframe.
+      items: cart.lines().map(line => ({
+        productId: line.product.id, name: line.variant ? `${line.product.name} — ${line.variant.name}` : line.product.name,
+        quantity: line.quantity, description: line.product.description || "", image: line.product.image || ""
+      }))
+    };
+  }
+  function sendGiftPreview() {
+    if (!giftPreviewFrame.contentWindow || giftPreviewFrame.src === "about:blank") return;
+    giftPreviewFrame.contentWindow.postMessage({type: "NOSHI_GIFT_PREVIEW", nonce: previewNonce, gift: previewPayload(previewTheme)}, window.location.origin);
+  }
+  function selectPreviewTheme(theme) {
+    previewTheme = theme;
+    document.querySelectorAll('[data-preview-theme]').forEach(button => {
+      button.setAttribute("aria-pressed", String(button.dataset.previewTheme === theme));
+    });
+    sendGiftPreview();
+  }
+  function openGiftPreview(theme) {
+    if (!cart.lines().length) return;
+    selectPreviewTheme(theme);
+    if (!giftPreviewDialog.open) giftPreviewDialog.showModal();
+    if (!giftPreviewFrame.src.includes(`gift.html?preview=1&nonce=${encodeURIComponent(previewNonce)}`)) giftPreviewFrame.src = `gift.html?preview=1&nonce=${encodeURIComponent(previewNonce)}`;
+    else sendGiftPreview();
+  }
+  giftPreviewFrame.addEventListener("load", sendGiftPreview);
+  giftPreviewDialog.addEventListener("close", () => {giftPreviewFrame.src = "about:blank";});
+  document.getElementById("giftPreviewClose").addEventListener("click", () => giftPreviewDialog.close());
+  document.getElementById("giftPreviewUse").addEventListener("click", () => {
+    const choice = document.querySelector(`input[name="giftTheme"][value="${previewTheme}"]`);
+    if (choice) {choice.checked = true;choice.dispatchEvent(new Event("change", {bubbles:true}));}
+    giftPreviewDialog.close();
+  });
+  giftPreviewDialog.addEventListener("click", event => {if (event.target === giftPreviewDialog) giftPreviewDialog.close();});
+  document.querySelectorAll('[data-preview-theme]').forEach(button => button.addEventListener("click", () => selectPreviewTheme(button.dataset.previewTheme)));
+  document.querySelectorAll('[data-gift-preview]').forEach(button => button.addEventListener("click", event => {
+    event.preventDefault();event.stopPropagation();openGiftPreview(button.dataset.giftPreview);
+  }));
+  document.getElementById("giftPreviewSelected").addEventListener("click", () => openGiftPreview(giftTheme()));
+  gift.message.addEventListener("input", () => {
+    if (document.querySelector('input[name="giftMessageMode"]:checked')?.value === "suggested") messageEdited = gift.message.value !== lastSuggested;
+    resetIdempotency();
+  });
+  [gift.sender,gift.senderPhone,gift.recipient,gift.recipientPhone,gift.consent].forEach(el=>el.addEventListener("input",()=>{syncGift();resetIdempotency();}));
+  gift.enabled.addEventListener("change",()=>{syncGift();resetIdempotency();});
+  gift.senderPhone.addEventListener("input",()=>{elements.phone.value=gift.senderPhone.value;});
+  document.querySelectorAll('input[name="giftScheduleMode"],input[name="giftTheme"]').forEach(el=>el.addEventListener("change",()=>{syncGift();resetIdempotency();}));
+  document.querySelectorAll('input[name="giftMessageMode"]').forEach(el=>el.addEventListener("change",()=>{
+    if (!el.checked) return;
+    if (currentMessageMode === "custom") savedCustomMessage = gift.message.value;
+    else savedSuggestedMessage = gift.message.value;
+    currentMessageMode = el.value;
+    if (el.value === "custom") {
+      gift.message.value = savedCustomMessage;
+      messageEdited = true;
+      gift.message.focus();
+    } else {
+      gift.message.value = savedSuggestedMessage === null ? suggestedGiftMessage() : savedSuggestedMessage;
+      messageEdited = gift.message.value !== suggestedGiftMessage();
+      lastSuggested = suggestedGiftMessage();
+    }
+    syncGift();resetIdempotency();
+  }));
+
   // =============================================
   // NOSHI COUPONS — CUSTOMER CHECKOUT
   // يبقى مغلقًا إلى أن تنجح اختبارات الحجز والرفض
@@ -535,6 +653,18 @@
       input.checked = false;
     });
     elements.phone.value = "";
+    gift.enabled.checked = false;
+    [gift.sender,gift.senderPhone,gift.recipient,gift.recipientPhone].forEach(el=>el.value="");
+    messageEdited = false;
+    savedSuggestedMessage = null;
+    savedCustomMessage = "";
+    currentMessageMode = "suggested";
+    gift.message.value = suggestedGiftMessage();
+    gift.consent.checked = false;
+    document.querySelectorAll('input[name="giftScheduleMode"]').forEach(el=>el.checked=false);
+    document.querySelectorAll('input[name="giftTheme"]').forEach(el=>el.checked=false);
+    document.querySelector('input[name="giftMessageMode"][value="suggested"]').checked=true;
+    syncGift();
     elements.dateInput.value = "";
     elements.timeInput.value = "";
     elements.notes.value = "";
@@ -690,7 +820,7 @@
     const delivery = selectedDelivery();
     const phone = normalizePhone(elements.phone.value);
 
-    if (!phone) {
+    if (!phone && !gift.enabled.checked) {
       setError(elements.phoneError, elements.phone, "اكتبي رقم جوال سعودي صحيح، مثل 05XXXXXXXX.");
       invalid.push(elements.phoneSection);
     } else clearError(elements.phoneError, elements.phone);
@@ -700,7 +830,9 @@
       invalid.push(elements.deliverySection);
     } else clearError(elements.deliveryError, elements.deliveryGroup);
 
-    if (!elements.dateInput.value) {
+    if (gift.enabled.checked && giftMode() === "recipient") {
+      clearError(elements.dateError, elements.dateControl);
+    } else if (!elements.dateInput.value) {
       setError(elements.dateError, elements.dateControl, "اختاري تاريخ التوصيل.");
       invalid.push(elements.dateField);
     } else if (elements.dateInput.value < localToday()) {
@@ -708,7 +840,9 @@
       invalid.push(elements.dateField);
     } else clearError(elements.dateError, elements.dateControl);
 
-    if (!allowedTimes.has(elements.timeInput.value)) {
+    if (gift.enabled.checked && giftMode() === "recipient") {
+      clearError(elements.timeError, elements.timeControl);
+    } else if (!allowedTimes.has(elements.timeInput.value)) {
       setError(elements.timeError, elements.timeControl, "اختاري وقت التوصيل.");
       invalid.push(elements.timeField);
     } else if (!isDeliveryTimeAvailable(elements.timeInput.value)) {
@@ -718,7 +852,15 @@
       clearError(elements.timeError, elements.timeControl);
     }
 
-    return { valid: invalid.length === 0, first: invalid[0] || null, delivery, phone };
+    if (gift.enabled.checked) {
+      const names=gift.sender.value.trim() && gift.recipient.value.trim() && gift.sender.value.trim().length<=80 && gift.recipient.value.trim().length<=80;
+      const phones=normalizePhone(gift.senderPhone.value) && normalizePhone(gift.recipientPhone.value);
+      const message=gift.message.value.trim();
+      const ok=names && phones && message && message.length<=600 && giftTheme() && giftMode() && gift.consent.checked;
+      gift.error.textContent=ok?"":"أكملي أسماء وجوالات المُهدية والمستلمة ورسالة الهدية والقالب وطريقة الموعد والموافقة على التواصل.";
+      if(!ok) invalid.push(document.getElementById("giftSection"));
+    }
+    return { valid: invalid.length === 0, first: invalid[0] || null, delivery, phone: gift.enabled.checked?normalizePhone(gift.senderPhone.value):phone };
   }
 
   function buildMessage(orderNumber) {
@@ -741,8 +883,8 @@
     const payload = {
       phone: result.phone,
       delivery: document.querySelector('input[name="delivery"]:checked')?.value || "",
-      deliveryDate: elements.dateInput.value,
-      deliveryTime: elements.timeInput.value,
+      deliveryDate: gift.enabled.checked && giftMode()==="recipient" ? "" : elements.dateInput.value,
+      deliveryTime: gift.enabled.checked && giftMode()==="recipient" ? "" : elements.timeInput.value,
       notes: elements.notes.value.trim(),
       items: cart.lines().map((line) => ({
         productId: line.product.id,
@@ -753,6 +895,11 @@
         if (COUPONS_ENABLED && appliedCoupon) {
       payload.couponCode = appliedCoupon.code;
     }
+    if(gift.enabled.checked) payload.gift = {
+      senderName:gift.sender.value.trim(), senderPhone:normalizePhone(gift.senderPhone.value),
+      recipientName:gift.recipient.value.trim(), recipientPhone:normalizePhone(gift.recipientPhone.value),
+      message:gift.message.value.trim(), theme:giftTheme(), scheduleMode:giftMode(), contactConsent:gift.consent.checked
+    };
     const fingerprint = JSON.stringify(payload);
     return { idempotencyKey: getIdempotencyKey(fingerprint), ...payload };
   }
@@ -854,13 +1001,24 @@
       lastWhatsAppUrl = `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
 
       elements.successOrderNumber.textContent = `#${orderNumber}`;
+      const completedGift = gift.enabled.checked;
       cart.clear();
       clearCheckout();
       resetIdempotency();
       render();
       resetSuccessDialog();
       openDialog(elements.successDialog);
-      startWhatsAppCountdown(10);
+      if (completedGift) {
+        stopWhatsAppCountdown();
+        document.getElementById("checkoutSuccessMessage").textContent = "وصلت هديتك لنوشي 💗 فريقنا سيتواصل مع المستلمة لإرسال رابطها وتنسيق موعد الاستلام.";
+        document.getElementById("checkoutWhatsappHandoff").hidden = true;
+        elements.successWhatsApp.hidden = true;
+      } else {
+        document.getElementById("checkoutSuccessMessage").textContent = "تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.";
+        document.getElementById("checkoutWhatsappHandoff").hidden = false;
+        elements.successWhatsApp.hidden = false;
+        startWhatsAppCountdown(10);
+      }
     } catch (error) {
       console.error("Noshi order error", error);
       if (error?.message === "ORDER_API_NOT_CONFIGURED") {
@@ -902,5 +1060,6 @@ elements.formMessage.textContent =
   enforceDeliveryDate();
   populateTimeOptions();
 
+  syncGift();
   render();
 })();

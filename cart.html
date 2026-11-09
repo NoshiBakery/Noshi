@@ -6,7 +6,7 @@
   <title>سلة الطلب | نوشي بيكري</title>
   <meta name="theme-color" content="#8f4058" />
   <link rel="icon" href="images/logo.png" />
-  <link rel="stylesheet" href="assets/css/cart-v7.css" />
+  <link rel="stylesheet" href="assets/css/cart-v7.css?v=gift-integrated-1" />
 </head>
 <body>
   <header class="topbar">
@@ -46,6 +46,55 @@
           </div>
         </section>
 
+        <section class="form-card gift-panel" id="giftSection" aria-labelledby="giftSwitchTitle">
+          <label class="gift-switch" for="giftEnabled">
+            <span class="gift-switch-icon" aria-hidden="true">🎁</span>
+            <span class="gift-switch-copy"><strong id="giftSwitchTitle">أرسلها هدية</strong><small>تجربة جميلة ومفاجأة خاصة لمن تحبين</small></span>
+            <input type="checkbox" id="giftEnabled" aria-controls="giftFields" />
+            <span class="gift-toggle-track" aria-hidden="true"></span>
+          </label>
+          <div id="giftFields" hidden>
+            <p class="gift-intro" id="giftGreeting">خلّينا نجهز هديتك بطريقة تفرح اللي تحبين 💗</p>
+            <div class="gift-step" aria-labelledby="giftPeopleTitle">
+              <h3 id="giftPeopleTitle"><span class="gift-step-number">1</span> لمين الهدية؟</h3>
+              <div class="gift-grid">
+                <label>اسم المُهدية <em>*</em><input id="giftSenderName" class="text-input" maxlength="80" autocomplete="name" placeholder="اسمك الجميل" /></label>
+                <label>جوال المُهدية <em>*</em><input id="giftSenderPhone" class="text-input" type="tel" inputmode="tel" dir="ltr" maxlength="16" autocomplete="tel" placeholder="05XXXXXXXX" /></label>
+                <label>اسم المستلمة <em>*</em><input id="giftRecipientName" class="text-input" maxlength="80" placeholder="اسم اللي بتفرحينها" /></label>
+                <label>جوال المستلمة <em>*</em><input id="giftRecipientPhone" class="text-input" type="tel" inputmode="tel" dir="ltr" maxlength="16" placeholder="05XXXXXXXX" /></label>
+              </div>
+            </div>
+            <div class="gift-step" id="giftMessageStep">
+              <h3><span class="gift-step-number">2</span> 💌 اكتبي كلماتك الحلوة للمستلمة <em>*</em></h3>
+              <div class="gift-option-row" role="radiogroup" aria-label="طريقة كتابة الرسالة">
+                <label class="gift-radio-card"><input type="radio" name="giftMessageMode" value="suggested" checked /><span>رسالة نوشي المقترحة</span></label>
+                <label class="gift-radio-card"><input type="radio" name="giftMessageMode" value="custom" /><span>أكتب رسالتي بنفسي</span></label>
+              </div>
+              <label class="gift-text-label" for="giftMessage">رسالتك داخل الهدية</label>
+              <textarea id="giftMessage" class="text-input" maxlength="600" rows="4" required></textarea>
+            </div>
+            <div class="gift-step" id="giftThemeStep">
+              <h3><span class="gift-step-number">3</span> 🎀 اختاري شكل المفاجأة <em>*</em></h3>
+              <p class="gift-step-tip">اختاري قالبًا واضغطي «جربي الهدية» لتفتحي الصندوق بنفسك.</p>
+              <div class="gift-themes" role="radiogroup" aria-label="قالب الهدية">
+                <label class="gift-theme-choice"><input type="radio" name="giftTheme" value="rose" /><span class="gift-theme-art rose-art" aria-hidden="true">✿</span><span class="gift-theme-name">وردة نوشي<small>حنان وورد</small></span><button type="button" data-gift-preview="rose">جربي الهدية <span aria-hidden="true">↗</span></button></label>
+                <label class="gift-theme-choice"><input type="radio" name="giftTheme" value="luxury" /><span class="gift-theme-art luxury-art" aria-hidden="true">✦</span><span class="gift-theme-name">هدية فاخرة<small>خمري وذهبي</small></span><button type="button" data-gift-preview="luxury">جربي الهدية <span aria-hidden="true">↗</span></button></label>
+                <label class="gift-theme-choice"><input type="radio" name="giftTheme" value="joy" /><span class="gift-theme-art joy-art" aria-hidden="true">✳</span><span class="gift-theme-name">لحظة فرح<small>فرحة وألوان</small></span><button type="button" data-gift-preview="joy">جربي الهدية <span aria-hidden="true">↗</span></button></label>
+              </div>
+              <button type="button" class="gift-preview-launch" id="giftPreviewSelected" disabled>✨ عايني هديتك قبل الإرسال</button>
+            </div>
+            <div class="gift-step" id="giftScheduleStep">
+              <h3><span class="gift-step-number">4</span> 📅 من تختار موعد التوصيل؟ <em>*</em></h3>
+              <div class="gift-option-stack" role="radiogroup" aria-label="طريقة اختيار الموعد">
+                <label class="gift-radio-card"><input type="radio" name="giftScheduleMode" value="sender" /><span>أنا أحدد الموعد بنفسي<small>نستأذن المستلمة قبل اعتماد الموعد</small></span></label>
+                <label class="gift-radio-card"><input type="radio" name="giftScheduleMode" value="recipient" /><span>المستلمة تختار الموعد<small>نرسل لها رابط الهدية لتختار وقتها</small></span></label>
+              </div>
+              <p class="gift-schedule-hint" id="giftScheduleHint" aria-live="polite"></p>
+              <label class="gift-consent"><input id="giftConsent" type="checkbox" /><span>أوافق على تواصل فريق نوشي مع المستلمة لتنسيق توصيل الهدية. <em>*</em></span></label>
+            </div>
+            <p class="error" id="giftError" role="alert"></p>
+          </div>
+        </section>
         <section class="form-card" id="deliverySection">
           <h2>🚚 نطاق التوصيل <em>*</em></h2>
           <div class="delivery-grid" id="deliveryGroup">
@@ -88,7 +137,7 @@
           </div>
         </section>
 
-        <section class="form-card">
+        <section class="form-card" id="notesSection">
           <label class="notes-label" for="notes">ملاحظات الطلب <small>(اختياري)</small></label>
           <textarea id="notes" rows="3" placeholder="مثال: تقليل كمية السكر، أو أي ملاحظة مهمة"></textarea>
         </section>
@@ -132,6 +181,18 @@
     </section>
   </main>
 
+  <dialog class="gift-preview-modal" id="giftPreviewDialog" aria-label="معاينة الهدية التفاعلية">
+    <div class="gift-preview-shell">
+      <div class="gift-preview-top"><div><strong>✨ جربي الهدية بنفسك</strong><small>هذه هي تجربة المستلمة الفعلية — بدون إرسال طلب</small></div><button type="button" id="giftPreviewClose" class="gift-preview-close" aria-label="إغلاق المعاينة">✕ إغلاق</button></div>
+      <div class="gift-preview-tabs" role="group" aria-label="تبديل قالب الهدية">
+        <button type="button" data-preview-theme="rose">🌸 وردة نوشي</button>
+        <button type="button" data-preview-theme="luxury">✨ هدية فاخرة</button>
+        <button type="button" data-preview-theme="joy">🎉 لحظة فرح</button>
+      </div>
+      <button type="button" class="gift-preview-select" id="giftPreviewUse">✓ اعتمدي هذا القالب</button>
+      <iframe id="giftPreviewFrame" title="تجربة فتح الهدية" src="about:blank" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin"></iframe>
+    </div>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <dialog class="status-dialog success-dialog" id="orderSuccessDialog" aria-labelledby="orderSuccessTitle">
     <div class="status-dialog-card success-card" id="orderSuccessMain">
@@ -147,9 +208,9 @@
         <strong class="success-order-number" id="successOrderNumber" dir="ltr">—</strong>
       </div>
 
-      <p class="success-message">تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.</p>
+      <p class="success-message" id="checkoutSuccessMessage">تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.</p>
 
-      <div class="whatsapp-handoff" aria-live="polite">
+      <div class="whatsapp-handoff" id="checkoutWhatsappHandoff" aria-live="polite">
         <p>سيتم تحويلك تلقائيًا إلى واتساب خلال <b id="whatsAppCountdown">10</b> ثوانٍ</p>
         <div class="countdown-track" aria-hidden="true"><span id="whatsAppCountdownBar"></span></div>
       </div>
@@ -172,6 +233,6 @@
   <script src="assets/js/offers-v7.js" defer></script>
   <script src="assets/js/cart-store-v7.js" defer></script>
   <script src="assets/js/order-api-config-v1.js" defer></script>
-  <script src="assets/js/cart-v7.js?v=5.0.0" defer></script><script src="assets/js/display-format.js?v=1.0.0" defer></script>
+  <script src="assets/js/cart-v7.js?v=gift-integrated-1" defer></script><script src="assets/js/display-format.js?v=1.0.0" defer></script>
 </body>
 </html>

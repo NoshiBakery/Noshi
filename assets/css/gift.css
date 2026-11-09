@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@400;450;500;600&display=swap');
+
+:root{--paper:#f7f3ec;--ink:#392d2a;--muted:#8e8177;--wine:#682b3c;--line:#dfd5c9}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif}button,a,input{ -webkit-tap-highlight-color:transparent}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--wine);outline-offset:5px}[hidden]{display:none!important}header{height:106px;margin:0 5.5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{color:var(--wine);font:42px 'Amiri',serif;text-decoration:none;line-height:.9;text-align:center}.brand span{display:block;letter-spacing:4px;font:9px Georgia;margin-top:12px}.header-note{font-size:12px;color:var(--muted)}.icon-button{border:1px solid var(--line);border-radius:30px;background:transparent;padding:8px 17px;font-size:11px;color:var(--ink)}.icon-button span{margin-right:10px}.experience{max-width:1440px;margin:auto;display:grid;grid-template-columns:44% 56%;min-height:730px;padding:55px 5.5% 45px;align-items:center}.story{padding:0 0 0 38px}.eyebrow{font-size:11px;letter-spacing:.6px;color:var(--wine);display:flex;align-items:center;gap:9px}.eyebrow>span{width:5px;height:5px;background:var(--wine);border-radius:50%}h1{font-family:Amiri,Georgia,serif;font-weight:400;font-size:clamp(42px,4.7vw,72px);line-height:1.35;margin:22px 0 12px}h1 em{color:var(--wine);font-style:normal}.intro{font-size:13px;line-height:1.9;color:var(--muted)}.letter{position:relative;margin-top:30px;padding:23px 25px 20px;background:#fffcf5;border:1px solid #e8dfd1;box-shadow:0 7px 20px #6b4c3410;transform:rotate(-1.2deg);max-width:410px}.letter:before{content:'';position:absolute;top:-10px;right:43%;width:60px;height:20px;background:#e3d4b650;transform:rotate(5deg)}.letter-label{font-size:10px;color:var(--muted)}.quote{position:absolute;left:22px;top:11px;font:54px Georgia;color:#d9c5ba}.letter p{font:20px/1.85 Amiri,serif;margin:18px 0 13px}.signature{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--wine)}.heart{font:28px Georgia}.steps{display:flex;align-items:center;gap:10px;margin-top:38px;font-size:10px;color:#ac9f94;white-space:nowrap}.steps span{display:flex;flex-direction:column;gap:8px}.steps b{font:11px Georgia;letter-spacing:1px}.steps i{width:29px;height:1px;background:var(--line);margin-top:14px}.steps .active{color:var(--wine)}.gift-area{position:relative;align-self:stretch;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 43%,#fdfaf4 0,#eee5d857 58%,#e7dbcd18 74%);border-radius:48% 48% 0 0;min-width:0}.scene-top{display:flex;direction:ltr;justify-content:space-between;margin:12px 20px;font:8px Georgia;letter-spacing:2px;color:#ab9583}.scene-no{letter-spacing:1px}#stage{height:430px;position:relative;width:100%;touch-action:pan-y}canvas{display:block;width:100%;height:100%}#gift-hit{position:absolute;inset:13% 13% 7%;background:transparent;border:0;border-radius:40%;cursor:grab}#gift-hit:active{cursor:grabbing}#loading{position:absolute;top:45%;width:100%;text-align:center;font-size:13px;color:var(--muted)}.scene-caption{text-align:center;margin-top:-5px;z-index:1}.spark{color:#aa895c;font:27px Georgia}.scene-caption>p{font:23px Amiri;margin:4px 0 14px}.primary{background:var(--wine);color:#fffaf3;border:1px solid var(--wine);padding:13px 26px;min-width:205px;font-size:12px;display:inline-flex;align-items:center;justify-content:space-between;gap:30px;transition:background .2s,transform .2s}.primary:hover{background:#4c1d2d;transform:translateY(-2px)}.primary:disabled{opacity:.6;cursor:wait}.primary span{font-size:19px}.scene-caption .hint{font-family:inherit;font-size:10px;color:var(--muted);margin:13px 0}.text-button{background:none;border:0;color:var(--muted);font-size:11px;padding:8px}.reveal{border-top:1px solid var(--line);padding:65px 5.5%;animation:appear 1s both}.section-title{text-align:center}.section-title .eyebrow{justify-content:center}h2{font:40px/1.3 Amiri;margin:14px 0} .section-title>p:last-child{color:var(--muted);font-size:12px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:1060px;margin:40px auto 75px}.products article{text-align:center}.product-art{height:255px;background:#eee6db;display:flex;align-items:center;justify-content:center;overflow:hidden}.products h3{font:25px Amiri;margin:8px 0}.products p{font-size:11px;color:var(--muted);margin:5px}.products .product-type{letter-spacing:1px;color:var(--wine);font-size:10px;margin-top:20px}.perfume{position:relative;width:86px;height:120px;background:linear-gradient(110deg,#c9945570,#f8e6bcba 30%,#ba7d3eaa);border:3px solid #dccbaa;border-radius:14px 14px 8px 8px;box-shadow:13px 18px 19px #61452925,inset 4px 0 4px #ffffffad;transform:rotate(-8deg);display:grid;place-items:center}.perfume>div{position:absolute;width:42px;height:35px;background:linear-gradient(90deg,#502932,#9a5965,#43212c);top:-37px;border-radius:3px}.perfume>span{font:8px Georgia;text-align:center;letter-spacing:2px;background:#f4ead5;padding:12px 5px;width:64px}.perfume b{font-size:13px;display:block;margin:6px 0}.perfume small{font-size:4px;letter-spacing:1px}.candle-art{background:#ebe5dc}.candle{height:110px;width:101px;border-radius:0 0 22px 22px;position:relative;background:linear-gradient(90deg,#bfa98f,#f9ebd3 35%,#e9d7b7 70%,#bda184);box-shadow:15px 18px 18px #694d2522;display:grid;place-items:center}.candle:before{content:'';position:absolute;top:-11px;width:100%;height:23px;background:radial-gradient(ellipse,#f4e6c9 60%,#b8a186 64%,#ddc9a8 72%);border-radius:50%}.candle i{position:absolute;width:2px;height:10px;background:#473528;top:-8px}.candle span{font:10px Georgia;letter-spacing:2px;text-align:center}.candle b{display:block;font:italic 11px Georgia;letter-spacing:0;margin-top:9px}.roses-art{background:#eee2da}.rose-bunch{width:165px;height:190px;position:relative;transform:rotate(10deg)}.rose-bunch span{position:absolute;font:87px Georgia;color:#a25564;text-shadow:2px 4px 4px #6d26342a;z-index:2}.rose-bunch span:nth-child(1){left:8px;top:17px}.rose-bunch span:nth-child(2){left:60px;top:13px;color:#c7848e}.rose-bunch span:nth-child(3){left:35px;top:-15px;color:#dba3a4}.rose-bunch span:nth-child(4){left:44px;top:52px;color:#bd7585}.rose-bunch span:nth-child(5){left:92px;top:48px;color:#e4b7b3}.rose-bunch i{position:absolute;left:22px;top:80px;width:130px;height:125px;clip-path:polygon(0 0,100% 0,63% 100%,37% 100%);background:linear-gradient(100deg,#d6bea0,#f9ebd6,#d0b494)}.delivery{max-width:1060px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:70px;border-top:1px solid var(--line);padding-top:50px}.delivery-intro>p{font-size:13px;line-height:1.9;color:var(--muted)}.delivery-icon{font:30px Georgia;color:var(--wine)}.delivery-intro .demo-note{font-size:10px;margin-top:26px}.delivery form>label,legend{font-size:12px;margin-bottom:12px;display:block}input[type=date]{width:100%;padding:14px;background:#fffbf5;border:1px solid var(--line);color:var(--ink);min-height:52px}fieldset{padding:0;margin:24px 0;border:0}legend{width:100%}legend small{float:left;color:var(--muted);font-size:10px}.times{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.times label{position:relative;cursor:pointer}.times input{position:absolute;opacity:0;inset:0}.times span{display:block;padding:14px 6px;text-align:center;border:1px solid var(--line);font-size:11px;transition:.2s}.times b{display:block;font-weight:400;font-size:11px;margin-top:6px}.times input:checked+span{border-color:var(--wine);background:#682b3c0a;color:var(--wine)}.times input:focus-visible+span{outline:2px solid var(--wine)}form>.primary{width:100%}#confirmation{font-size:12px;color:#42644b;background:#e8eee4;padding:16px;margin-top:15px;line-height:1.8}footer{margin:0 5.5%;padding:25px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px}footer>span:first-child{font:26px Amiri;color:var(--wine)}footer small{font:10px 'IBM Plex Sans Arabic';margin-right:15px;color:var(--muted)}footer b{font:17px Georgia;margin-right:6px}@keyframes appear{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}@media(min-width:1500px){#stage{height:490px}.experience{min-height:790px}}@media(max-width:760px){header{height:83px}.header-note{display:none}.brand{font-size:33px}.experience{display:flex;flex-direction:column;padding-top:30px;gap:20px}.story{padding:0;width:100%}h1{font-size:44px;margin:15px 0 8px}h1 br{display:none}.intro{font-size:12px}.letter{max-width:100%;padding:19px 22px;margin-top:22px}.letter p{font-size:19px;margin:12px 0}.steps{justify-content:center;margin:26px 0 0}.gift-area{width:100%;padding-top:15px}#stage{height:340px}.scene-top{font-size:7px}.scene-caption{margin-top:-5px}.reveal{padding-top:40px}.products{gap:13px;margin-bottom:45px}.product-art{height:165px}.perfume{transform:scale(.78) rotate(-8deg)}.candle{transform:scale(.75)}.rose-bunch{transform:scale(.67) rotate(10deg);flex-shrink:0}.products h3{font-size:21px}.products p{font-size:9px}.delivery{grid-template-columns:1fr;gap:25px;padding-top:30px}.delivery h2{font-size:34px}.delivery-intro .demo-note{margin-top:12px}footer small{display:none}h2{font-size:34px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+.products{grid-template-columns:repeat(3,minmax(0,1fr))}.products article{min-width:0}.product-art{min-width:0}
+
+.products.products-photos{grid-template-columns:repeat(2,minmax(0,1fr));max-width:780px;gap:30px}
+.products-photos .product-art{height:auto;aspect-ratio:1;background:#eee7de}
+.products-photos img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.products-photos article:hover img{transform:scale(1.035)}
+@media(max-width:760px){.products.products-photos{gap:16px}.products-photos h3{font-size:23px}}
+/* NOSHI preview: simplify guidance while preserving WebGL gift geometry and animation. */
+.letter-label{display:block;font-size:18px;font-weight:600;color:var(--wine);letter-spacing:0}
+.letter .signature{font-size:14px;font-weight:600}
+.scene-caption{padding:0 14px 22px}
+.scene-caption #instruction{font:clamp(22px,3vw,29px)/1.5 'Amiri',serif;color:var(--wine);margin:8px 0 14px}
+.details-button{border:0;border-radius:16px;background:var(--wine);color:#fff;padding:16px 30px;font-size:17px;font-weight:600;min-height:56px;box-shadow:0 9px 22px #682b3c36}
+.details-button:hover{filter:brightness(.92)}
+.details-button:focus-visible,.choice-button:focus-visible{outline:3px solid #9d6d44;outline-offset:3px}
+#gift-hit:focus-visible{outline:4px solid var(--wine);outline-offset:-13px}
+.products-photos .product-art{padding:12px;aspect-ratio:1;background:#f6f0e8;border-radius:20px}
+.products-photos img{object-fit:contain;max-width:100%;max-height:100%;border-radius:12px}
+.products article{padding:12px;border:1px solid var(--line);background:#fffaf5;border-radius:22px}
+.products .product-description{font-size:13px;line-height:1.8;color:var(--muted);margin:10px 8px 12px}
+.proposed-appointment{padding:24px;border:1px solid var(--line);background:#fffcf7;border-radius:20px}
+.proposed-heading{font-size:17px;line-height:1.8;margin:0 0 8px}
+.proposed-value{direction:ltr;text-align:center;font-size:21px;font-weight:600;color:var(--wine);margin:12px 0 20px}
+.proposed-options{display:grid;gap:12px}
+.choice-button{width:100%;min-height:58px;padding:12px 16px;border-radius:14px;border:1px solid var(--wine);background:var(--wine);color:white;font-size:15px;font-weight:600}
+.choice-button.secondary{background:#fff9f3;color:var(--wine)}
+.delivery{align-items:start}
+.delivery-intro h2{font-size:clamp(29px,3.5vw,42px)}
+.delivery form{background:#fffcf7;padding:24px;border:1px solid var(--line);border-radius:20px}
+.delivery .primary{border-radius:14px;min-height:56px;font-size:15px}
+.times{grid-template-columns:repeat(3,minmax(0,1fr))}
+.times span{border-radius:12px;min-height:70px}
+@media(max-width:760px){.story h1{font-size:clamp(35px,9vw,44px)}.gift-area{border-radius:32px 32px 0 0}.delivery form{padding:16px}.products.products-photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.products article{padding:8px}.products-photos .product-art{padding:6px}.products .product-description{font-size:12px}.times{grid-template-columns:1fr}.times span{min-height:52px}.scene-caption{padding-bottom:24px}}
+
+/* NOSHI integration: minimal adaptive layer. The 3D gift and ribbon geometry remain intact. */
+:root{--paper:#fbf6f1;--wine:#873b57}
+body{font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif}
+body[data-theme="rose"]{--paper:#fff7fa;--wine:#a44770;--line:#f0d5df}
+body[data-theme="luxury"]{--paper:#f6eff0;--wine:#6b2543;--line:#dac1c9}
+body[data-theme="joy"]{--paper:#fff8ec;--wine:#a25d40;--line:#f0d8c2}
+.story h1{font-family:Georgia,Tahoma,sans-serif;font-weight:700;font-size:clamp(29px,3.5vw,54px);line-height:1.6}
+.sender-pill{display:inline-flex;padding:9px 17px;border:1px solid var(--line);background:#ffffff88;border-radius:999px;font-size:15px;color:var(--wine)}
+.letter{max-width:760px;margin:12px auto 32px;transform:none;padding:30px clamp(20px,4vw,44px)}
+.letter-label{font-size:clamp(22px,2.6vw,30px);font-weight:700}
+.letter p{font-size:clamp(16px,1.9vw,20px);line-height:2.1;white-space:pre-wrap;overflow-wrap:anywhere}
+#gift-hit{touch-action:manipulation;cursor:pointer}
+#gift-hit:disabled{cursor:default}
+.details-button{min-height:56px;padding:11px 28px;font-size:16px}
+#reveal{max-width:1150px;margin:auto;padding:24px 5% 75px}
+.products.products-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:16px}
+.products article{min-width:0;box-shadow:0 10px 30px #3e1b2520}
+.products-photos .product-art{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.products-photos img{display:block;width:100%;height:100%;object-fit:contain}
+.gift-qty{display:block;margin:4px 10px 12px;font-size:13px;color:var(--wine);font-weight:700}
+.delivery{max-width:800px;margin:30px auto 0}
+.delivery select,.delivery input[type=date]{min-height:55px;border-radius:12px;border:1px solid var(--line);padding:12px;width:100%;background:#fff}
+.delivery label,.delivery legend{font-size:16px;font-weight:700}
+.delivery .primary,.choice-button{min-height:56px}
+#confirmation[data-state="error"]{color:#a43143}
+#confirmation[data-state="success"]{color:#17654b}
+.gift-preview .delivery button{pointer-events:auto}
+@media(max-width:760px){.experience{display:flex;flex-direction:column;padding:30px 4% 20px;gap:15px;min-height:auto}.story{padding:0;text-align:center}.story h1{font-size:clamp(26px,7.5vw,38px)}.gift-area{width:100%;min-height:390px}.letter{padding:24px 18px}.products.products-photos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Accessible two-click fallback when WebGL is unavailable. */
+.webgl-fallback{display:grid;place-items:center;min-height:320px}
+.fallback-gift{font-size:clamp(110px,26vw,220px);filter:drop-shadow(0 22px 18px #633b3030);transition:transform .5s ease}
+.webgl-fallback:has(#gift-hit:focus-visible) .fallback-gift{transform:translateY(-6px)}
+
+/* ATHAR reference: exact letter styles from هدية(3); no visual redesign. */
+.story .letter{position:relative;margin-top:30px;padding:23px 25px 20px;background:#fffcf5;border:1px solid #e8dfd1;box-shadow:0 7px 20px #6b4c3410;transform:rotate(-1.2deg);max-width:410px}
+.story .letter:before{content:'';position:absolute;top:-10px;right:43%;width:60px;height:20px;background:#e3d4b650;transform:rotate(5deg)}
+.story .letter-label{font-size:10px;color:var(--muted)}
+.story .quote{position:absolute;left:22px;top:11px;font:54px Georgia;color:#d9c5ba}
+.story .letter p{font:20px/1.85 Amiri,serif;margin:18px 0 13px}
+.story .signature{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--wine)}
+.story .heart{font:28px Georgia}
+.story .letter p{white-space:pre-line;overflow-wrap:anywhere}
+
+/* NOSHI gift recipient UX refinements - preserve the ATHAR letter styling above. */
+.brand-group{display:flex;align-items:center;gap:13px;min-width:0}
+.noshi-logo{width:68px;height:68px;object-fit:contain;flex:none}
+.story h1{font-family:Amiri,Georgia,serif;font-weight:400;font-size:clamp(36px,4.4vw,67px);line-height:1.35;white-space:pre-line;overflow-wrap:anywhere}
+.delivery,.delivery form,.delivery-intro,.proposed-appointment{min-width:0}
+.delivery form{box-sizing:border-box;width:100%;min-width:0}
+.delivery input[type=date],.delivery select{box-sizing:border-box;display:block;max-width:100%;min-width:0;width:100%;font-size:16px;line-height:1.4;direction:ltr;text-align:center;color:var(--ink)}
+.delivery input[type=date]::-webkit-date-and-time-value{text-align:center;min-width:0}
+.delivery input[type=date]::-webkit-calendar-picker-indicator{margin:0 0 0 8px;flex-shrink:0}
+.delivery .primary{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-width:0;font-size:clamp(17px,2.2vw,21px);line-height:1.5;padding:16px 12px;white-space:normal}
+@media(max-width:760px){.brand-group{gap:7px}.noshi-logo{width:54px;height:54px}.story h1{font-size:clamp(35px,8.6vw,45px)}.delivery{width:100%;min-width:0}.delivery form{padding:14px}.delivery input[type=date]{padding:12px 8px}}
+
+
+/* 2026-11-08 recipient refinements: same date-picker approach as the NOSHI checkout. */
+.gift-date-control{position:relative;display:flex;align-items:center;gap:10px;width:100%;min-width:0;min-height:55px;padding:11px 15px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);text-align:right;overflow:hidden}
+.gift-date-control>span,.gift-date-control>b{pointer-events:none}
+.gift-date-control>b{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;font:700 17px/1.6 'IBM Plex Sans Arabic',Tahoma,sans-serif}
+.gift-date-control.has-value>b{font-variant-numeric:tabular-nums;unicode-bidi:isolate}
+.delivery .gift-date-control input[type=date]{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;max-width:none;min-height:0;margin:0;padding:0;border:0;border-radius:inherit;opacity:.001;cursor:pointer;direction:ltr;font-size:16px;appearance:none;-webkit-appearance:none;color-scheme:light}
+.gift-date-control:focus-within{outline:2px solid var(--wine);outline-offset:2px}
+.delivery label,.delivery legend{font-size:17px;line-height:1.65}
+.delivery select#time{direction:rtl;text-align:right;text-align-last:right;padding-right:16px;font-size:17px;line-height:1.6}
+.delivery select#time option{direction:rtl;text-align:right}
+.scene-caption #instruction:empty{display:none}
+.scene-caption #scene-spark[hidden]{display:none!important}
+footer>span:first-child{color:#171717}
+footer .footer-love{color:#171717}
+footer .footer-love b{display:inline-block;color:#d62c35;transform-origin:center;animation:noshi-gift-heart 2.8s ease-in-out infinite}
+@keyframes noshi-gift-heart{0%,100%{transform:scale(1)}45%{transform:scale(1.1)}60%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){footer .footer-love b{animation:none}}
+@media(max-width:760px){.gift-date-control{padding:11px 12px}.gift-date-control>b{font-size:17px}.delivery select#time{font-size:17px}}
+
+/* Gift refinement: light-weight delivery date and a slightly larger footer line. */
+.delivery #schedule>label{font-weight:400}
+.gift-date-control>b{font-weight:400}
+footer .footer-love{font-size:13px;line-height:1.6}
+footer .footer-love b{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:16px;vertical-align:middle;font-weight:400}
+
+/* Gift detail cards: 1 centered, 2 balanced, exactly 3 in a 2+1 pyramid.
+   This grid is independent of the 3D product cards inside the gift box. */
+.products.products-photos[data-card-count="1"]{
+  grid-template-columns:minmax(0,360px);
+  justify-content:center;
+}
+.products.products-photos[data-card-count="2"],
+.products.products-photos[data-card-count="3"]{
+  --gift-card-gap:16px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--gift-card-gap);
+}
+.products.products-photos[data-card-count="3"]>article:nth-child(3){
+  grid-column:1 / -1;
+  justify-self:center;
+  width:calc((100% - var(--gift-card-gap))/2);
+  box-sizing:border-box;
+}
+@media(max-width:760px){
+  .products.products-photos[data-card-count="2"],
+  .products.products-photos[data-card-count="3"]{--gift-card-gap:10px}
+}
+
+/* Keep the default rose theme from flashing while the saved gift is being loaded. */
+body.gift-theme-pending::after {
+  content: 'نجهّز لكِ هديتك…';
+  position: fixed; inset: 0; z-index: 9999;
+  display: grid; place-items: center;
+  background: #f7f3ec; color: #682b3c;
+  font: 24px/1.6 Amiri, Georgia, serif;
+}
+body.gift-theme-pending { overflow: hidden; }
+
+/* Stabilize the caption area while switching from opening instructions to the details CTA.
+   Grid rows remain reserved even when the spark/instruction/button is hidden,
+   so showing the CTA cannot move the 3D stage or change the scroll position. */
+.scene-caption {
+  display:grid;
+  grid-template-rows:32px 53px 67px;
+  justify-items:center;
+  align-content:start;
+  min-height:152px;
+}
+.scene-caption #scene-spark { grid-row:1; }
+.scene-caption #instruction { grid-row:2; margin:3px 0 0; }
+.scene-caption .details-button {
+  grid-row:2 / 4;
+  align-self:center;
+  justify-self:center;
+  max-width:100%;
+}
+.scene-caption .details-button:not([hidden]) {
+  animation:noshi-details-appear .32s ease-out both;
+}
+@keyframes noshi-details-appear {
+  from { opacity:0; transform:translateY(7px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .scene-caption .details-button:not([hidden]) { animation:none; }
+}
