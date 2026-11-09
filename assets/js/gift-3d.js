@@ -2,7 +2,7 @@ import * as THREE from './three.module.js';
 import { createGiftRibbon } from './gift-ribbon.js';
 const $=s=>document.querySelector(s), stage=$('#stage'), action=$('#action'), hit=$('#gift-hit');
 hit.disabled=true;
-let state=0,busy=false;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let state=0,busy=false,sceneVersion=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch{ $('#loading').textContent='المعاينة ثلاثية الأبعاد غير متاحة على هذا الجهاز. يمكنكِ متابعة فتح الهدية بالأزرار.'; }
 const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(33,1,.1,100);camera.position.set(5.2,4.4,6.8);camera.lookAt(0,.55,0);
 if(renderer){renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.setClearColor(0x000000,0);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;stage.prepend(renderer.domElement);$('#loading').hidden=true}
@@ -66,7 +66,7 @@ function animateTo(kind,duration){return new Promise(resolve=>{transition={kind,
 const params=new URLSearchParams(location.search);
 const preview=params.get('preview')==='1' && window.parent!==window;
 // GitHub Pages serves /Noshi/g/<token> through the repository's 404.html fallback.
-const shortPath=location.pathname.match(/^\/Noshi\/g\/([A-Za-z0-9_-]{24}|[a-f0-9]{48})\/?$/);
+const shortPath=location.pathname.match(/^\/Noshi\/g\/([A-Za-z0-9_-]{20}|[A-Za-z0-9_-]{24}|[a-f0-9]{48})\/?$/);
 const token=params.get('t')||shortPath?.[1]||'';
 const allowedThemes=new Set(['rose','luxury','joy']);
 let giftData=null, saving=false;
@@ -142,7 +142,7 @@ async function confirmDate(d,t){
       const response=await fetch(`${base}/api/gifts/${encodeURIComponent(token)}/confirm`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({date:d,time:t}),cache:'no-store',referrerPolicy:'no-referrer'});
       const data=await response.json();
       if(!response.ok||!data.success)throw Error(data.message||'تعذر تأكيد الموعد. حاولي مرة أخرى.');
-      setNotice(data.message||'💗 وصلنا اختيارك! بنراجع الموعد ونجهز هديتك بكل حب.',true);
+      setNotice('وصلنا اختيارك! بنراجع الموعد ونجهز هديتك بكل حب 💗',true);
     }
     proposed.hidden=true;schedule.hidden=true;
   }catch(error){setNotice(error.message||'تعذر حفظ الموعد. حاولي مرة أخرى.',false)}
@@ -153,13 +153,21 @@ $('#change-proposed').onclick=showSchedule;
 schedule.onsubmit=e=>{e.preventDefault();if(e.target.reportValidity())confirmDate(date.value,time.value)};
 function populateGift(data){
   if(!data||!allowedThemes.has(data.theme)||!Array.isArray(data.items))return;
+  const isThemeChange=preview && giftData && giftData.theme!==data.theme;
+  // Cancel any in-flight animation before rebuilding the preview. An old async
+  // advance() continuation must never complete after the new theme is ready.
+  ++sceneVersion;
+  if(transition){const pending=transition;transition=null;pending.resolve()}
   giftData=data;selectSceneTheme(data.theme);
   $('#loading').hidden=true;hit.disabled=false;action.hidden=true;$('#reveal').hidden=true;notice.hidden=true;
-  state=0;busy=false;transition=null;$('#scene-spark').hidden=false;lid.position.set(0,1.39,0);lid.rotation.set(0,0,0);lid.scale.setScalar(1);
-  goods.position.y=.15;goods.visible=false;motes.visible=false;ribbonSystem.update(0);
+  state=0;busy=false;$('#scene-spark').hidden=false;lid.position.set(0,1.39,0);lid.rotation.set(0,0,0);lid.scale.setScalar(1);
+  gift.rotation.set(0,-.12,0);hoverX=0;hoverY=0;
+  goods.position.set(0,.15,0);goods.visible=false;motes.visible=false;
+  ribbonSystem.update(0,true); // snap geometry to the wrapped state, not 28% interpolation
+  if(isThemeChange)window.scrollTo(0,0);
   const sender=safeText(data.senderName,80)||'مُهدية تحبّك';
   const recipient=safeText(data.recipientName,80)||'يا جميلة';
-  $('.story h1').textContent=`يا أهلاً يا ${recipient}\nلديك هدية ورسالة`;
+  $('.story h1').innerHTML='هناك من أراد أن يُسعد <span class="heartword">قلبكِ.</span>';
   $('#senderBadge').textContent=`من ${sender}`;
   $('.letter p').textContent=safeText(data.message,600);
   $('.signature span').textContent = data.message?.includes(`من ${sender}`) ? '' : `من ${sender}`;
@@ -200,14 +208,15 @@ action.onclick=openDetails;
 async function advance(){
   if(!giftData||busy||state===2)return;
   busy=true;hit.disabled=true;
+  const openingVersion=sceneVersion;
   if(state===0){
     $('#instruction').textContent='الشريط ينفكّ…';
-    await animateTo('ribbon',3600);state=1;
+    await animateTo('ribbon',3600);if(openingVersion!==sceneVersion)return;state=1;
     $('#instruction').textContent='اضغطي على الغطاء';
     hit.setAttribute('aria-label','اضغطي على غطاء الهدية');
   }else{
     $('#instruction').textContent='الهدية تنفتح لكِ…';
-    await animateTo('lid',2300);state=2;openedAt=performance.now();
+    await animateTo('lid',2300);if(openingVersion!==sceneVersion)return;state=2;openedAt=performance.now();
     action.hidden=false;
     $('#instruction').textContent='';
     $('#scene-spark').hidden=true;
@@ -236,7 +245,7 @@ if(preview){
     populateGift(event.data.gift);
   });
   window.parent.postMessage({type:'NOSHI_GIFT_PREVIEW_READY'},location.origin);
-}else if(!/^(?:[A-Za-z0-9_-]{24}|[a-f0-9]{48})$/.test(token)){
+}else if(!/^(?:[A-Za-z0-9_-]{20}|[A-Za-z0-9_-]{24}|[a-f0-9]{48})$/.test(token)){
   $('#loading').textContent='رابط الهدية غير صالح. تواصلي مع فريق نوشي.';
   finishThemeLoading();
 }else{

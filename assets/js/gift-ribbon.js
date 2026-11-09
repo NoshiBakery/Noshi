@@ -114,7 +114,7 @@ export function createGiftRibbon(parent,material){
     point.y=mix(point.y,1.65,release);point.z*=1-release;
     return point;
   }
-  function update(progress){
+  function update(progress, forceReset=false){
     const untying=smooth(progress/.28);
     loops.forEach(({side,sheet})=>{
       sheet.mesh.visible=untying<.999;
@@ -171,7 +171,7 @@ export function createGiftRibbon(parent,material){
         const length=u*table.length;
         if(length<=attached||!free)return toWorld(atLength(table,length),axis,side);
         return toWorld(atLength(free,(length-attached)/freeLength*free.length),axis,side);
-      },()=>0,progress>=.999?1:.28);
+      },()=>0,forceReset||progress>=.999?1:.28);
     }
   }
   update(0);

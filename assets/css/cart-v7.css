@@ -1434,3 +1434,21 @@ body.gift-checkout .coupon-action{background:#994b6c;color:white}
 }
 
 .gift-preview-select{display:block;width:calc(100% - 30px);margin:0 15px 10px;border:0;border-radius:12px;background:#994b6c;color:#fff;min-height:43px;font-size:13px;font-weight:700;cursor:pointer}
+
+/* Gift choices: make the selected option unmistakable and keep instructions quiet. */
+.gift-panel .gift-radio-card:has(input:checked){
+  background:#ead4df;border-color:#692640;color:#4b192e;
+  box-shadow:inset 0 0 0 1px #692640,0 3px 10px #5d213716;
+}
+.gift-panel .gift-radio-card:has(input:checked) small{color:#653348}
+.gift-panel .gift-theme-choice:has(input:checked){
+  background:#e9d1dd;border-color:#692640;
+  box-shadow:inset 0 0 0 2px #692640,0 4px 13px #5d21371c;
+}
+.gift-panel .gift-theme-choice:has(input:checked) .gift-theme-name,
+.gift-panel .gift-theme-choice:has(input:checked) .gift-theme-name small{color:#4b192e}
+.gift-panel .gift-schedule-hint:not(:empty){
+  padding:10px 13px;border-inline-start:3px solid #a05b76;
+  border-radius:9px;background:#fff0f5;color:#6d3850;
+  font-size:13px;line-height:1.9;
+}

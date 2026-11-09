@@ -179,3 +179,25 @@ body.gift-theme-pending { overflow: hidden; }
 @media(prefers-reduced-motion:reduce) {
   .scene-caption .details-button:not([hidden]) { animation:none; }
 }
+
+/* Recipient refinements: preserve ATHAR paper letter and WebGL scene. */
+@font-face{font-family:Thmanyah;src:url('../../fonts/thmanyahsans-Regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:Thmanyah;src:url('../../fonts/thmanyahsans-Bold.woff2') format('woff2');font-style:normal;font-weight:700;font-display:swap}
+.story h1 .heartword{color:#8f4058;white-space:nowrap;font-style:normal}
+.story .letter-label{font:700 clamp(23px,2.6vw,29px)/1.5 Thmanyah,Tahoma,sans-serif;color:#8f4058;letter-spacing:0}
+.story .signature{justify-content:flex-start;gap:8px;direction:rtl;line-height:1.5}
+.story .signature>span:first-child{font:700 clamp(16px,2vw,20px)/1.65 Thmanyah,Tahoma,sans-serif;color:#8f4058;text-align:right}
+.story .signature .heart{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;color:#8f4058;font-size:unset;line-height:1}
+.letter-heart-icon{display:block;width:23px;height:23px;max-width:100%;flex:none}
+.noshi-logo{width:84px;height:84px}
+footer .footer-brand{display:flex;flex-direction:column;align-items:flex-start;gap:3px;font-family:Amiri,Georgia,serif}
+.footer-noshi-logo{display:block;object-fit:contain;width:60px;height:60px}
+footer .footer-brand small{margin:0}
+footer .footer-love b{animation:noshi-gift-heart 1.4s ease-in-out infinite}
+@keyframes noshi-gift-heart{0%,100%{transform:scale(1)}24%{transform:scale(1.23)}46%{transform:scale(1)}66%{transform:scale(1.13)}78%{transform:scale(1)}}
+body[data-theme="rose"] .gift-area{background:radial-gradient(ellipse at 50% 43%,#eee0e9 0%,#f1e5eb 58%,#f5e9ec 100%)}
+body[data-theme="luxury"] .gift-area{background:radial-gradient(ellipse at 50% 43%,#e7dde4 0%,#ece1e7 61%,#f1e7eb 100%)}
+body[data-theme="joy"] .gift-area{background:radial-gradient(ellipse at 50% 43%,#f1e8d7 0%,#f5eadb 59%,#f7efe4 100%)}
+.delivery #confirmation[data-state="success"]{font-size:clamp(16px,2vw,19px);line-height:1.9;font-weight:600;padding:17px 20px}
+@media(max-width:760px){.noshi-logo{width:65px;height:65px}.brand-group{gap:6px}.footer-noshi-logo{width:55px;height:55px}.story .letter-label{font-size:23px}}
+@media(prefers-reduced-motion:reduce){footer .footer-love b{animation:none}}

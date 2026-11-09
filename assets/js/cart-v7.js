@@ -1008,17 +1008,14 @@
       render();
       resetSuccessDialog();
       openDialog(elements.successDialog);
-      if (completedGift) {
-        stopWhatsAppCountdown();
-        document.getElementById("checkoutSuccessMessage").textContent = "وصلت هديتك لنوشي 💗 فريقنا سيتواصل مع المستلمة لإرسال رابطها وتنسيق موعد الاستلام.";
-        document.getElementById("checkoutWhatsappHandoff").hidden = true;
-        elements.successWhatsApp.hidden = true;
-      } else {
-        document.getElementById("checkoutSuccessMessage").textContent = "تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.";
-        document.getElementById("checkoutWhatsappHandoff").hidden = false;
-        elements.successWhatsApp.hidden = false;
-        startWhatsAppCountdown(10);
-      }
+      // Keep the original success ticket, countdown, WhatsApp button and handoff.
+      // Gift orders only get an additional explanatory line; they must not hide it.
+      document.getElementById("checkoutSuccessMessage").textContent = completedGift
+        ? "وصل طلب هديتك لنوشي 🎁 فريقنا سيتواصل مع المستلمة لإرسال رابط الهدية والتأكد من موعد التوصيل. أرسلي رقم الطلب لنا على واتساب للمتابعة."
+        : "تكرّمًا، أرسل رقم الطلب لنا على الواتساب علشان نتابع طلبك بسهولة.";
+      document.getElementById("checkoutWhatsappHandoff").hidden = false;
+      elements.successWhatsApp.hidden = false;
+      startWhatsAppCountdown(10);
     } catch (error) {
       console.error("Noshi order error", error);
       if (error?.message === "ORDER_API_NOT_CONFIGURED") {
