@@ -1482,3 +1482,9 @@ body.gift-checkout .coupon-action{background:#994b6c;color:white}
 .gift-success-point>span{width:22px;height:22px;flex:0 0 auto;border-radius:50%;
   background:#ead6dd;color:#713f56;display:grid;place-items:center;font-size:12px;font-weight:700}
 .status-dialog-card .gift-success-point p{margin:0;color:#554b4c;font-size:12px;line-height:1.75;text-align:start}
+
+/* Gift explanatory text: readable contrast on the light blush checkout background. */
+.gift-panel .gift-step-tip{color:#533041;font-size:15px;font-weight:600;line-height:1.9}
+.gift-panel .gift-radio-card small{color:#624255;font-size:13px;font-weight:500}
+.gift-panel .gift-theme-name small{color:#624255;font-size:12px;font-weight:500}
+.gift-panel .gift-theme-choice:has(input:checked) .gift-theme-name small{color:#4b192e}
