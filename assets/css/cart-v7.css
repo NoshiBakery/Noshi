@@ -1352,9 +1352,9 @@ textarea:focus,
 .gift-radio-card input{accent-color:#994b6c;flex:0 0 auto;width:20px;height:20px}
 
 .gift-radio-card span{flex:1}
-.gift-radio-card small{display:block;color:#986d7d;font-size:11px;font-weight:400;line-height:1.8}
+.gift-radio-card small{display:block;color:#986d7d;font-size:13px;font-weight:400;line-height:1.8}
 
-.gift-step-tip{margin:-5px 0 12px;font-size:12px;line-height:1.9;color:#947181}
+.gift-step-tip{margin:-5px 0 12px;font-size:14px;line-height:1.9;color:#947181}
 
 .gift-themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
 
@@ -1371,7 +1371,7 @@ textarea:focus,
 .joy-art{background:linear-gradient(140deg,#fdd77d,#ffe5e9);color:#c04a89}
 
 .gift-theme-name{display:flex;flex-direction:column;align-items:center;gap:2px;color:#5f3247;font-weight:700;font-size:12px;line-height:1.5;text-align:center}
-.gift-theme-name small{color:#9b7a87;font-size:11px;font-weight:400}
+.gift-theme-name small{color:#9b7a87;font-size:12px;font-weight:400}
 
 .gift-theme-choice button{border:1px solid #e8c7d7;background:#fff;color:#8f3a60;border-radius:10px;min-height:40px;font-size:11px;font-weight:700;padding:6px 7px;width:100%;margin-top:auto}
 
@@ -1482,3 +1482,9 @@ body.gift-checkout .coupon-action{background:#994b6c;color:white}
 .gift-success-point>span{width:22px;height:22px;flex:0 0 auto;border-radius:50%;
   background:#ead6dd;color:#713f56;display:grid;place-items:center;font-size:12px;font-weight:700}
 .status-dialog-card .gift-success-point p{margin:0;color:#554b4c;font-size:12px;line-height:1.75;text-align:start}
+
+/* Gift explanatory text: readable contrast on the light blush checkout background. */
+.gift-panel .gift-step-tip{color:#533041;font-size:15px;font-weight:600;line-height:1.9}
+.gift-panel .gift-radio-card small{color:#624255;font-size:13px;font-weight:500}
+.gift-panel .gift-theme-name small{color:#624255;font-size:12px;font-weight:500}
+.gift-panel .gift-theme-choice:has(input:checked) .gift-theme-name small{color:#4b192e}
