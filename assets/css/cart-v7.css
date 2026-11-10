@@ -1369,13 +1369,12 @@ textarea:focus,
 .rose-art{background:linear-gradient(140deg,#f2b5ce,#ffedf4);color:#8c3558}
 .luxury-art{background:linear-gradient(140deg,#401425,#82445d);color:#ffe0a2}
 .joy-art{background:linear-gradient(140deg,#fdd77d,#ffe5e9);color:#c04a89}
+/* Lift decorative glyphs inside their existing tiles without moving the cards. */
+.gift-theme-art.rose-art,.gift-theme-art.luxury-art,.gift-theme-art.joy-art{box-sizing:border-box;padding-bottom:6px}
 
 .gift-theme-name{display:flex;flex-direction:column;align-items:center;gap:2px;color:#5f3247;font-weight:700;font-size:12px;line-height:1.5;text-align:center}
 .gift-theme-name small{color:#9b7a87;font-size:12px;font-weight:400}
 
-.gift-theme-choice button{border:1px solid #e8c7d7;background:#fff;color:#8f3a60;border-radius:10px;min-height:40px;font-size:11px;font-weight:700;padding:6px 7px;width:100%;margin-top:auto}
-
-.gift-theme-choice button:hover{background:#ffedf4}
 .gift-preview-launch{display:block;width:100%;min-height:48px;border:1px solid #ab5d80;background:#fff;color:#884064;font-weight:700;font-size:13px;border-radius:13px;margin-top:12px}
 .gift-preview-launch:disabled{opacity:.55;cursor:not-allowed}
 
@@ -1484,7 +1483,7 @@ body.gift-checkout .coupon-action{background:#994b6c;color:white}
 .status-dialog-card .gift-success-point p{margin:0;color:#554b4c;font-size:12px;line-height:1.75;text-align:start}
 
 /* Gift explanatory text: readable contrast on the light blush checkout background. */
-.gift-panel .gift-step-tip{color:#533041;font-size:15px;font-weight:600;line-height:1.9}
+.gift-panel .gift-step-tip{color:#533041;font-size:13px;font-weight:500;line-height:1.8}
 .gift-panel .gift-radio-card small{color:#624255;font-size:13px;font-weight:500}
 .gift-panel .gift-theme-name small{color:#624255;font-size:12px;font-weight:500}
 .gift-panel .gift-theme-choice:has(input:checked) .gift-theme-name small{color:#4b192e}
