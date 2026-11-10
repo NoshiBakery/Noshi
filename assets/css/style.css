@@ -2154,16 +2154,18 @@
 
       /* ===== حركات الظهور ===== */
       .fade-in-section {
-        opacity: 0;
-        transform: translateY(30px);
+        /* Visible by default when scripts or the reveal observer cannot run. */
+        opacity: 1;
+        transform: translateY(0);
         transition:
           opacity 0.8s ease,
           transform 0.8s ease;
       }
 
-      .fade-in-section.is-visible {
-        opacity: 1;
-        transform: translateY(0);
+      /* Only hide sections after the early reveal bootstrap has run. */
+      .noshi-reveal-pending .fade-in-section:not(.is-visible) {
+        opacity: 0;
+        transform: translateY(30px);
       }
 
       @keyframes fadeInUp {

@@ -49,7 +49,16 @@
       fetchpriority="high"
     />
 
-    <link rel="stylesheet" href="assets/css/style.css?v=5" />
+    <script>
+      // Reveal sections only while JavaScript can manage their animation.
+      document.documentElement.classList.add('noshi-reveal-pending');
+      window.setTimeout(() => {
+        if (!document.documentElement.classList.contains('noshi-reveal-observing')) {
+          document.documentElement.classList.remove('noshi-reveal-pending');
+        }
+      }, 3500);
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css?v=visibility-guard-20261110" />
     <link rel="stylesheet" href="assets/css/catalog-v7.css?v=variant2" />
     <link rel="stylesheet" href="assets/css/reviews-v1.css" />
   </head>
@@ -990,7 +999,7 @@
     <script src="assets/js/products-v5.js?v=variant2" defer></script>
     <script src="assets/js/offers-v7.js" defer></script>
     <script src="assets/js/cart-store-v7.js" defer></script>
-    <script src="assets/js/catalog-v7.js?v=variant3" defer></script>
+    <script src="assets/js/catalog-v7.js?v=visibility-guard-20261110" defer></script>
   <script src="assets/js/display-format.js?v=1.0.0" defer></script>
 </body>
 </html>

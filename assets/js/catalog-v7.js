@@ -367,13 +367,43 @@
   window.addEventListener("scroll", () => scrollTopButton?.classList.toggle("visible", window.scrollY > 300), { passive: true });
   scrollTopButton?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible"));
-    }, { threshold: 0.08 });
-    document.querySelectorAll(".fade-in-section").forEach((section) => observer.observe(section));
-  } else {
-    document.querySelectorAll(".fade-in-section").forEach((section) => section.classList.add("is-visible"));
+  const revealSections = Array.from(document.querySelectorAll(".fade-in-section"));
+  const revealAll = () => {
+    revealSections.forEach((section) => section.classList.add("is-visible"));
+    document.documentElement.classList.remove("noshi-reveal-pending");
+  };
+  try {
+    if (!("IntersectionObserver" in window)) {
+      revealAll();
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      }, { threshold: 0 }); // Tall mobile sections may never reach 8% intersection.
+      revealSections.forEach((section) => observer.observe(section));
+      document.documentElement.classList.add("noshi-reveal-observing");
+
+      // If a mobile WebView drops an observer callback, recover visible sections.
+      let revealRescueTimer = null;
+      const rescueVisibleSections = () => {
+        revealRescueTimer = null;
+        revealSections.forEach((section) => {
+          if (section.classList.contains("is-visible")) return;
+          const rect = section.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < window.innerHeight) section.classList.add("is-visible");
+        });
+      };
+      const scheduleRevealRescue = () => {
+        if (revealRescueTimer !== null) return;
+        revealRescueTimer = window.setTimeout(rescueVisibleSections, 1800);
+      };
+      window.addEventListener("scroll", scheduleRevealRescue, { passive: true });
+      window.addEventListener("pageshow", scheduleRevealRescue);
+      scheduleRevealRescue();
+    }
+  } catch (_) {
+    revealAll(); // Observer setup must never leave tappable, invisible products.
   }
 
   const year = document.getElementById("year");
