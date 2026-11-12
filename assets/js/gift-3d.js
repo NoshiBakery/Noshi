@@ -116,8 +116,8 @@ function updateDateText(){
   dateText.dir=normalized?'ltr':'rtl';
   dateControl.classList.toggle('has-value',Boolean(normalized));
 }
-date.addEventListener('change',updateDateText);
-date.addEventListener('input',updateDateText);
+date.addEventListener('change',()=>{updateDateText();updateTimeOptions()});
+date.addEventListener('input',()=>{updateDateText();updateTimeOptions()});
 updateDateText();
 date.min=riyadhDate();date.max=riyadhDate(90);
 for(let h=6;h<=23;h++)for(let m of [0,30]){
@@ -125,13 +125,34 @@ for(let h=6;h<=23;h++)for(let m of [0,30]){
   o.textContent=`${h>=12?'م':'ص'} ${h%12||12}:${String(m).padStart(2,'0')}`;time.append(o);
 }
 const midnight=document.createElement('option');midnight.value='00:00';midnight.textContent='ص 12:00';time.append(midnight);
+function isAvailableSlot(d,t){
+  const today=riyadhDate();
+  if(!d||d<today||d>date.max)return false;
+  if(d>today)return true;
+  const now=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date());
+  return t>now;
+}
+function updateTimeOptions(){
+  date.min=riyadhDate();
+  for(const option of time.options){
+    if(!option.value)continue;
+    const expired=Boolean(date.value)&&!isAvailableSlot(date.value,option.value);
+    option.disabled=expired;
+    option.textContent=option.textContent.replace(' — انتهى','')+(expired?' — انتهى':'');
+  }
+  if(time.value&&!isAvailableSlot(date.value,time.value))time.value='';
+}
+updateTimeOptions();
 const proposed=$('#proposed-appointment'), schedule=$('#schedule'), notice=$('#confirmation');
-function showSchedule(){proposed.hidden=true;schedule.hidden=false;date.focus()}
+function showSchedule(){proposed.hidden=true;schedule.hidden=false;updateTimeOptions();date.focus()}
 function setNotice(message,good){notice.hidden=false;notice.textContent=message;notice.dataset.state=good?'success':'error';}
 async function confirmDate(d,t){
   if(!giftData||saving)return;
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||d<date.min||d>date.max||![...time.options].some(x=>x.value===t)){
-    setNotice('اختاري تاريخًا ووقتًا صحيحين.',false);return;
+  updateTimeOptions();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||!isAvailableSlot(d,t)||![...time.options].some(x=>x.value===t)){
+    setNotice('اختاري تاريخًا ووقتًا صحيحين ولم ينتهيا.',false);
+    if(!schedule.hidden)return;
+    showSchedule();return;
   }
   saving=true;notice.hidden=true;
   [...$('#delivery').querySelectorAll('button')].forEach(b=>b.disabled=true);
