@@ -59,7 +59,7 @@
       }, 3500);
     </script>
     <link rel="stylesheet" href="assets/css/style.css?v=visibility-guard-20261110" />
-    <link rel="stylesheet" href="assets/css/catalog-v7.css?v=variant2" />
+    <link rel="stylesheet" href="assets/css/catalog-v7.css?v=options-20261115" />
     <link rel="stylesheet" href="assets/css/reviews-v1.css" />
   </head>
   <body>
@@ -201,6 +201,15 @@
             <div class="dialog-variant-options" id="modalVariantOptions"></div>
           </div>
 
+          <div class="noshi-choice-group" id="modalFlour" hidden>
+            <span class="dialog-variants-label">اختاري نوع الدقيق <small>(إجباري)</small></span>
+            <div class="noshi-choice-buttons" id="modalFlourOptions"></div>
+          </div>
+          <div class="noshi-choice-group" id="modalSugar" hidden>
+            <span class="dialog-variants-label">اختاري مستوى السكر <small>(إجباري)</small></span>
+            <div class="noshi-choice-buttons" id="modalSugarOptions"></div>
+          </div>
+
           <div class="dialog-meta">
             <div class="dialog-pill">
               <span>السعر</span>
@@ -273,6 +282,11 @@
           <h2>المنتجات الاكثر مــبــيــعــاً 🔥</h2>
         </div>
 
+        <div class="noshi-product-tabs" role="group" aria-label="تصنيف المنتجات">
+          <button type="button" class="noshi-tab active" data-products-tab="all" aria-pressed="true">جميع المنتجات</button>
+          <button type="button" class="noshi-tab" data-products-tab="healthy" aria-pressed="false">المنتجات الصحية</button>
+        </div>
+        <p class="noshi-category-info" id="healthyCategoryInfo" hidden>منتجات يتوفر منها خيار البر أو المكس، وتبقى كل خيارات المنتج متاحة.</p>
         <div class="products-grid" id="productsGrid">
           <!-- سيتم إنشاء المنتجات هنا بواسطة JavaScript -->
         </div>
@@ -996,10 +1010,11 @@
 
     <script src="assets/js/reviews-api-config-v1.js" defer></script>
     <script src="assets/js/reviews-v1.js" defer></script>
-    <script src="assets/js/products-v5.js?v=variant2" defer></script>
+    <script src="assets/js/products-v5.js?v=options-20261115" defer></script>
     <script src="assets/js/offers-v7.js" defer></script>
-    <script src="assets/js/cart-store-v7.js" defer></script>
-    <script src="assets/js/catalog-v7.js?v=visibility-guard-20261110" defer></script>
+    <script src="assets/js/product-options-v1.js?v=options-20261115" defer></script>
+    <script src="assets/js/cart-store-v7.js?v=options-20261115" defer></script>
+    <script src="assets/js/catalog-v7.js?v=options-20261115" defer></script>
   <script src="assets/js/display-format.js?v=1.0.0" defer></script>
 </body>
 </html>

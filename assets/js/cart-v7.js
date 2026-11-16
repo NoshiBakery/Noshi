@@ -3,6 +3,7 @@
 (function initCartPage() {
   const products = window.NOSHI_PRODUCTS || [];
   const cart = window.NoshiCart;
+  const options = window.NoshiProductOptions;
   if (!cart) return;
 
   const WHATSAPP_NUMBER = "966576059229";
@@ -149,7 +150,7 @@
       proposedTime: giftMode() === "sender" ? elements.timeInput.value : "",
       // Do not pass prices, phone numbers, or payment fields to the preview iframe.
       items: cart.lines().map(line => ({
-        productId: line.product.id, name: line.variant ? `${line.product.name} — ${line.variant.name}` : line.product.name,
+        productId: line.product.id, name: [line.variant ? `${line.product.name} — ${line.variant.name}` : line.product.name, ...options.summary(line.product, line.flourId, line.sugarId)].join(" | "),
         quantity: line.quantity, description: line.product.description || "", image: line.product.image || ""
       }))
     };
@@ -244,6 +245,9 @@
   function currentCouponItems() {
     return cart.lines().map(line => ({
       productId: line.product.id,
+      variant: line.variantId || undefined,
+      flour: line.flourId || undefined,
+      sugar: line.sugarId || undefined,
       quantity: line.quantity
     }));
   }
@@ -288,6 +292,10 @@
 
   async function applyCoupon() {
     if (!COUPONS_ENABLED || submitting) return;
+    if (cart.lines().some(line => !line.optionsValid)) {
+      elements.couponMessage.textContent = "أكملي خيارات الأصناف قبل تطبيق الكوبون.";
+      return;
+    }
 
     const code = elements.couponInput.value.trim().toUpperCase();
 
@@ -817,9 +825,25 @@
     return `<span class="old-unit-price">${formatMoney(line.originalUnitPrice)}</span> <span class="sale-unit-price">${formatMoney(line.unitPrice)}</span> <span class="discount-chip">خصم ${formatNumber(line.discountPercent)}%</span>`;
   }
 
+  function optionSelectors(line) {
+    const cfg = options.config(line.product);
+    const flourSelect = cfg.choices.length ? `<label class="noshi-cart-choice">نوع الدقيق
+      <select data-option="flour" data-key="${line.key}" aria-label="نوع الدقيق">
+        <option value="" ${!line.flourId ? "selected" : ""}>اختاري النوع</option>
+        ${cfg.choices.map(id=>`<option value="${id}" ${line.flourId === id ? "selected" : ""}>${options.flourLabel(line.product,id)}${options.extraPrice(line.product,id) ? ` (+${formatMoney(options.extraPrice(line.product,id))})` : ""}</option>`).join("")}
+      </select></label>` : "";
+    const sugarSelect = cfg.sugarRequired ? `<label class="noshi-cart-choice">مستوى السكر
+      <select data-option="sugar" data-key="${line.key}" aria-label="مستوى السكر">
+        <option value="" ${!line.sugarId ? "selected" : ""}>اختاري مستوى السكر</option>
+        ${["balanced","reduced"].map(id=>`<option value="${id}" ${line.sugarId === id ? "selected" : ""}>${options.sugarLabel(id)}</option>`).join("")}
+      </select></label>` : "";
+    return flourSelect || sugarSelect ? `<div class="noshi-cart-choices">${flourSelect}${sugarSelect}</div>` : "";
+  }
+
   function itemMarkup(line) {
     const { product, variant, quantity, lineTotal } = line;
     const size = variant ? ` · ${variant.name}` : (product.showSize && product.size ? ` · ${englishDigits(product.size)}` : "");
+    const summary = options.summary(product,line.flourId,line.sugarId);
     return `
       <article class="cart-item" data-product-id="${product.id}" data-cart-key="${line.key}">
         <img class="item-image" src="${product.image}" width="64" height="64" alt="صورة ${product.name}" />
@@ -828,14 +852,17 @@
             <div style="min-width:0">
               <div class="item-name">${product.name}</div>
               <div class="item-meta">${priceMeta(line)}${size}</div>
+              ${summary.length ? `<div class="noshi-cart-description">${summary.join(" · ")}</div>` : ""}
+              ${!line.optionsValid ? `<div class="noshi-cart-warning" role="alert">اختاري مواصفات الصنف قبل اعتماد الطلب.</div>` : ""}
+              ${optionSelectors(line)}
             </div>
-            <button class="remove-button" type="button" data-action="remove" data-id="${product.id}" data-variant-id="${line.variantId || ""}">حذف</button>
+            <button class="remove-button" type="button" data-action="remove" data-key="${line.key}">حذف</button>
           </div>
           <div class="item-bottom">
             <div class="quantity" aria-label="كمية ${product.name}">
-              <button type="button" data-action="decrease" data-id="${product.id}" data-variant-id="${line.variantId || ""}" ${quantity <= 1 ? "disabled" : ""} aria-label="تقليل الكمية">−</button>
+              <button type="button" data-action="decrease" data-key="${line.key}" ${quantity <= 1 ? "disabled" : ""} aria-label="تقليل الكمية">−</button>
               <output>${formatNumber(quantity)}</output>
-              <button type="button" data-action="increase" data-id="${product.id}" data-variant-id="${line.variantId || ""}" aria-label="زيادة الكمية">+</button>
+              <button type="button" data-action="increase" data-key="${line.key}" aria-label="زيادة الكمية">+</button>
             </div>
             <strong class="item-total">${formatMoney(lineTotal)}</strong>
           </div>
@@ -863,7 +890,8 @@
     elements.discountAmount.textContent = `− ${formatMoney(discount)}`;
     elements.deliveryFee.textContent = delivery ? formatMoney(fee) : "لم يُحدد";
     elements.grandTotal.textContent = formatMoney(subtotal + fee);
-    renderCouponTotal();    elements.submit.disabled = lines.length === 0;
+    renderCouponTotal();
+    elements.submit.disabled = lines.length === 0 || lines.some(line => !line.optionsValid);
     updateNavigation();
   }
 
@@ -889,6 +917,10 @@
 
   function validate() {
     const invalid = [];
+    if (cart.lines().some(line => !line.optionsValid)) {
+      elements.formMessage.textContent = "اختاري نوع الدقيق ومستوى السكر لكل صنف قبل الاعتماد.";
+      invalid.push(elements.items);
+    }
     const delivery = selectedDelivery();
     const phone = normalizePhone(elements.phone.value);
 
@@ -946,7 +978,7 @@
 
   function setSubmitting(active) {
     submitting = active;
-    elements.submit.disabled = active || !cart.lines().length;
+    elements.submit.disabled = active || !cart.lines().length || cart.lines().some(line => !line.optionsValid);
     elements.submit.classList.toggle("is-loading", active);
     elements.submitText.textContent = active ? "جاري اعتماد الطلب..." : "اعتماد الطلب";
   }
@@ -961,6 +993,8 @@
       items: cart.lines().map((line) => ({
         productId: line.product.id,
         variant: line.variantId || undefined,
+        flour: line.flourId || undefined,
+        sugar: line.sugarId || undefined,
         quantity: line.quantity,
       })),
     };
@@ -996,18 +1030,35 @@
   elements.items.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-action]");
     if (!button) return;
-    const id = button.dataset.id;
-    const variantId = button.dataset.variantId || "";
-    const key = variantId ? `${id}::${variantId}` : id;
-    const current = cart.read()[key] || 0;
-    if (button.dataset.action === "increase") cart.setQuantity(id, current + 1, variantId);
-    if (button.dataset.action === "decrease" && current > 1) cart.setQuantity(id, current - 1, variantId);
+    const line = cart.lines().find(item => item.key === button.dataset.key);
+    if (!line) return;
+    const {product, variantId, flourId, sugarId, quantity} = line;
+    if (button.dataset.action === "increase") cart.setQuantity(product.id, quantity + 1, variantId, flourId, sugarId);
+    if (button.dataset.action === "decrease" && quantity > 1) cart.setQuantity(product.id, quantity - 1, variantId, flourId, sugarId);
     if (button.dataset.action === "remove") {
-      const product = products.find((item) => item.id === id);
-      cart.remove(id, variantId);
-      if (product) showToast(`تم حذف ${product.name}`);
+      cart.remove(product.id, variantId, flourId, sugarId);
+      showToast(`تم حذف ${product.name}`);
     }
     render();
+  });
+
+  elements.items.addEventListener("change", event => {
+    const select = event.target.closest("select[data-option]");
+    if (!select) return;
+    const card = select.closest("[data-cart-key]");
+    const key = card?.dataset.cartKey;
+    const line = cart.lines().find(item => item.key === key);
+    if (!line) return;
+    const flourId = card.querySelector('[data-option="flour"]')?.value || "";
+    const sugarId = card.querySelector('[data-option="sugar"]')?.value || "";
+    if (options.validSelection(line.product, flourId, sugarId)) {
+      if (cart.updateOptions(key, flourId, sugarId)) {
+        resetIdempotency();
+        render();
+      }
+    } else {
+      elements.formMessage.textContent = "أكملي اختيار نوع الدقيق ومستوى السكر لهذا الصنف.";
+    }
   });
 
   elements.phone.addEventListener("input", () => {
@@ -1044,6 +1095,11 @@
 
     if (!cart.lines().length) {
       elements.formMessage.textContent = "السلة فارغة.";
+      return;
+    }
+    if (cart.lines().some(line => !line.optionsValid)) {
+      elements.formMessage.textContent = "اختاري مواصفات كل صنف في السلة قبل اعتماد الطلب.";
+      elements.items.scrollIntoView({behavior:"smooth",block:"center"});
       return;
     }
 

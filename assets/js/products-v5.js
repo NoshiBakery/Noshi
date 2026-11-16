@@ -23,6 +23,9 @@ window.NOSHI_PRODUCTS = Object.freeze([
     id: "p03",
     name: "تاوة نوشي",
     price: 38,
+    // مثال عند التفعيل لاحقًا (لا تغيّر توافر المنتج إلا بعد اعتماده):
+    // flourStyle: "tawa", flourChoices: ["white", "bran", "mix"],
+    // flourExtras: { white: 0, bran: 2, mix: 1 }, sugarRequired: true,
     image: "images/tawa.webp",
     description: "تاوة لذيذه وهشة",
     size: "40 حبة",

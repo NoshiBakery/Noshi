@@ -4,6 +4,7 @@
   const products = window.NOSHI_PRODUCTS || [];
   const cart = window.NoshiCart;
   const offers = window.NoshiOffers;
+  const options = window.NoshiProductOptions;
   if (!cart) return;
 
   cart.importFromUrl();
@@ -21,6 +22,12 @@
   const modalSize = document.getElementById("modalSize");
   const modalVariants = document.getElementById("modalVariants");
   const modalVariantOptions = document.getElementById("modalVariantOptions");
+  const modalFlour = document.getElementById("modalFlour");
+  const modalFlourOptions = document.getElementById("modalFlourOptions");
+  const modalSugar = document.getElementById("modalSugar");
+  const modalSugarOptions = document.getElementById("modalSugarOptions");
+  const tabs = Array.from(document.querySelectorAll("[data-products-tab]"));
+  const categoryInfo = document.getElementById("healthyCategoryInfo");
   const modalClose = document.getElementById("modalClose");
   const modalAddButton = document.getElementById("modalAddToCart");
   const toast = document.getElementById("toastMessage");
@@ -29,6 +36,9 @@
   let activeProductId = null;
   let lastTrigger = null;
   let activeVariantId = "";
+  let activeFlourId = "";
+  let activeSugarId = "";
+  let activeCategory = "all";
   let toastTimer = null;
 
   function englishDigits(value) {
@@ -54,14 +64,22 @@
   }
 
   function priceMarkup(product, variantId = "") {
+    // When only one flour type is sold, display its surcharge in the advertised price.
+    const cfg = options.config(product);
+    const singleExtra = cfg.choices.length === 1 ? options.extraPrice(product, cfg.choices[0]) : 0;
+    const withExtra = pricing => {
+      const original = options.round(pricing.originalPrice + singleExtra);
+      const final = options.round(original * (1 - pricing.percent / 100));
+      return {originalPrice:original,finalPrice:final,hasOffer:pricing.percent>0 && final<original,percent:pricing.percent};
+    };
     if (Array.isArray(product?.variants) && product.variants.length && !variantId) {
-      const prices = product.variants.map((variant) => pricingFor(product, variant.id));
+      const prices = product.variants.map((variant) => withExtra(pricingFor(product, variant.id)));
       const lowest = prices.reduce((best, item) => item.finalPrice < best.finalPrice ? item : best, prices[0]);
       const prefix = `<span class="price-from">يبدأ من</span>`;
       if (!lowest.hasOffer) return `${prefix}<span class="current-product-price">${money(lowest.finalPrice)}</span>`;
       return `${prefix}<span class="current-product-price sale">${money(lowest.finalPrice)}</span><span class="original-product-price">${money(lowest.originalPrice)}</span>`;
     }
-    const pricing = pricingFor(product, variantId);
+    const pricing = withExtra(pricingFor(product, variantId));
     if (!pricing.hasOffer) return `<span class="current-product-price">${money(pricing.finalPrice)}</span>`;
     return `<span class="current-product-price sale">${money(pricing.finalPrice)}</span><span class="original-product-price">${money(pricing.originalPrice)}</span><span class="catalog-offer-chip">خصم ${number(pricing.percent)}%</span>`;
   }
@@ -164,15 +182,21 @@
     window.setTimeout(finish, 1450);
   }
 
-  function addProduct(productId, source, button, variantId = "") {
+  function addProduct(productId, source, button, variantId = "", flourId = "", sugarId = "") {
     const product = productById(productId);
     if (!product) return;
-    if (Array.isArray(product.variants) && product.variants.length && !variantId) {
+    const hasVariants = Array.isArray(product.variants) && product.variants.length;
+    const cfg = options.config(product);
+    if ((hasVariants && !variantId) ||
+        (cfg.choices.length === 1 && options.extraPrice(product,cfg.choices[0]) > 0 && !flourId) ||
+        (cfg.choices.length > 1 && !flourId) || (cfg.sugarRequired && !sugarId)) {
       openProduct(productId, button || source);
       return;
     }
+    if (cfg.choices.length === 1 && !flourId) flourId = cfg.choices[0];
+    if (!options.validSelection(product, flourId, sugarId)) return;
     animateIntoCart(product, source);
-    cart.add(product.id, 1, variantId);
+    cart.add(product.id, 1, variantId, flourId, sugarId);
     updateCartUI();
     showToast(`تمت إضافة ${product.name} للسلة`);
 
@@ -186,6 +210,27 @@
     }, 1050);
   }
 
+  function updateChoiceState(product) {
+    const cfg = options.config(product);
+    const hasVariants = Array.isArray(product.variants) && product.variants.length;
+    if (modalAddButton) modalAddButton.disabled =
+      (hasVariants && !activeVariantId) || !options.validSelection(product, activeFlourId, activeSugarId);
+    const price = pricingFor(product, activeVariantId);
+    const extra = options.extraPrice(product, activeFlourId);
+    if (modalPrice) {
+      if (hasVariants && !activeVariantId) modalPrice.innerHTML = priceMarkup(product);
+      else {
+        const original = options.round(price.originalPrice + extra);
+        const final = options.round(original * (1 - price.percent / 100));
+        modalPrice.textContent = `${money(final)}${final !== original ? ` (بدل ${money(original)})` : ""}`;
+      }
+    }
+    modalFlourOptions?.querySelectorAll("button").forEach(button =>
+      button.classList.toggle("selected", button.dataset.flourId === activeFlourId));
+    modalSugarOptions?.querySelectorAll("button").forEach(button =>
+      button.classList.toggle("selected", button.dataset.sugarId === activeSugarId));
+  }
+
   function openProduct(productId, trigger) {
     const product = productById(productId);
     if (!product || !modal) return;
@@ -197,6 +242,32 @@
     modalTitle.textContent = product.name;
     modalDescription.textContent = product.description || "";
     activeVariantId = "";
+    activeFlourId = options.defaults(product).flourId;
+    activeSugarId = "";
+    const cfg = options.config(product);
+    if (modalFlour) modalFlour.hidden = !cfg.choices.length;
+    if (modalSugar) modalSugar.hidden = !cfg.sugarRequired;
+    modalFlourOptions?.replaceChildren();
+    modalSugarOptions?.replaceChildren();
+    cfg.choices.forEach(id => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "noshi-option-button";
+      button.dataset.flourId = id;
+      const extra = options.extraPrice(product,id);
+      button.textContent = `${options.flourLabel(product,id)}${extra ? ` (+${money(extra)})` : " · بدون زيادة"}`;
+      button.addEventListener("click", () => { activeFlourId = id; updateChoiceState(product); });
+      modalFlourOptions?.appendChild(button);
+    });
+    if (cfg.sugarRequired) ["balanced","reduced"].forEach(id => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "noshi-option-button";
+      button.dataset.sugarId = id;
+      button.textContent = options.sugarLabel(id);
+      button.addEventListener("click", () => { activeSugarId = id; updateChoiceState(product); });
+      modalSugarOptions?.appendChild(button);
+    });
     const pricing = pricingFor(product);
     modalPrice.innerHTML = priceMarkup(product);
     const modalBadge = document.getElementById("modalBadge");
@@ -217,12 +288,12 @@
           modalPrice.innerHTML = priceMarkup(product, variant.id);
           const selectedPricing = pricingFor(product, variant.id);
           if (modalBadge) modalBadge.textContent = selectedPricing.hasOffer ? `خصم ${number(selectedPricing.percent)}%` : "منتج مميز";
-          if (modalAddButton) modalAddButton.disabled = false;
+          updateChoiceState(product);
         });
         modalVariantOptions.appendChild(button);
       });
     }
-    if (modalAddButton) modalAddButton.disabled = hasVariants;
+    updateChoiceState(product);
     const hasSize = !hasVariants && Boolean(product.showSize && product.size);
     modalSizeWrap.hidden = !hasSize;
     modalSize.textContent = hasSize ? englishDigits(product.size) : "";
@@ -241,7 +312,8 @@
 
   function renderProducts() {
     if (!grid) return;
-    const visible = expanded ? products : products.slice(0, 6);
+    const filtered = activeCategory === "healthy" ? products.filter(p => options.isHealthy(p)) : products;
+    const visible = expanded ? filtered : filtered.slice(0, 6);
     grid.replaceChildren();
 
     visible.forEach((product, index) => {
@@ -294,6 +366,13 @@
       price.className = "product-price product-price-stack";
       price.innerHTML = priceMarkup(product);
       meta.appendChild(price);
+      const available = options.config(product).choices;
+      if (available.length === 1) {
+        const typeTag = document.createElement("span");
+        typeTag.className = "noshi-product-kind";
+        typeTag.textContent = options.flourLabel(product,available[0]) + " فقط";
+        meta.appendChild(typeTag);
+      }
       if (product.showSize && product.size) {
         const size = document.createElement("span");
         size.className = "product-size";
@@ -317,9 +396,25 @@
       grid.appendChild(card);
     });
 
-    if (showMoreWrapper) showMoreWrapper.hidden = expanded || products.length <= 6;
+    if (!visible.length) {
+      const notice = document.createElement("p");
+      notice.className = "noshi-category-empty";
+      notice.textContent = "لا توجد منتجات متوفرة بخيارات البر أو المكس حاليًا.";
+      grid.appendChild(notice);
+    }
+    if (categoryInfo) categoryInfo.hidden = activeCategory !== "healthy";
+    if (showMoreWrapper) showMoreWrapper.hidden = expanded || filtered.length <= 6;
   }
 
+  tabs.forEach(button => button.addEventListener("click", () => {
+    activeCategory = button.dataset.productsTab === "healthy" ? "healthy" : "all";
+    tabs.forEach(tab => {
+      const active = tab === button;
+      tab.classList.toggle("active",active);
+      tab.setAttribute("aria-pressed",String(active));
+    });
+    renderProducts();
+  }));
   showMoreButton?.addEventListener("click", () => {
     expanded = true;
     renderProducts();
@@ -333,7 +428,7 @@
     closeProduct();
   });
   modalAddButton?.addEventListener("click", () => {
-    if (activeProductId) addProduct(activeProductId, modalImage, modalAddButton, activeVariantId);
+    if (activeProductId) addProduct(activeProductId, modalImage, modalAddButton, activeVariantId, activeFlourId, activeSugarId);
   });
   window.addEventListener("noshi:cart-change", updateCartUI);
   window.addEventListener("storage", updateCartUI);
