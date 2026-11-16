@@ -245,6 +245,7 @@
     activeFlourId = options.defaults(product).flourId;
     activeSugarId = "";
     const cfg = options.config(product);
+    modal.classList.toggle("has-product-options", Boolean(cfg.choices.length || cfg.sugarRequired));
     if (modalFlour) modalFlour.hidden = !cfg.choices.length;
     if (modalSugar) modalSugar.hidden = !cfg.sugarRequired;
     modalFlourOptions?.replaceChildren();
@@ -255,7 +256,7 @@
       button.className = "noshi-option-button";
       button.dataset.flourId = id;
       const extra = options.extraPrice(product,id);
-      button.textContent = `${options.flourLabel(product,id)}${extra ? ` (+${money(extra)})` : " · بدون زيادة"}`;
+      button.textContent = `${options.flourLabel(product,id)}${extra ? ` (+${money(extra)})` : ""}`;
       button.addEventListener("click", () => { activeFlourId = id; updateChoiceState(product); });
       modalFlourOptions?.appendChild(button);
     });

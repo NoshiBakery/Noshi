@@ -206,3 +206,87 @@ html, body { touch-action: pan-x pan-y; }
 .noshi-option-button.selected {background:#fff4f7;border-color:var(--color-primary-strong);box-shadow:0 0 0 2px rgba(156,75,99,.10);}
 
 .noshi-product-kind {font-size:.74rem;color:#8a5368;font-weight:800;}
+
+/* 2026-11-16 — Product dialog readability/spacing only; no change to other site dialogs. */
+.product-dialog .dialog-close {
+  background: #873750;
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  box-shadow: 0 4px 13px rgba(76, 27, 44, .27);
+}
+.product-dialog .dialog-close:hover,
+.product-dialog .dialog-close:focus-visible {
+  background: #63263b;
+  color: #fff;
+}
+.product-dialog .noshi-choice-group { margin-top: .72rem; }
+.product-dialog .noshi-choice-group .dialog-variants-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: .48rem;
+  font-size: 1rem;
+  line-height: 1.45;
+  font-weight: 900;
+}
+.product-dialog .noshi-required-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: .16rem .55rem;
+  border: 1px solid #a94b63;
+  border-radius: 999px;
+  background: #953c57;
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+.product-dialog .noshi-choice-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .45rem;
+}
+.product-dialog #modalSugarOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.product-dialog .noshi-option-button {
+  min-width: 0;
+  min-height: 41px;
+  padding: .4rem .32rem;
+  border-radius: 10px;
+  font-size: .84rem;
+  line-height: 1.35;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+.product-dialog .dialog-meta { gap: .55rem; }
+.product-dialog .dialog-pill {
+  border-color: #dfc7ce;
+  background: #fff8f6;
+  border-radius: 11px;
+}
+.product-dialog .dialog-pill span { color: #72535d; font-weight: 700; }
+.product-dialog .dialog-pill strong { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .product-dialog.has-product-options { overflow-y: auto !important; }
+  .product-dialog .noshi-choice-group { margin-top: .62rem; }
+  .product-dialog .noshi-choice-group .dialog-variants-label {
+    font-size: .98rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: .4rem !important;
+  }
+  .product-dialog .noshi-required-badge { font-size: .79rem; }
+  .product-dialog .noshi-option-button { min-height: 39px; padding: .35rem .28rem; font-size: .8rem; }
+  .product-dialog .dialog-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: .48rem !important;
+    margin-top: .7rem;
+  }
+  .product-dialog .dialog-pill { padding: .5rem .6rem !important; }
+  .product-dialog .dialog-pill span { font-size: .76rem !important; }
+  .product-dialog .dialog-pill strong { font-size: .98rem !important; }
+}
+@media (max-width: 355px) {
+  .product-dialog #modalFlourOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -4,8 +4,8 @@
 (function (global) {
   const FLOUR = Object.freeze({
     flour: Object.freeze({white:"دقيق أبيض",bran:"دقيق بر",mix:"دقيق مكس"}),
-    cake: Object.freeze({white:"عادية",bran:"بر",mix:"مكس"}),
-    tawa: Object.freeze({white:"عادية",bran:"بر",mix:"مكس"})
+    cake: Object.freeze({white:"عادي",bran:"بر",mix:"مكس"}),
+    tawa: Object.freeze({white:"عادي",bran:"بر",mix:"مكس"})
   });
   const SUGAR = Object.freeze({balanced:"سكر موزون",reduced:"تقليل السكر"});
   const round = value => Math.round((value + Number.EPSILON) * 100) / 100;
