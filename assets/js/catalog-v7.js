@@ -26,8 +26,6 @@
   const modalFlourOptions = document.getElementById("modalFlourOptions");
   const modalSugar = document.getElementById("modalSugar");
   const modalSugarOptions = document.getElementById("modalSugarOptions");
-  const tabs = Array.from(document.querySelectorAll("[data-products-tab]"));
-  const categoryInfo = document.getElementById("healthyCategoryInfo");
   const modalClose = document.getElementById("modalClose");
   const modalAddButton = document.getElementById("modalAddToCart");
   const toast = document.getElementById("toastMessage");
@@ -38,7 +36,6 @@
   let activeVariantId = "";
   let activeFlourId = "";
   let activeSugarId = "";
-  let activeCategory = "all";
   let toastTimer = null;
 
   function englishDigits(value) {
@@ -195,8 +192,9 @@
     }
     if (cfg.choices.length === 1 && !flourId) flourId = cfg.choices[0];
     if (!options.validSelection(product, flourId, sugarId)) return;
-    animateIntoCart(product, source);
     cart.add(product.id, 1, variantId, flourId, sugarId);
+    animateIntoCart(product, source);
+    if (source === modalImage && activeProductId === product.id) closeProduct();
     updateCartUI();
     showToast(`تمت إضافة ${product.name} للسلة`);
 
@@ -313,8 +311,7 @@
 
   function renderProducts() {
     if (!grid) return;
-    const filtered = activeCategory === "healthy" ? products.filter(p => options.isHealthy(p)) : products;
-    const visible = expanded ? filtered : filtered.slice(0, 6);
+    const visible = expanded ? products : products.slice(0, 6);
     grid.replaceChildren();
 
     visible.forEach((product, index) => {
@@ -397,25 +394,9 @@
       grid.appendChild(card);
     });
 
-    if (!visible.length) {
-      const notice = document.createElement("p");
-      notice.className = "noshi-category-empty";
-      notice.textContent = "لا توجد منتجات متوفرة بخيارات البر أو المكس حاليًا.";
-      grid.appendChild(notice);
-    }
-    if (categoryInfo) categoryInfo.hidden = activeCategory !== "healthy";
-    if (showMoreWrapper) showMoreWrapper.hidden = expanded || filtered.length <= 6;
+    if (showMoreWrapper) showMoreWrapper.hidden = expanded || products.length <= 6;
   }
 
-  tabs.forEach(button => button.addEventListener("click", () => {
-    activeCategory = button.dataset.productsTab === "healthy" ? "healthy" : "all";
-    tabs.forEach(tab => {
-      const active = tab === button;
-      tab.classList.toggle("active",active);
-      tab.setAttribute("aria-pressed",String(active));
-    });
-    renderProducts();
-  }));
   showMoreButton?.addEventListener("click", () => {
     expanded = true;
     renderProducts();
