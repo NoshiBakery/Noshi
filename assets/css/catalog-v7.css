@@ -212,25 +212,26 @@ html, body { touch-action: pan-x pan-y; }
 .noshi-option-extra { color:#8a5368; font-weight:800; }
 .noshi-option-recommended {
   position: absolute;
-  top: 9px;
-  left: -30px;
+  top: 10px;
+  left: -19px;
   z-index: 1;
-  width: 108px;
-  padding: .2rem 0;
-  transform: rotate(-40deg);
+  width: 82px;
+  padding: .18rem 0;
+  transform: rotate(-45deg);
   background: #27824B;
   color: #fff;
-  font-size: .7em;
+  font-size: .67em;
   font-weight: 900;
   line-height: 1.25;
   text-align: center;
   white-space: nowrap;
   pointer-events: none;
 }
-/* Reserve room for the diagonal corner ribbon without covering the option name or price. */
+/* Clip the ribbon to its own rounded option card, never across headings or nearby choices. */
 .product-dialog .noshi-option-button:has(.noshi-option-recommended) {
   min-height: 74px;
   padding-top: 1.65rem;
+  overflow: hidden;
 }
 
 
