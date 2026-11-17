@@ -204,6 +204,10 @@ html, body { touch-action: pan-x pan-y; }
 .noshi-choice-buttons {display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:.5rem;}
 .noshi-option-button {font:inherit;font-weight:800;min-height:50px;padding:.6rem;border:1.5px solid #e8ccd5;border-radius:12px;background:#fff;color:var(--color-primary-strong);cursor:pointer;}
 .noshi-option-button.selected {background:#fff4f7;border-color:var(--color-primary-strong);box-shadow:0 0 0 2px rgba(156,75,99,.10);}
+/* Product option labels: decorative only; selection and pricing remain unchanged. */
+.noshi-option-free { color:#27824B; font-weight:900; }
+.noshi-option-recommended { display:block;width:max-content;max-width:100%;margin:.3rem auto 0;padding:.1rem .4rem;border-radius:999px;background:#f8e9ef;color:#873750;font-size:.7em;font-weight:800;line-height:1.5; }
+
 
 .noshi-product-kind {font-size:.74rem;color:#8a5368;font-weight:800;}
 
