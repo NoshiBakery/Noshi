@@ -210,7 +210,28 @@ html, body { touch-action: pan-x pan-y; }
 .noshi-option-extra { display:block; margin-top:.18rem; font-size:.83em; line-height:1.25; }
 .noshi-option-free { color:#27824B; font-weight:900; }
 .noshi-option-extra { color:#8a5368; font-weight:800; }
-.noshi-option-recommended { position:absolute; inset-block:6px auto; inset-inline-start:-1px; display:flex; align-items:center; justify-content:center; min-width:52px; padding:.18rem .55rem .18rem .8rem; background:#27824B; color:#fff; font-size:.68em; font-weight:900; line-height:1.2; clip-path:polygon(0 0,100% 0,100% 100%,0 100%,12px 50%); box-shadow:0 4px 10px rgba(39,130,75,.18); }
+.noshi-option-recommended {
+  position: absolute;
+  top: 9px;
+  left: -30px;
+  z-index: 1;
+  width: 108px;
+  padding: .2rem 0;
+  transform: rotate(-40deg);
+  background: #27824B;
+  color: #fff;
+  font-size: .7em;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* Reserve room for the diagonal corner ribbon without covering the option name or price. */
+.product-dialog .noshi-option-button:has(.noshi-option-recommended) {
+  min-height: 74px;
+  padding-top: 1.65rem;
+}
 
 
 .noshi-product-kind {font-size:.74rem;color:#8a5368;font-weight:800;}
