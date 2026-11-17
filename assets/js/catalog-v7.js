@@ -253,18 +253,25 @@
       button.type = "button";
       button.className = "noshi-option-button";
       button.dataset.flourId = id;
-      const extra = options.extraPrice(product,id);
-      button.append(document.createTextNode(options.flourLabel(product,id)));
+
+      const title = document.createElement("span");
+      title.className = "noshi-option-title";
+      title.textContent = options.flourLabel(product, id);
+      button.append(title);
+
+      const extra = options.extraPrice(product, id);
       const priceLabel = document.createElement("span");
       priceLabel.className = extra ? "noshi-option-extra" : "noshi-option-free";
-      priceLabel.textContent = extra ? ` (+${money(extra)})` : " (مجانًا)";
+      priceLabel.textContent = extra ? `+${money(extra)}` : "مجانًا";
       button.append(priceLabel);
+
       if (product.recommendedOptions?.flour?.includes(id)) {
         const badge = document.createElement("span");
         badge.className = "noshi-option-recommended";
         badge.textContent = "موصى به";
         button.append(badge);
       }
+
       button.addEventListener("click", () => { activeFlourId = id; updateChoiceState(product); });
       modalFlourOptions?.appendChild(button);
     });
@@ -273,17 +280,24 @@
       button.type = "button";
       button.className = "noshi-option-button";
       button.dataset.sugarId = id;
-      button.append(document.createTextNode(`${options.sugarLabel(id)} `));
+
+      const title = document.createElement("span");
+      title.className = "noshi-option-title";
+      title.textContent = options.sugarLabel(id);
+      button.append(title);
+
       const freeLabel = document.createElement("span");
       freeLabel.className = "noshi-option-free";
-      freeLabel.textContent = "(مجانًا)";
+      freeLabel.textContent = "مجانًا";
       button.append(freeLabel);
+
       if (product.recommendedOptions?.sugar?.includes(id)) {
         const badge = document.createElement("span");
         badge.className = "noshi-option-recommended";
         badge.textContent = "موصى به";
         button.append(badge);
       }
+
       button.addEventListener("click", () => { activeSugarId = id; updateChoiceState(product); });
       modalSugarOptions?.appendChild(button);
     });
